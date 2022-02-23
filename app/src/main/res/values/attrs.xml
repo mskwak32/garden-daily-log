@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TextViewWithIcon">
+        <attr name="iconRes" format="reference"/>
+        <attr name="text" format="reference|string"/>
+        <attr name="textColor" format="reference|integer"/>
+        <attr name="required" format="boolean"/>
+    </declare-styleable>
+</resources>

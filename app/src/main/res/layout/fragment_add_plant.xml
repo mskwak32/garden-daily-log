@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="40dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/photo"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/add_photo"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/rounded_corner" />
+
+            <com.mskwak.gardendailylog.ui.custom_component.TextViewWithIcon
+                android:id="@+id/plantNameTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:iconRes="@drawable/ic_label_black"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/photo"
+                app:required="true"
+                app:text="@string/plant_name" />
+
+            <EditText
+                android:id="@+id/plantNameInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round_card_background"
+                android:hint="@string/plant_name"
+                android:minHeight="40dp"
+                android:paddingLeft="16dp"
+                android:paddingTop="4dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="4dp"
+                app:layout_constraintTop_toBottomOf="@id/plantNameTitle" />
+
+            <com.mskwak.gardendailylog.ui.custom_component.TextViewWithIcon
+                android:id="@+id/plantDateTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:iconRes="@drawable/ic_event_black"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/plantNameInput"
+                app:required="true"
+                app:text="@string/plant_date" />
+
+            <TextView
+                android:id="@+id/plantDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round_card_background"
+                android:gravity="center_vertical"
+                android:minHeight="40dp"
+                android:paddingLeft="16dp"
+                android:textColor="@color/dim_black_70"
+                app:layout_constraintTop_toBottomOf="@id/plantDateTitle"
+                tools:text="2022-02-22" />
+
+            <com.mskwak.gardendailylog.ui.custom_component.TextViewWithIcon
+                android:id="@+id/memoTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:iconRes="@drawable/ic_event_black"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/plantDate"
+                app:required="false"
+                app:text="@string/memo" />
+
+            <EditText
+                android:id="@+id/memoInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round_card_background"
+                android:minHeight="40dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColor="@color/dim_black_70"
+                app:layout_constraintTop_toBottomOf="@id/memoTitle"
+                tools:text="memo memo" />
+
+            <TextView
+                android:id="@+id/wateringTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/watering"
+                android:textColor="@color/dim_black_70"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/memoInput" />
+
+            <com.mskwak.gardendailylog.ui.custom_component.TextViewWithIcon
+                android:id="@+id/lastWateringTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:iconRes="@drawable/ic_event_black"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/wateringTitle"
+                app:required="true"
+                app:text="@string/watering_last_date" />
+
+            <TextView
+                android:id="@+id/lastWateringDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round_card_background"
+                android:gravity="center_vertical"
+                android:minHeight="40dp"
+                android:paddingLeft="16dp"
+                android:textColor="@color/dim_black_70"
+                app:layout_constraintTop_toBottomOf="@id/lastWateringTitle"
+                tools:text="2022-02-22" />
+
+            <com.mskwak.gardendailylog.ui.custom_component.TextViewWithIcon
+                android:id="@+id/wateringPeriodTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:iconRes="@drawable/ic_update_black"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lastWateringDate"
+                app:text="@string/watering_period" />
+
+            <TextView
+                android:id="@+id/wateringPeriod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round_card_background"
+                android:gravity="center_vertical"
+                android:minHeight="40dp"
+                android:paddingLeft="16dp"
+                android:textColor="@color/dim_black_70"
+                app:layout_constraintTop_toBottomOf="@id/wateringPeriodTitle"
+                tools:text="1일마다" />
+
+            <com.mskwak.gardendailylog.ui.custom_component.TextViewWithIcon
+                android:id="@+id/wateringAlarmTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:iconRes="@drawable/ic_alarm_black"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/wateringPeriod"
+                app:text="@string/watering_alarm" />
+
+            <TextView
+                android:id="@+id/wateringAlarm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/round_card_background"
+                android:gravity="center_vertical"
+                android:minHeight="40dp"
+                android:paddingLeft="16dp"
+                android:textColor="@color/dim_black_70"
+                app:layout_constraintTop_toBottomOf="@id/wateringAlarmTitle"
+                tools:text="오전 09:00" />
+
+            <com.suke.widget.SwitchButton
+                android:id="@+id/wateringAlarmSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="@id/wateringAlarmTitle"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/wateringAlarmTitle"
+                app:sb_show_indicator="false" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

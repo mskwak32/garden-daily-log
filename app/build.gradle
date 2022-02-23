@@ -81,4 +81,8 @@ dependencies {
     testImplementation "org.robolectric:robolectric:$robolectricVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidxTestJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+
+    //ui
+    def switchButtonVersion = "0.0.3@aar"
+    implementation "com.github.zcweng:switch-button:$switchButtonVersion"
 }
