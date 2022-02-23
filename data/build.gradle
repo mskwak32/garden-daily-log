@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
@@ -7,20 +7,14 @@ plugins {
 
 apply from: rootProject.file("android.gradle")
 
-android {
-    defaultConfig {
-        applicationId "com.mskwak.gardendailylog"
-        setProperty("archivesBaseName", "$rootProject.name $versionName-$versionCode")
-    }
-}
-
 dependencies {
-    implementation project(":data")
     implementation project(":domain")
-    implementation project(":presentation")
 
     implementation(Libraries.CORE_KTX)
     implementation(Libraries.APP_COMPAT)
+    implementation(Coroutines.COROUTINES_CORE)
+    implementation(Coroutines.COROUTINES_ANDROID)
+    implementation(Libraries.GSON)
 
     implementation(Di.HILT_ANDROID)
     kapt(Di.HILT_COMPILER)
@@ -28,4 +22,9 @@ dependencies {
     implementation(Room.ROOM_RUNTIME)
     kapt(Room.ROOM_COMPILER)
     implementation(Room.ROOM_KTX)
+
+    testImplementation("junit:junit:${Versions.JUNIT}")
+    testImplementation("androidx.test:core:${Versions.ANDROIDX_TEST}")
+    testImplementation("androidx.arch.core:core-testing:${Versions.ARCH_TEST}")
+    testImplementation("org.robolectric:robolectric:${Versions.ROBOLECTRIC}")
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="green_400">#54d69c</color>
+    <color name="green_600">#2fc082</color>
+    <color name="green_500">#3bcb8b</color>
+    <color name="green_50">#cdf2e1</color>
+
+    <color name="teal">#00aa95</color>
+
+    <color name="bgray_1000">#303133</color>
+    <color name="bgray_600">#52575c</color>
+    <color name="bgray_400">#909399</color>
+    <color name="bgray_200">#b0b5bd</color>
+    <color name="bgray_100">#cfd4dd</color>
+    <color name="bgray_50">#dbdfe6</color>
+    <color name="bgray_10">#f4f5f7</color>
+
+    <color name="dim_black_70">#b3000000</color>
+    <color name="dim_black_45">#73000000</color>
+</resources>
