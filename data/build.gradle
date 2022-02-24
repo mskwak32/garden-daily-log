@@ -14,6 +14,7 @@ dependencies {
     implementation(Libraries.APP_COMPAT)
     implementation(Coroutines.COROUTINES_CORE)
     implementation(Coroutines.COROUTINES_ANDROID)
+    implementation(Libraries.LIFECYCLE_LIVEDATA)
     implementation(Libraries.GSON)
 
     implementation(Di.HILT_ANDROID)
