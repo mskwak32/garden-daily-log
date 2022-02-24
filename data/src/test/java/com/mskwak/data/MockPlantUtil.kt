@@ -1,22 +1,26 @@
 package com.mskwak.data
 
-import com.mskwak.data.model.AlarmModelImpl
-import com.mskwak.data.model.RecordModel
-import com.mskwak.data.model.Plant
+import com.mskwak.data.model.AlarmData
+import com.mskwak.data.model.PlantData
+import com.mskwak.data.model.RecordData
 import java.util.*
 
 object MockPlantUtil {
 
-    fun mockPlant() = Plant(
+    fun mockPlant() = PlantData(
         name = "plant",
         createdDate = Date(System.currentTimeMillis()),
         waterPeriod = 1,
         lastWateringDate = Date(System.currentTimeMillis()),
-        alarm = AlarmModelImpl(9, 0, false)
+        wateringAlarm = AlarmData(9, 0, false),
+        pictureUri = null,
+        memo = null
     )
 
-    fun mockRecord(plantId: Int) = RecordModel(
+    fun mockRecord(plantId: Int) = RecordData(
         plantId = plantId,
-        memo = "memo"
+        memo = "memo",
+        pictureList = listOf(),
+        createdTime = Date()
     )
 }

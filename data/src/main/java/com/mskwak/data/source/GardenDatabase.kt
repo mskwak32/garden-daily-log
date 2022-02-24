@@ -3,11 +3,11 @@ package com.mskwak.data.source
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.mskwak.data.model.RecordModel
-import com.mskwak.data.model.Plant
+import com.mskwak.data.model.PlantData
+import com.mskwak.data.model.RecordData
 
 @Database(
-    entities = [Plant::class, RecordModel::class],
+    entities = [PlantData::class, RecordData::class],
     version = 1
 )
 @TypeConverters(DatabaseConverter::class)

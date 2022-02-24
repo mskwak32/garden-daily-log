@@ -2,8 +2,8 @@ package com.mskwak.data.source
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.mskwak.data.MockPlantUtil
-import com.mskwak.data.model.RecordModel
 import com.mskwak.data.getOrAwaitValue
+import com.mskwak.data.model.RecordData
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
@@ -12,7 +12,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
-class PlantTest : LocalDatabase() {
+class PlantDataTest : LocalDatabase() {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
@@ -30,7 +30,7 @@ class PlantTest : LocalDatabase() {
         val mockPlant = MockPlantUtil.mockPlant()
         plantDao.insertPlant(mockPlant)
         val plant = plantDao.observePlants().getOrAwaitValue().first().also {
-            val mockRecords = listOf<RecordModel>(
+            val mockRecords = listOf<RecordData>(
                 MockPlantUtil.mockRecord(it.id),
                 MockPlantUtil.mockRecord(it.id)
             )
