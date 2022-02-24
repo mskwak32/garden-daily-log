@@ -2,22 +2,22 @@ package com.mskwak.data.source
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.mskwak.data.model.PlantData
+import com.mskwak.data.model.PlantImpl
 
 @Dao
 interface PlantDao {
     @Insert
-    suspend fun insertPlant(plant: PlantData)
+    suspend fun insertPlant(plant: PlantImpl)
 
     @Update
-    suspend fun updatePlant(plant: PlantData)
+    suspend fun updatePlant(plant: PlantImpl)
 
     @Delete
-    suspend fun deletePlant(plant: PlantData)
+    suspend fun deletePlant(plant: PlantImpl)
 
     @Query("SELECT * FROM plant")
-    fun observePlants(): LiveData<List<PlantData>>
+    fun observePlants(): LiveData<List<PlantImpl>>
 
     @Query("SELECT * FROM plant WHERE id = :plantId")
-    fun observePlant(plantId: Int): LiveData<PlantData>
+    fun observePlant(plantId: Int): LiveData<PlantImpl>
 }

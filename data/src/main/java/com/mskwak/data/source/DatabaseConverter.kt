@@ -3,17 +3,40 @@ package com.mskwak.data.source
 import android.net.Uri
 import androidx.room.TypeConverter
 import com.google.gson.Gson
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 import java.util.*
 
 class DatabaseConverter {
     @TypeConverter
-    fun dateToTimestamp(date: Date): Long {
-        return date.time
+    fun dateToString(date: LocalDate): String {
+        return date.toString()
     }
 
     @TypeConverter
-    fun timestampToDate(timestamp: Long): Date {
-        return Date(timestamp)
+    fun stringToDate(dateString: String): LocalDate {
+        return LocalDate.parse(dateString)
+    }
+
+    @TypeConverter
+    fun timeToString(time: LocalTime): String {
+        return time.toString()
+    }
+
+    @TypeConverter
+    fun stringToTime(timeString: String): LocalTime {
+        return LocalTime.parse(timeString)
+    }
+
+    @TypeConverter
+    fun dateTimeToString(dateTime: LocalDateTime): String {
+        return dateTime.toString()
+    }
+
+    @TypeConverter
+    fun stringToDateTime(dateTimeString: String): LocalDateTime {
+        return LocalDateTime.parse(dateTimeString)
     }
 
     @TypeConverter

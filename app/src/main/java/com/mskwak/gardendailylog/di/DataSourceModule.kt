@@ -13,7 +13,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class DatabaseModule {
+class DataSourceModule {
     @Provides
     @Singleton
     fun providesGardenDatabase(application: Application): GardenDatabase {

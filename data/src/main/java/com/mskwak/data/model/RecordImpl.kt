@@ -5,13 +5,13 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.mskwak.domain.model.RecordModel
-import java.util.*
+import com.mskwak.domain.model.Record
+import java.time.LocalDateTime
 
 @Entity(
     tableName = "gardeningRecord",
     foreignKeys = [ForeignKey(
-        entity = PlantData::class,
+        entity = PlantImpl::class,
         parentColumns = ["id"],
         childColumns = ["plantId"],
         onUpdate = ForeignKey.CASCADE,
@@ -19,10 +19,10 @@ import java.util.*
     )],
     indices = [Index(value = ["plantId"])]
 )
-data class RecordData(
+data class RecordImpl(
     @PrimaryKey(autoGenerate = true) override val id: Int = 0,
     override val plantId: Int,
     override val memo: String,
     override val pictureList: List<Uri>,
-    override val createdTime: Date
-) : RecordModel
+    override val createdTime: LocalDateTime
+) : Record

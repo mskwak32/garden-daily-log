@@ -1,12 +1,12 @@
 package com.mskwak.domain.model
 
 import android.net.Uri
-import java.util.*
+import java.time.LocalDateTime
 
-interface RecordModel {
+interface Record {
     val id: Int
     val plantId: Int
     val memo: String
     val pictureList: List<Uri>
-    val createdTime: Date
+    val createdTime: LocalDateTime
 }

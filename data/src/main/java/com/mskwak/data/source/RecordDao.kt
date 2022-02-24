@@ -2,23 +2,23 @@ package com.mskwak.data.source
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.mskwak.data.model.RecordData
+import com.mskwak.data.model.RecordImpl
 
 @Dao
 interface RecordDao {
 
     @Insert
-    suspend fun insertRecord(record: RecordData)
+    suspend fun insertRecord(record: RecordImpl)
 
     @Update
-    suspend fun updateRecord(record: RecordData)
+    suspend fun updateRecord(record: RecordImpl)
 
     @Delete
-    suspend fun deleteRecord(record: RecordData)
+    suspend fun deleteRecord(record: RecordImpl)
 
     @Query("SELECT * FROM gardeningRecord WHERE plantId = :plantId")
-    fun observeRecordsByPlantId(plantId: Int): LiveData<List<RecordData>>
+    fun observeRecordsByPlantId(plantId: Int): LiveData<List<RecordImpl>>
 
     @Query("SELECT * FROM gardeningRecord ORDER BY createdTime DESC")
-    fun observeRecords(): LiveData<List<RecordData>>
+    fun observeRecords(): LiveData<List<RecordImpl>>
 }
