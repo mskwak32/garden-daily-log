@@ -1,25 +1,25 @@
 package com.mskwak.data
 
-import com.mskwak.data.model.AlarmImpl
-import com.mskwak.data.model.PlantImpl
-import com.mskwak.data.model.RecordImpl
+import com.mskwak.data.model.AlarmData
+import com.mskwak.data.model.PlantData
+import com.mskwak.data.model.RecordData
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
 object MockPlantUtil {
 
-    fun mockPlant() = PlantImpl(
+    fun mockPlant() = PlantData(
         name = "plant",
-        createdDate = LocalDateTime.now(),
+        createdDate = LocalDate.now(),
         waterPeriod = 1,
         lastWateringDate = LocalDate.now(),
-        wateringAlarm = AlarmImpl(LocalTime.now(), false),
+        wateringAlarm = AlarmData(LocalTime.now(), false),
         pictureUri = null,
         memo = null
     )
 
-    fun mockRecord(plantId: Int) = RecordImpl(
+    fun mockRecord(plantId: Int) = RecordData(
         plantId = plantId,
         memo = "memo",
         pictureList = listOf(),

@@ -11,7 +11,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
-class PlantImplTest : LocalDatabase() {
+class PlantDataTest : LocalDatabase() {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 

@@ -11,7 +11,7 @@ import java.time.LocalDateTime
 @Entity(
     tableName = "gardeningRecord",
     foreignKeys = [ForeignKey(
-        entity = PlantImpl::class,
+        entity = PlantData::class,
         parentColumns = ["id"],
         childColumns = ["plantId"],
         onUpdate = ForeignKey.CASCADE,
@@ -19,7 +19,7 @@ import java.time.LocalDateTime
     )],
     indices = [Index(value = ["plantId"])]
 )
-data class RecordImpl(
+data class RecordData(
     @PrimaryKey(autoGenerate = true) override val id: Int = 0,
     override val plantId: Int,
     override val memo: String,

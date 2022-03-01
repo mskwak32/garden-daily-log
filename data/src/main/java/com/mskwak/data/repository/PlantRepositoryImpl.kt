@@ -2,7 +2,7 @@ package com.mskwak.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
-import com.mskwak.data.model.PlantImpl
+import com.mskwak.data.model.PlantData
 import com.mskwak.data.source.PlantDao
 import com.mskwak.domain.model.Plant
 import com.mskwak.domain.repository.PlantRepository
@@ -13,15 +13,19 @@ class PlantRepositoryImpl @Inject constructor(
 ) : PlantRepository {
 
     override suspend fun addPlant(plant: Plant) {
-        plantDao.insertPlant(plant as PlantImpl)
+        plantDao.insertPlant(plant as PlantData)
     }
 
     override suspend fun updatePlant(plant: Plant) {
-        plantDao.updatePlant(plant as PlantImpl)
+        plantDao.updatePlant(plant as PlantData)
     }
 
     override suspend fun deletePlant(plant: Plant) {
-        plantDao.deletePlant(plant as PlantImpl)
+        plantDao.deletePlant(plant as PlantData)
+    }
+
+    override suspend fun getPlant(plantId: Int): Plant {
+        return plantDao.getPlant(plantId)
     }
 
     override fun observePlants(): LiveData<List<Plant>> {
