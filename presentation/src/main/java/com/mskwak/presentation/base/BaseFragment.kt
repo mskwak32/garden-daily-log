@@ -19,18 +19,17 @@ abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, layoutRes, container, false)
         binding?.lifecycleOwner = viewLifecycleOwner
+        initView()
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        initDataBinding()
         initialize()
     }
 
     open fun initialize() {}
-    abstract fun initDataBinding()
+    abstract fun initView()
 
     override fun onDestroyView() {
         super.onDestroyView()

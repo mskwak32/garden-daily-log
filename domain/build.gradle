@@ -8,6 +8,8 @@ apply from: rootProject.file("android.gradle")
 dependencies {
 
     implementation(Coroutines.COROUTINES_CORE)
+    implementation(Libraries.LIFECYCLE_LIVEDATA)
     testImplementation("junit:junit:${Versions.JUNIT}")
     testImplementation("org.mockito:mockito-core:${Versions.MOCKITO}")
+    implementation(Libraries.LOGGER)
 }

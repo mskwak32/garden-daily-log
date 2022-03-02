@@ -5,7 +5,7 @@ import androidx.annotation.Nullable
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import timber.log.Timber
+import com.orhanobut.logger.Logger
 import java.util.concurrent.atomic.AtomicBoolean
 
 class SingleLiveEvent<T> : MutableLiveData<T>() {
@@ -14,7 +14,7 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
     @MainThread
     override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
         if (hasActiveObservers()) {
-            Timber.w("Multiple observers registered but only one will be notified of changes.")
+            Logger.w("Multiple observers registered but only one will be notified of changes.")
         }
 
         super.observe(owner) { t ->

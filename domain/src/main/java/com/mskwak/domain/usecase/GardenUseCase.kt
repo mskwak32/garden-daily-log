@@ -1,14 +1,13 @@
 package com.mskwak.domain.usecase
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import com.mskwak.domain.model.Plant
 import com.mskwak.domain.model.Record
 import com.mskwak.domain.repository.PlantRepository
 import com.mskwak.domain.repository.RecordRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.time.LocalDate
 import java.time.Period
 import java.time.temporal.ChronoUnit
@@ -17,9 +16,30 @@ class GardenUseCase(
     private val plantRepository: PlantRepository,
     private val recordRepository: RecordRepository
 ) {
-    fun getPlants(): LiveData<List<Plant>> {
-        return plantRepository.observePlants()
+
+    fun getPlantsWithSortOrder(sortOrder: PlantListSortOrder): LiveData<List<Plant>> {
+        val plantsLiveData = plantRepository.observePlants()
+        return plantsLiveData.switchMap { list ->
+            liveData {
+                emit(list.applySort(sortOrder))
+            }
+        }
     }
+
+    private suspend fun List<Plant>.applySort(sortOrder: PlantListSortOrder): List<Plant> =
+        withContext(Dispatchers.Default) {
+            when (sortOrder) {
+                PlantListSortOrder.CREATED_LATEST -> {
+                    sortedByDescending { plant -> plant.createdDate }
+                }
+                PlantListSortOrder.CREATED_OLDEST -> {
+                    sortedBy { plant -> plant.createdDate }
+                }
+                PlantListSortOrder.WATERING -> {
+                    sortedBy { plant -> getRemainWateringDate(plant) }
+                }
+            }
+        }
 
     fun getPlantWithRecords(plantId: Int): Pair<LiveData<Plant>, LiveData<List<Record>>> {
         val plantLiveData = plantRepository.observePlant(plantId)

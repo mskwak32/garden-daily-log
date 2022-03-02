@@ -23,6 +23,7 @@ dependencies {
     implementation(Room.ROOM_RUNTIME)
     kapt(Room.ROOM_COMPILER)
     implementation(Room.ROOM_KTX)
+    implementation(Libraries.LOGGER)
 
     testImplementation("junit:junit:${Versions.JUNIT}")
     testImplementation("androidx.test:core:${Versions.ANDROIDX_TEST}")

@@ -4,7 +4,6 @@ object Versions {
     const val LIFECYCLE_KTX = "2.4.1"
     const val NAVIGATION_KTX = "2.4.1"
     const val GSON = "2.9.0"
-
     const val MATERIAL = "1.5.0"
     const val CONSTRAINT_LAYOUT = "2.1.3"
     const val SWITCH_BUTTON = "0.0.3@aar"
@@ -20,8 +19,9 @@ object Versions {
     const val MOCKITO = "4.3.1"
 
     const val ROOM = "2.4.1"
-    const val TIMBER = "5.0.1"
     const val GLIDE = "4.13.0"
+    const val DATASTORE = "1.0.0"
+    const val LOGGER = "2.2.0"
 }
 
 object Libraries {
@@ -35,7 +35,8 @@ object Libraries {
         "androidx.navigation:navigation-fragment-ktx:${Versions.NAVIGATION_KTX}"
     const val NAVIGATION_UI = "androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATION_KTX}"
     const val GSON = "com.google.code.gson:gson:${Versions.GSON}"
-    const val TIMBER = "com.jakewharton.timber:timber:${Versions.TIMBER}"
+    const val LOGGER = "com.orhanobut:logger:${Versions.LOGGER}"
+    const val DATASTORE = "androidx.datastore:datastore:${Versions.DATASTORE}"
 }
 
 object Ui {

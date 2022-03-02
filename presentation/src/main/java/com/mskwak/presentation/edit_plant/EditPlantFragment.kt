@@ -21,7 +21,7 @@ class EditPlantFragment : BaseFragment<FragmentEditPlantBinding>() {
     private val viewModel by viewModels<EditPlantViewModel>()
     private val args by navArgs<EditPlantFragmentArgs>()
 
-    override fun initDataBinding() {
+    override fun initView() {
         binding?.viewModel = viewModel
     }
 

@@ -27,12 +27,12 @@
                     android:id="@+id/photo"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:src="@drawable/add_photo"
                     android:onClick="@{() -> viewModel.onPhotoClick()}"
+                    android:src="@drawable/add_photo"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:shapeAppearanceOverlay="@style/rounded_corner" />
+                    app:shapeAppearanceOverlay="@style/roundedCorner" />
 
                 <com.mskwak.presentation.custom_component.TextViewWithIcon
                     android:id="@+id/plantNameTitle"
@@ -53,7 +53,6 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/round_card_background"
                     android:hint="@string/plant_name"
-                    android:textSize="15sp"
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:maxLines="1"
@@ -63,6 +62,7 @@
                     android:paddingRight="16dp"
                     android:paddingBottom="4dp"
                     android:text="@={viewModel.plantName}"
+                    android:textSize="15sp"
                     app:layout_constraintTop_toBottomOf="@id/plantNameTitle" />
 
                 <com.mskwak.presentation.custom_component.TextViewWithIcon
@@ -110,8 +110,8 @@
                     android:background="@drawable/round_card_background"
                     android:minHeight="40dp"
                     android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
                     android:paddingTop="4dp"
+                    android:paddingRight="16dp"
                     android:paddingBottom="4dp"
                     android:text="@{viewModel.memo}"
                     android:textColor="@color/dim_black_70"
@@ -228,10 +228,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="@string/save"
-            android:textStyle="bold"
-            android:textColor="@color/white"
             android:onClick="@{() -> viewModel.onSaveClick()}"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textStyle="bold"
             app:backgroundTint="@color/green_400"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent" />

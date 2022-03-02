@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.mskwak.domain.model.Plant
+import com.mskwak.presentation.GlideApp
 import com.mskwak.presentation.R
 import com.mskwak.presentation.databinding.LayoutItemPlantBinding
 import com.mskwak.presentation.model.PlantImpl
@@ -40,7 +40,7 @@ class PlantListAdapter(private val viewModel: HomeViewModel) :
 
         private fun setPlantImage(plant: Plant) {
             if (plant.pictureUri == null) {
-                Glide.with(itemView)
+                GlideApp.with(itemView)
                     .load(R.drawable.ic_flower_pot)
                     .centerCrop()
                     .into(binding.picture)
@@ -48,8 +48,9 @@ class PlantListAdapter(private val viewModel: HomeViewModel) :
         }
 
         private fun setDday(viewModel: HomeViewModel, plant: Plant) {
-            val days = viewModel.getRemainWateringDate(plant)
-            binding.dDayCount.text = String.format("D-%02d", days)
+            viewModel.getRemainWateringDate(plant) { days ->
+                binding.dDayCount.text = String.format("D-%02d", days)
+            }
         }
     }
 }

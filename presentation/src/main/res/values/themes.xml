@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme.GardenDailyLog" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.GardenDailyLog" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/green_600</item>
         <item name="colorPrimaryVariant">@color/green_400</item>
@@ -16,11 +16,18 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="rounded_corner">
+    <style name="roundedCorner">
         <item name="cornerSize">10dp</item>
     </style>
 
     <style name="numberPicker">
         <item name="colorControlNormal">@color/green_600</item>
+    </style>
+
+    <style name="spinnerDropdown">
+        <item name="android:background">@drawable/spinner_bg</item>
+        <item name="android:dropDownVerticalOffset">36dp</item>
+        <item name="android:spinnerMode">dropdown</item>
+        <item name="android:popupBackground">@drawable/spinner_dropdown_popup_bg</item>
     </style>
 </resources>

@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">텃밭일지</string>
     <string name="bottom_nav_home">홈</string>
     <string name="bottom_nav_record">일지</string>
     <string name="bottom_nav_setting">설정</string>
+    <string name="home_title">내 텃밭</string>
     <string-array name="home_sort_array">
-        <item>등록 최근순</item>
-        <item>등록 오래된순</item>
+        <item>심은날짜 최근순</item>
+        <item>심은날짜 오래된순</item>
         <item>급수일 가까운순</item>
     </string-array>
     <string name="plant_list_empty">아직 등록된 식물이 없어요</string>
