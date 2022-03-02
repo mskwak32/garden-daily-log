@@ -25,4 +25,11 @@ data class RecordData(
     override val memo: String,
     override val pictureList: List<Uri>,
     override val createdTime: LocalDateTime
-) : Record
+) : Record {
+    constructor(record: Record) : this(
+        plantId = record.plantId,
+        memo = record.memo,
+        pictureList = record.pictureList,
+        createdTime = record.createdTime
+    )
+}

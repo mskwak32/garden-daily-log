@@ -3,12 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.mskwak.presentation.home.HomeViewModel" />
+
+        <variable
+            name="plant"
+            type="com.mskwak.domain.model.Plant" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/round_card_background"
         android:padding="8dp"
+        android:onClick="@{() -> viewModel.openPlant(plant)}"
         tools:ignore="SpUsage">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -51,6 +63,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:ellipsize="end"
+            android:text="@{plant.name}"
             android:maxLines="1"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -63,6 +76,7 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:localDate="@{plant.createdDate}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@id/plantName"
             tools:text="2022.02.22" />

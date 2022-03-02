@@ -21,22 +21,27 @@ class GardenUseCase(
         return plantRepository.observePlants()
     }
 
-    fun getPlant(
-        plantId: Int,
-        mapKeyPlant: String,
-        mapKeyRecord: String
-    ): Map<String, LiveData<*>> {
+    fun getPlantWithRecords(plantId: Int): Pair<LiveData<Plant>, LiveData<List<Record>>> {
         val plantLiveData = plantRepository.observePlant(plantId)
         val recordsLiveData = recordRepository.observeRecordsByPlantId(plantId)
-        return mapOf<String, LiveData<*>>(
-            Pair(mapKeyPlant, plantLiveData),
-            Pair(mapKeyRecord, recordsLiveData)
-        )
+        return Pair(plantLiveData, recordsLiveData)
     }
 
-    fun addPlant(plant: Plant) {
+    fun getPlant(plantId: Int, scope: CoroutineScope, onComplete: (plant: Plant) -> Unit) {
+        scope.launch {
+            val deferred = async(Dispatchers.IO) {
+                plantRepository.getPlant(plantId)
+            }
+            onComplete(deferred.await())
+        }
+    }
+
+    fun addPlant(plant: Plant, scope: CoroutineScope, onComplete: () -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
             plantRepository.addPlant(plant)
+            scope.launch {
+                onComplete.invoke()
+            }
         }
     }
 
@@ -50,13 +55,9 @@ class GardenUseCase(
         }
     }
 
-    fun deletePlant(plant: Plant, scope: CoroutineScope, onComplete: () -> Unit) {
-        scope.launch {
-            val deferred = async(Dispatchers.IO) {
-                plantRepository.deletePlant(plant)
-            }
-            deferred.await()
-            onComplete.invoke()
+    fun deletePlant(plant: Plant) {
+        CoroutineScope(Dispatchers.IO).launch {
+            plantRepository.deletePlant(plant)
         }
     }
 
@@ -113,7 +114,7 @@ class GardenUseCase(
 
     fun getDaysFromPlant(plant: Plant): Period {
         val today = LocalDate.now()
-        val plantDate = plant.createdDate.toLocalDate()
+        val plantDate = plant.createdDate
 
         if (!today.isAfter(plantDate)) {
             return Period.ofDays(0)

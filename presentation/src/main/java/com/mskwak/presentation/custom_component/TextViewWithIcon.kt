@@ -16,6 +16,8 @@ class TextViewWithIcon @JvmOverloads constructor(
     private var iconView: ImageView
     private var textView: TextView
     private var requiredView: TextView
+    private var isRequired: Boolean = false
+    private val defaultTextColor: Int
 
     init {
         val view =
@@ -25,6 +27,7 @@ class TextViewWithIcon @JvmOverloads constructor(
         iconView = view.findViewById(R.id.icon)
         textView = view.findViewById(R.id.text)
         requiredView = view.findViewById(R.id.requiredIcon)
+        defaultTextColor = textView.currentTextColor
         initAttrs(attrs)
     }
 
@@ -34,7 +37,7 @@ class TextViewWithIcon @JvmOverloads constructor(
         val iconRes = typedArray.getResourceId(R.styleable.TextViewWithIcon_iconRes, -1)
         val text = typedArray.getText(R.styleable.TextViewWithIcon_text)
         val textColor = typedArray.getColor(R.styleable.TextViewWithIcon_textColor, -1)
-        val isRequired = typedArray.getBoolean(R.styleable.TextViewWithIcon_required, false)
+        isRequired = typedArray.getBoolean(R.styleable.TextViewWithIcon_required, false)
 
         if (iconRes != -1) {
             iconView.setImageResource(iconRes)
@@ -46,5 +49,13 @@ class TextViewWithIcon @JvmOverloads constructor(
         }
 
         requiredView.visibility = if (isRequired) VISIBLE else GONE
+    }
+
+    fun setFieldEmpty(isEmpty: Boolean) {
+        if (!isRequired) {
+            return
+        }
+        val textColor = if (isEmpty) resources.getColor(R.color.red_300, null) else defaultTextColor
+        textView.setTextColor(textColor)
     }
 }

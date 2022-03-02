@@ -13,15 +13,15 @@ class PlantRepositoryImpl @Inject constructor(
 ) : PlantRepository {
 
     override suspend fun addPlant(plant: Plant) {
-        plantDao.insertPlant(plant as PlantData)
+        plantDao.insertPlant(PlantData(plant))
     }
 
     override suspend fun updatePlant(plant: Plant) {
-        plantDao.updatePlant(plant as PlantData)
+        plantDao.updatePlant(PlantData(plant))
     }
 
     override suspend fun deletePlant(plant: Plant) {
-        plantDao.deletePlant(plant as PlantData)
+        plantDao.deletePlant(PlantData(plant))
     }
 
     override suspend fun getPlant(plantId: Int): Plant {

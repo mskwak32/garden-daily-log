@@ -17,4 +17,15 @@ data class PlantData(
     @Embedded override val wateringAlarm: AlarmData,
     override val pictureUri: Uri?,
     override val memo: String?
-) : Plant
+) : Plant {
+
+    constructor(plant: Plant) : this(
+        name = plant.name,
+        createdDate = plant.createdDate,
+        waterPeriod = plant.waterPeriod,
+        lastWateringDate = plant.lastWateringDate,
+        wateringAlarm = AlarmData(plant.wateringAlarm),
+        pictureUri = plant.pictureUri,
+        memo = plant.memo
+    )
+}

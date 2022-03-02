@@ -12,15 +12,15 @@ class RecordRepositoryImpl @Inject constructor(
     private val recordDao: RecordDao
 ) : RecordRepository {
     override suspend fun addRecord(record: Record) {
-        recordDao.insertRecord(record as RecordData)
+        recordDao.insertRecord(RecordData(record))
     }
 
     override suspend fun updateRecord(record: Record) {
-        recordDao.updateRecord(record as RecordData)
+        recordDao.updateRecord(RecordData(record))
     }
 
     override suspend fun deleteRecord(record: Record) {
-        recordDao.deleteRecord(record as RecordData)
+        recordDao.deleteRecord(RecordData(record))
     }
 
     override fun observeRecordsByPlantId(plantId: Int): LiveData<List<Record>> {

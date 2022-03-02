@@ -21,6 +21,7 @@ object Versions {
 
     const val ROOM = "2.4.1"
     const val TIMBER = "5.0.1"
+    const val GLIDE = "4.13.0"
 }
 
 object Libraries {
@@ -42,6 +43,8 @@ object Ui {
     const val CONSTRAINT_LAYOUT =
         "androidx.constraintlayout:constraintlayout:${Versions.CONSTRAINT_LAYOUT}"
     const val SWITCH_BUTTON = "com.github.zcweng:switch-button:${Versions.SWITCH_BUTTON}"
+    const val GLIDE = "com.github.bumptech.glide:glide:${Versions.GLIDE}"
+    const val GLIDE_COMPILER = "com.github.bumptech.glide:compiler:${Versions.GLIDE}"
 }
 
 object Di {
