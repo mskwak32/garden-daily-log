@@ -1,5 +1,6 @@
 package com.mskwak.presentation.home
 
+import android.annotation.SuppressLint
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
@@ -8,11 +9,14 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import com.mskwak.domain.model.Plant
 import com.mskwak.domain.usecase.PlantListSortOrder
 import com.mskwak.presentation.R
 import com.mskwak.presentation.base.BaseFragment
 import com.mskwak.presentation.custom_component.ListItemDecoration
 import com.mskwak.presentation.databinding.FragmentHomeBinding
+import com.mskwak.presentation.dialog.DeletePlantConfirmDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,10 +28,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun initView() {
         binding?.viewModel = viewModel
         binding?.plantListView?.adapter = adapter
-        val dividerHeight =
-            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics)
-                .toInt()
-        binding?.plantListView?.addItemDecoration(ListItemDecoration(dividerHeight))
+
+        initRecyclerView()
         initSortSpinner()
     }
 
@@ -44,6 +46,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
         viewModel.addPlantClickEvent.observe(viewLifecycleOwner) {
             navigateAddPlant()
+        }
+        viewModel.deletePlantClickEvent.observe(viewLifecycleOwner) {
+            openDeleteConfirm(it)
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun initRecyclerView() {
+        val dividerHeight =
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics)
+                .toInt()
+        val swipeHelperCallback = SwipeHelperCallback().apply { setClamp(200f) }
+        val itemTouchHelper = ItemTouchHelper(swipeHelperCallback)
+        itemTouchHelper.attachToRecyclerView(binding?.plantListView)
+        binding?.plantListView?.apply {
+            addItemDecoration(ListItemDecoration(dividerHeight))
+            setOnTouchListener { _, _ ->
+                swipeHelperCallback.removePreviousClamp(this)
+                false
+            }
         }
     }
 
@@ -90,6 +112,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun openPlantDetail(plantId: Int) {
+        //TODO
+    }
 
+    private fun openDeleteConfirm(plant: Plant) {
+        DeletePlantConfirmDialog().apply {
+            deleteClickListener = {
+                viewModel.deletePlant(plant)
+            }
+        }.show(childFragmentManager, null)
     }
 }

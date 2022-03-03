@@ -37,6 +37,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:${Versions.ESPRESSO}")
 
     implementation(Libraries.LOGGER)
+    implementation(Libraries.TIMBER)
     implementation(Ui.GLIDE)
     kapt(Ui.GLIDE_COMPILER)
 }

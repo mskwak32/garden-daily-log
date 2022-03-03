@@ -14,6 +14,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
+        <item name="bottomSheetDialogTheme">@style/bottomSheetDialog</item>
     </style>
 
     <style name="roundedCorner">
@@ -29,5 +30,21 @@
         <item name="android:dropDownVerticalOffset">36dp</item>
         <item name="android:spinnerMode">dropdown</item>
         <item name="android:popupBackground">@drawable/spinner_dropdown_popup_bg</item>
+    </style>
+
+    <style name="bottomSheetDialog" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/bottomSheetStyle</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:colorBackground">@color/bgray_10</item>
+    </style>
+
+    <style name="bottomSheetStyle" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearanceOverlay">@style/bottomSheetShapeAppearance</item>
+    </style>
+
+    <style name="bottomSheetShapeAppearance" parent="Widget.Material3.BottomSheet">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeTopRight">16dp</item>
     </style>
 </resources>

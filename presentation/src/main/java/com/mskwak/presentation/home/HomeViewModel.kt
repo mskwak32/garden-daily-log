@@ -6,10 +6,10 @@ import com.mskwak.domain.usecase.GardenUseCase
 import com.mskwak.domain.usecase.PlantListSortOrder
 import com.mskwak.presentation.model.PlantImpl
 import com.mskwak.presentation.util.SingleLiveEvent
-import com.orhanobut.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,10 +25,12 @@ class HomeViewModel @Inject constructor(
     val openPlantEvent: LiveData<Int> = _openPlantEvent
     private val _addPlantClickEvent = SingleLiveEvent<Unit>()
     val addPlantClickEvent: LiveData<Unit> = _addPlantClickEvent
+    private val _deletePlantClickEvent = SingleLiveEvent<Plant>()
+    val deletePlantClickEvent: LiveData<Plant> = _deletePlantClickEvent
 
     var plants: LiveData<List<Plant>> = _sortOrder.switchMap { sortOrder ->
         useCase.getPlantsWithSortOrder(sortOrder).map {
-            Logger.d("plantList refresh: size = ${it.size} sort = ${sortOrder.name}")
+            Timber.d("plantList refresh: size = ${it.size} sort = ${sortOrder.name}")
             _isEmptyList.value = it.isNullOrEmpty()
             it.map { plant -> PlantImpl(plant) }
         }
@@ -51,6 +53,10 @@ class HomeViewModel @Inject constructor(
 
     fun onAddPlantClick() {
         _addPlantClickEvent.call()
+    }
+
+    fun onDeletePlantClick(plant: Plant) {
+        _deletePlantClickEvent.value = plant
     }
 
     fun getRemainWateringDate(plant: Plant, result: (days: Int) -> Unit) {

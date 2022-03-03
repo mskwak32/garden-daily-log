@@ -22,10 +22,13 @@
     <color name="bgray_50">#dbdfe6</color>
     <color name="bgray_25">#ebecf0</color>
     <color name="bgray_10">#f4f5f7</color>
+    <color name="bgray_5">#fbfbfb</color>
 
     <color name="dim_black_70">#b3000000</color>
     <color name="dim_black_45">#73000000</color>
+    <color name="dim_bgray_10_85">#d9f4f5f7</color>
 
     <color name="red_300">#fb7c6b</color>
+    <color name="red_400">#f76d64</color>
     <color name="red_600">#f1524c</color>
 </resources>

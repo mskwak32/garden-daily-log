@@ -20,6 +20,7 @@ data class PlantData(
 ) : Plant {
 
     constructor(plant: Plant) : this(
+        id = plant.id,
         name = plant.name,
         createdDate = plant.createdDate,
         waterPeriod = plant.waterPeriod,

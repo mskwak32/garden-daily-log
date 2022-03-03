@@ -14,73 +14,97 @@
             type="com.mskwak.domain.model.Plant" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/round_card_background"
-        android:onClick="@{() -> viewModel.openPlant(plant)}"
-        android:padding="8dp"
-        tools:ignore="SpUsage">
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/picture"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="8dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/roundedCorner"
-            tools:src="@drawable/plant_default" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/plant_card_delete_bg"
+            android:gravity="right|center_vertical">
 
-        <TextView
-            android:id="@+id/d_dayCount"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="D-00" />
+            <TextView
+                android:id="@+id/delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:onClick="@{() -> viewModel.onDeletePlantClick(plant)}"
+                android:text="@string/delete"
+                android:textColor="@color/bgray_10"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/waterIcon"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginRight="4dp"
-            android:background="@drawable/ic_water_drop_blue"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/d_dayCount"
-            app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/plantName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@{plant.name}"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toRightOf="@id/picture"
-            app:layout_constraintRight_toLeftOf="@id/waterIcon"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="plant name" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/plant_card_bg"
+            android:onClick="@{() -> viewModel.openPlant(plant)}"
+            android:padding="8dp"
+            tools:ignore="SpUsage">
 
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="@id/plantName"
-            app:localDate="@{plant.createdDate}"
-            tools:text="2022.02.22" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/picture"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="8dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/roundedCorner"
+                tools:src="@drawable/plant_default" />
+
+            <TextView
+                android:id="@+id/d_dayCount"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="D-00" />
+
+            <ImageView
+                android:id="@+id/waterIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="4dp"
+                android:background="@drawable/ic_water_drop_blue"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/d_dayCount"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/plantName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{plant.name}"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toRightOf="@id/picture"
+                app:layout_constraintRight_toLeftOf="@id/waterIcon"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="plant name" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/plantName"
+                app:localDate="@{plant.createdDate}"
+                tools:text="2022.02.22" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 </layout>

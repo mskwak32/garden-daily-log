@@ -21,6 +21,7 @@ object Versions {
     const val ROOM = "2.4.1"
     const val GLIDE = "4.13.0"
     const val DATASTORE = "1.0.0"
+    const val TIMBER = "5.0.1"
     const val LOGGER = "2.2.0"
 }
 
@@ -36,6 +37,7 @@ object Libraries {
     const val NAVIGATION_UI = "androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATION_KTX}"
     const val GSON = "com.google.code.gson:gson:${Versions.GSON}"
     const val LOGGER = "com.orhanobut:logger:${Versions.LOGGER}"
+    const val TIMBER = "com.jakewharton.timber:timber:${Versions.TIMBER}"
     const val DATASTORE = "androidx.datastore:datastore:${Versions.DATASTORE}"
 }
 

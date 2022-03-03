@@ -27,6 +27,7 @@ data class RecordData(
     override val createdTime: LocalDateTime
 ) : Record {
     constructor(record: Record) : this(
+        id = record.id,
         plantId = record.plantId,
         memo = record.memo,
         pictureList = record.pictureList,

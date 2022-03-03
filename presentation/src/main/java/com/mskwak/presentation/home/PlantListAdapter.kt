@@ -13,6 +13,7 @@ import com.mskwak.presentation.model.PlantImpl
 
 class PlantListAdapter(private val viewModel: HomeViewModel) :
     ListAdapter<Plant, PlantListAdapter.ViewHolder>(PlantDiffCallback()) {
+    private var deleteItemListener: ((plant: Plant) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -22,16 +23,22 @@ class PlantListAdapter(private val viewModel: HomeViewModel) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(viewModel, item)
+        holder.bind(item)
     }
 
 
-    class ViewHolder(private val binding: LayoutItemPlantBinding) :
+    inner class ViewHolder(private val binding: LayoutItemPlantBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: HomeViewModel, plant: Plant) {
+        init {
+//            binding.delete.setOnClickListener {
+//                deleteItemListener?.invoke(getItem(adapterPosition))
+//            }
+            binding.viewModel = viewModel
+        }
+
+        fun bind(plant: Plant) {
             binding.apply {
-                this.viewModel = viewModel
                 this.plant = plant
             }
             setPlantImage(plant)

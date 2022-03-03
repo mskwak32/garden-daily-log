@@ -29,4 +29,5 @@ dependencies {
     kapt(Room.ROOM_COMPILER)
     implementation(Room.ROOM_KTX)
     implementation(Libraries.LOGGER)
+    implementation(Libraries.TIMBER)
 }
