@@ -42,9 +42,14 @@
         <item name="shapeAppearanceOverlay">@style/bottomSheetShapeAppearance</item>
     </style>
 
-    <style name="bottomSheetShapeAppearance" parent="Widget.Material3.BottomSheet">
+    <style name="bottomSheetShapeAppearance">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopLeft">16dp</item>
         <item name="cornerSizeTopRight">16dp</item>
+    </style>
+
+    <style name="WrapContentDialog" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="windowMinWidthMajor">0%</item>
+        <item name="windowMinWidthMinor">0%</item>
     </style>
 </resources>

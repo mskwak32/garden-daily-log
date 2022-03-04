@@ -52,11 +52,13 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="8dp"
                 android:scaleType="centerCrop"
+                android:src="@drawable/plant_default"
+                app:asThumbnail="@{true}"
+                app:imageUri="@{plant.pictureUri}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/roundedCorner"
-                tools:src="@drawable/plant_default" />
+                app:shapeAppearanceOverlay="@style/roundedCorner" />
 
             <TextView
                 android:id="@+id/d_dayCount"

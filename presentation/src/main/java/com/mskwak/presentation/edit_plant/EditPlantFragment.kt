@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.mskwak.presentation.R
 import com.mskwak.presentation.base.BaseFragment
 import com.mskwak.presentation.databinding.FragmentEditPlantBinding
+import com.mskwak.presentation.dialog.SelectPhotoDialog
 import com.mskwak.presentation.dialog.WateringPeriodDialog
 import com.mskwak.presentation.util.setupSnackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,7 +55,12 @@ class EditPlantFragment : BaseFragment<FragmentEditPlantBinding>() {
     }
 
     private fun openPhotoSelect() {
-
+        SelectPhotoDialog().apply {
+            imageBitmapListener = { bitmap ->
+                binding?.picture?.setImageBitmap(bitmap)
+                viewModel.setNewPicture(bitmap)
+            }
+        }.show(childFragmentManager, null)
     }
 
     private fun openPlantDateDialog() {

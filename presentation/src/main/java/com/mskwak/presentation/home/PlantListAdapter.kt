@@ -6,14 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mskwak.domain.model.Plant
-import com.mskwak.presentation.GlideApp
-import com.mskwak.presentation.R
 import com.mskwak.presentation.databinding.LayoutItemPlantBinding
 import com.mskwak.presentation.model.PlantImpl
 
 class PlantListAdapter(private val viewModel: HomeViewModel) :
     ListAdapter<Plant, PlantListAdapter.ViewHolder>(PlantDiffCallback()) {
-    private var deleteItemListener: ((plant: Plant) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -31,9 +28,6 @@ class PlantListAdapter(private val viewModel: HomeViewModel) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
-//            binding.delete.setOnClickListener {
-//                deleteItemListener?.invoke(getItem(adapterPosition))
-//            }
             binding.viewModel = viewModel
         }
 
@@ -41,17 +35,7 @@ class PlantListAdapter(private val viewModel: HomeViewModel) :
             binding.apply {
                 this.plant = plant
             }
-            setPlantImage(plant)
             setDday(viewModel, plant)
-        }
-
-        private fun setPlantImage(plant: Plant) {
-            if (plant.pictureUri == null) {
-                GlideApp.with(itemView)
-                    .load(R.drawable.ic_flower_pot)
-                    .centerCrop()
-                    .into(binding.picture)
-            }
         }
 
         private fun setDday(viewModel: HomeViewModel, plant: Plant) {

@@ -21,14 +21,19 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="40dp">
+                android:paddingLeft="16dp"
+                android:paddingTop="40dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="40dp">
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/photo"
+                    android:id="@+id/picture"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:onClick="@{() -> viewModel.onPhotoClick()}"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/add_photo"
+                    app:imageUri="@{viewModel.pictureUri}"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -42,7 +47,7 @@
                     app:fieldEmpty="@{viewModel.plantNameEmpty}"
                     app:iconRes="@drawable/ic_label_black"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/photo"
+                    app:layout_constraintTop_toBottomOf="@id/picture"
                     app:required="true"
                     app:text="@string/plant_name" />
 

@@ -2,6 +2,7 @@ package com.mskwak.gardendailylog.di
 
 import android.app.Application
 import androidx.room.Room
+import com.mskwak.data.source.FileDataSource
 import com.mskwak.data.source.GardenDatabase
 import com.mskwak.data.source.PlantDao
 import com.mskwak.data.source.RecordDao
@@ -31,5 +32,12 @@ class DataSourceModule {
     @Singleton
     fun providesRecordDao(db: GardenDatabase): RecordDao {
         return db.recordDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFileDataSource(application: Application): FileDataSource {
+        val baseDir = application.filesDir
+        return FileDataSource(baseDir)
     }
 }

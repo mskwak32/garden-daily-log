@@ -1,5 +1,7 @@
 package com.mskwak.presentation.edit_plant
 
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +12,7 @@ import com.mskwak.presentation.model.AlarmImpl
 import com.mskwak.presentation.model.PlantImpl
 import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
 import javax.inject.Inject
@@ -26,6 +29,9 @@ class EditPlantViewModel @Inject constructor(
     val wateringAlarmClickEvent = SingleLiveEvent<Unit>()
     val onSavedEvent = SingleLiveEvent<Unit>()
 
+    private val _pictureUri = MutableLiveData<Uri>()
+    val pictureUri: LiveData<Uri> = _pictureUri
+    private var newPictureBitmap: Bitmap? = null
     val plantName = MutableLiveData<String>()
     private val _plantNameEmpty = MutableLiveData(false)
     val plantNameEmpty: LiveData<Boolean> = _plantNameEmpty
@@ -75,31 +81,38 @@ class EditPlantViewModel @Inject constructor(
             return
         }
 
-        val alarm = AlarmImpl(wateringAlarmTime.value!!, wateringAlarmOnOff.value!!)
-        val plant = PlantImpl(
-            plantName.value!!,
-            plantDate.value!!,
-            wateringPeriod.value!!,
-            lastWateringDate.value!!,
-            alarm,
-            null,
-            memo.value
-        )
-        if (isUpdatePlant) {
-            plant.id = plantId
-            useCase.updatePlant(plant, viewModelScope) {
-                onSavedEvent.call()
+        viewModelScope.launch {
+            //사진 저장 후 uri받아오기
+            val pictureUri = newPictureBitmap?.let {
+                useCase.savePicture(it)
             }
-        } else {
-            useCase.addPlant(plant, viewModelScope) {
-                onSavedEvent.call()
+
+            val alarm = AlarmImpl(wateringAlarmTime.value!!, wateringAlarmOnOff.value!!)
+            val plant = PlantImpl(
+                plantName.value!!,
+                plantDate.value!!,
+                wateringPeriod.value!!,
+                lastWateringDate.value!!,
+                alarm,
+                pictureUri,
+                memo.value
+            )
+            if (isUpdatePlant) {
+                plant.id = plantId
+                //delete old picture
+                this@EditPlantViewModel.pictureUri.value?.let { useCase.deletePicture(it) }
+                useCase.updatePlant(plant)
+            } else {
+                useCase.addPlant(plant)
             }
+            onSavedEvent.call()
         }
     }
 
     fun loadPlant(plantId: Int) {
         useCase.getPlant(plantId, viewModelScope) { plant ->
             this.plantId = plant.id
+            _pictureUri.value = plant.pictureUri
             plantName.value = plant.name
             plantDate.value = plant.createdDate
             memo.value = plant.memo
@@ -111,5 +124,8 @@ class EditPlantViewModel @Inject constructor(
         }
     }
 
+    fun setNewPicture(bitmap: Bitmap) {
+        newPictureBitmap = bitmap
+    }
 
 }

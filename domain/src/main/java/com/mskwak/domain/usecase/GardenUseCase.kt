@@ -1,5 +1,7 @@
 package com.mskwak.domain.usecase
 
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
@@ -14,7 +16,8 @@ import java.time.temporal.ChronoUnit
 
 class GardenUseCase(
     private val plantRepository: PlantRepository,
-    private val recordRepository: RecordRepository
+    private val recordRepository: RecordRepository,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
     fun getPlantsWithSortOrder(sortOrder: PlantListSortOrder): LiveData<List<Plant>> {
@@ -49,34 +52,23 @@ class GardenUseCase(
 
     fun getPlant(plantId: Int, scope: CoroutineScope, onComplete: (plant: Plant) -> Unit) {
         scope.launch {
-            val deferred = async(Dispatchers.IO) {
+            val deferred = async(ioDispatcher) {
                 plantRepository.getPlant(plantId)
             }
             onComplete(deferred.await())
         }
     }
 
-    fun addPlant(plant: Plant, scope: CoroutineScope, onComplete: () -> Unit) {
-        CoroutineScope(Dispatchers.IO).launch {
-            plantRepository.addPlant(plant)
-            scope.launch {
-                onComplete.invoke()
-            }
-        }
+    suspend fun addPlant(plant: Plant) = withContext(ioDispatcher) {
+        plantRepository.addPlant(plant)
     }
 
-    fun updatePlant(plant: Plant, scope: CoroutineScope, onComplete: () -> Unit) {
-        scope.launch {
-            val deferred = async(Dispatchers.IO) {
-                plantRepository.updatePlant(plant)
-            }
-            deferred.await()
-            onComplete.invoke()
-        }
+    suspend fun updatePlant(plant: Plant) = withContext(ioDispatcher) {
+        plantRepository.updatePlant(plant)
     }
 
     fun deletePlant(plant: Plant) {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(ioDispatcher).launch {
             plantRepository.deletePlant(plant)
         }
     }
@@ -86,14 +78,14 @@ class GardenUseCase(
     }
 
     fun addRecord(record: Record) {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(ioDispatcher).launch {
             recordRepository.addRecord(record)
         }
     }
 
     fun updateRecord(record: Record, scope: CoroutineScope, onComplete: () -> Unit) {
         scope.launch {
-            val deferred = async(Dispatchers.IO) {
+            val deferred = async(ioDispatcher) {
                 recordRepository.updateRecord(record)
             }
             deferred.await()
@@ -103,7 +95,7 @@ class GardenUseCase(
 
     fun deleteRecord(record: Record, scope: CoroutineScope, onComplete: () -> Unit) {
         scope.launch {
-            val deferred = async(Dispatchers.IO) {
+            val deferred = async(ioDispatcher) {
                 recordRepository.deleteRecord(record)
             }
             deferred.await()
@@ -141,6 +133,16 @@ class GardenUseCase(
         }
 
         return Period.between(plantDate, today)
+    }
+
+    suspend fun savePicture(bitmap: Bitmap): Uri = withContext(ioDispatcher) {
+        plantRepository.savePlantPicture(bitmap)
+    }
+
+    fun deletePicture(uri: Uri) {
+        CoroutineScope(ioDispatcher).launch {
+            plantRepository.deletePlantPicture(uri)
+        }
     }
 
 }
