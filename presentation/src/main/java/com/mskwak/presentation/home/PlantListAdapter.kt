@@ -14,7 +14,9 @@ class PlantListAdapter(private val viewModel: HomeViewModel) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = LayoutItemPlantBinding.inflate(inflater, parent, false)
+        val binding = LayoutItemPlantBinding.inflate(inflater, parent, false).apply {
+            this.viewModel = this@PlantListAdapter.viewModel
+        }
         return ViewHolder(binding)
     }
 
@@ -24,24 +26,19 @@ class PlantListAdapter(private val viewModel: HomeViewModel) :
     }
 
 
-    inner class ViewHolder(private val binding: LayoutItemPlantBinding) :
+    class ViewHolder(private val binding: LayoutItemPlantBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        init {
-            binding.viewModel = viewModel
-        }
 
         fun bind(plant: Plant) {
             binding.apply {
                 this.plant = plant
             }
-            setDday(viewModel, plant)
+            setDday(plant)
         }
 
-        private fun setDday(viewModel: HomeViewModel, plant: Plant) {
-            viewModel.getRemainWateringDate(plant) { days ->
-                binding.dDayCount.text = String.format("D-%02d", days)
-            }
+        private fun setDday(plant: Plant) {
+            val days = binding.viewModel?.getRemainWateringDate(plant)
+            binding.dDayCount.text = String.format("D-%02d", days)
         }
     }
 }

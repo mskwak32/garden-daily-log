@@ -7,8 +7,6 @@ import com.mskwak.domain.usecase.PlantListSortOrder
 import com.mskwak.presentation.model.PlantImpl
 import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -59,9 +57,7 @@ class HomeViewModel @Inject constructor(
         _deletePlantClickEvent.value = plant
     }
 
-    fun getRemainWateringDate(plant: Plant, result: (days: Int) -> Unit) {
-        viewModelScope.launch(Dispatchers.Default) {
-            result.invoke(useCase.getRemainWateringDate(plant))
-        }
+    fun getRemainWateringDate(plant: Plant): Int {
+        return useCase.getRemainWateringDate(plant)
     }
 }
