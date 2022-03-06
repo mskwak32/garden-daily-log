@@ -31,4 +31,6 @@
     <color name="red_300">#fb7c6b</color>
     <color name="red_400">#f76d64</color>
     <color name="red_600">#f1524c</color>
+
+    <color name="blue_500">#4196ff</color>
 </resources>

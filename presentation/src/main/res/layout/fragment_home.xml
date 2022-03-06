@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:onClick="@{() -> viewModel.onAddPlantClick()}"
-                android:text="@string/add_plant" />
+                android:text="@string/new_plant" />
 
         </LinearLayout>
 

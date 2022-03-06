@@ -112,7 +112,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun openPlantDetail(plantId: Int) {
-        //TODO
+        val action = HomeFragmentDirections.actionHomeFragmentDestToPlantDetailDest(0)
+        findNavController().navigate(action)
     }
 
     private fun openDeleteConfirm(plant: Plant) {
