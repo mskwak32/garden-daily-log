@@ -21,8 +21,6 @@ class HomeViewModel @Inject constructor(
 
     private val _openPlantEvent = SingleLiveEvent<Int>()
     val openPlantEvent: LiveData<Int> = _openPlantEvent
-    private val _addPlantClickEvent = SingleLiveEvent<Unit>()
-    val addPlantClickEvent: LiveData<Unit> = _addPlantClickEvent
     private val _deletePlantClickEvent = SingleLiveEvent<Plant>()
     val deletePlantClickEvent: LiveData<Plant> = _deletePlantClickEvent
 
@@ -45,16 +43,12 @@ class HomeViewModel @Inject constructor(
         _openPlantEvent.value = plant.id
     }
 
-    fun deletePlant(plant: Plant) {
-        useCase.deletePlant(plant)
-    }
-
-    fun onAddPlantClick() {
-        _addPlantClickEvent.call()
-    }
-
     fun onDeletePlantClick(plant: Plant) {
         _deletePlantClickEvent.value = plant
+    }
+
+    fun deletePlant(plant: Plant) {
+        useCase.deletePlant(plant)
     }
 
     fun getDdays(plant: Plant): String {

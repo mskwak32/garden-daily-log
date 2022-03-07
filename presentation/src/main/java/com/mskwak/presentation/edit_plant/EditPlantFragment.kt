@@ -24,29 +24,15 @@ class EditPlantFragment : BaseFragment<FragmentEditPlantBinding>() {
 
     override fun initView() {
         binding?.viewModel = viewModel
+        binding?.fragment = this
     }
 
     override fun initialize() {
         args.plantId?.let {
             viewModel.loadPlant(it.toInt())
         }
-        viewModel.photoClickEvent.observe(viewLifecycleOwner) {
-            openPhotoSelect()
-        }
-        viewModel.plantDateClickEvent.observe(viewLifecycleOwner) {
-            openPlantDateDialog()
-        }
-        viewModel.lastWateringClickEvent.observe(viewLifecycleOwner) {
-            openLastWateringDialog()
-        }
-        viewModel.wateringPeriodClickEvent.observe(viewLifecycleOwner) {
-            openWateringPeriodDialog()
-        }
         viewModel.wateringAlarmOnOff.observe(viewLifecycleOwner) {
             binding?.wateringAlarmSwitch?.isChecked = it
-        }
-        viewModel.wateringAlarmClickEvent.observe(viewLifecycleOwner) {
-            openWateringAlarmDialog()
         }
         viewModel.onSavedEvent.observe(viewLifecycleOwner) {
             findNavController().popBackStack()
@@ -54,7 +40,7 @@ class EditPlantFragment : BaseFragment<FragmentEditPlantBinding>() {
         view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarMessage, Snackbar.LENGTH_SHORT)
     }
 
-    private fun openPhotoSelect() {
+    fun onPhotoClick() {
         SelectPhotoDialog().apply {
             imageBitmapListener = { bitmap ->
                 binding?.picture?.setImageBitmap(bitmap)
@@ -63,7 +49,7 @@ class EditPlantFragment : BaseFragment<FragmentEditPlantBinding>() {
         }.show(childFragmentManager, null)
     }
 
-    private fun openPlantDateDialog() {
+    fun onPlantDateClick() {
         val listener = DatePickerDialog.OnDateSetListener { _, y, m, d ->
             val date = LocalDate.of(y, m.plus(1), d)
             viewModel.plantDate.value = date
@@ -71,7 +57,7 @@ class EditPlantFragment : BaseFragment<FragmentEditPlantBinding>() {
         openDatePicker(viewModel.plantDate.value!!, listener)
     }
 
-    private fun openLastWateringDialog() {
+    fun onLastWateringDateClick() {
         val listener = DatePickerDialog.OnDateSetListener { _, y, m, d ->
             val date = LocalDate.of(y, m.plus(1), d)
             viewModel.lastWateringDate.value = date
@@ -79,7 +65,7 @@ class EditPlantFragment : BaseFragment<FragmentEditPlantBinding>() {
         openDatePicker(viewModel.lastWateringDate.value!!, listener)
     }
 
-    private fun openWateringPeriodDialog() {
+    fun onWateringPeriodClick() {
         WateringPeriodDialog.Builder()
             .setInitialDays(viewModel.wateringPeriod.value!!)
             .setOnCompleteListener { days ->
@@ -87,7 +73,7 @@ class EditPlantFragment : BaseFragment<FragmentEditPlantBinding>() {
             }.show(childFragmentManager)
     }
 
-    private fun openWateringAlarmDialog() {
+    fun onWateringAlarmClick() {
         val listener = TimePickerDialog.OnTimeSetListener { _, h, m ->
             val time = LocalTime.of(h, m)
             viewModel.wateringAlarmTime.value = time

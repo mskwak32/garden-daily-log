@@ -27,6 +27,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun initView() {
         binding?.viewModel = viewModel
+        binding?.fragment = this
         binding?.plantListView?.adapter = adapter
 
         initRecyclerView()
@@ -34,18 +35,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     override fun initialize() {
-        initObserver()
-    }
-
-    private fun initObserver() {
         viewModel.plants.observe(viewLifecycleOwner) { plants ->
             adapter.submitList(plants)
         }
         viewModel.openPlantEvent.observe(viewLifecycleOwner) {
             openPlantDetail(it)
-        }
-        viewModel.addPlantClickEvent.observe(viewLifecycleOwner) {
-            navigateAddPlant()
         }
         viewModel.deletePlantClickEvent.observe(viewLifecycleOwner) {
             openDeleteConfirm(it)
@@ -106,13 +100,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-    private fun navigateAddPlant() {
-        val action = HomeFragmentDirections.actionHomeFragmentDestToEditPlantFragmentDest(null)
+    private fun openPlantDetail(plantId: Int) {
+        val action = HomeFragmentDirections.actionHomeFragmentDestToPlantDetailDest(plantId)
         findNavController().navigate(action)
     }
 
-    private fun openPlantDetail(plantId: Int) {
-        val action = HomeFragmentDirections.actionHomeFragmentDestToPlantDetailDest(plantId)
+    fun onAddPlantClick() {
+        val action = HomeFragmentDirections.actionHomeFragmentDestToEditPlantFragmentDest(null)
         findNavController().navigate(action)
     }
 

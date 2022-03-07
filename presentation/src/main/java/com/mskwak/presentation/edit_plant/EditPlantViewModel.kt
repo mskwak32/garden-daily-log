@@ -22,26 +22,25 @@ class EditPlantViewModel @Inject constructor(
     private val useCase: GardenUseCase
 ) : ViewModel() {
 
-    val photoClickEvent = SingleLiveEvent<Unit>()
-    val plantDateClickEvent = SingleLiveEvent<Unit>()
-    val lastWateringClickEvent = SingleLiveEvent<Unit>()
-    val wateringPeriodClickEvent = SingleLiveEvent<Unit>()
-    val wateringAlarmClickEvent = SingleLiveEvent<Unit>()
     val onSavedEvent = SingleLiveEvent<Unit>()
 
     private val _pictureUri = MutableLiveData<Uri>()
     val pictureUri: LiveData<Uri> = _pictureUri
+
     private var newPictureBitmap: Bitmap? = null
     val plantName = MutableLiveData<String>()
+
     private val _plantNameEmpty = MutableLiveData(false)
     val plantNameEmpty: LiveData<Boolean> = _plantNameEmpty
+
     val plantDate = MutableLiveData(LocalDate.now())
     val memo = MutableLiveData<String>()
-
     val lastWateringDate = MutableLiveData(LocalDate.now())
     val wateringPeriod = MutableLiveData(1)
+
     private val _wateringAlarmOnOff = MutableLiveData(false)
     val wateringAlarmOnOff: LiveData<Boolean> = _wateringAlarmOnOff
+
     val wateringAlarmTime = MutableLiveData(LocalTime.of(9, 0))
 
     private val _snackbarMessage = SingleLiveEvent<Int>()
@@ -49,26 +48,6 @@ class EditPlantViewModel @Inject constructor(
 
     private var isUpdatePlant = false
     private var plantId = 0
-
-    fun onPhotoClick() {
-        photoClickEvent.call()
-    }
-
-    fun onPlantDateClick() {
-        plantDateClickEvent.call()
-    }
-
-    fun onLastWateringDateClick() {
-        lastWateringClickEvent.call()
-    }
-
-    fun onWateringPeriodClick() {
-        wateringPeriodClickEvent.call()
-    }
-
-    fun onWateringAlarmClick() {
-        wateringAlarmClickEvent.call()
-    }
 
     fun onWateringAlarmOnOffClick() {
         _wateringAlarmOnOff.value = !wateringAlarmOnOff.value!!
