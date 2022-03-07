@@ -112,7 +112,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun openPlantDetail(plantId: Int) {
-        val action = HomeFragmentDirections.actionHomeFragmentDestToPlantDetailDest(0)
+        val action = HomeFragmentDirections.actionHomeFragmentDestToPlantDetailDest(plantId)
         findNavController().navigate(action)
     }
 

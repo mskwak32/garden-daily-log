@@ -18,9 +18,7 @@
 
         <action
             android:id="@+id/action_homeFragmentDest_to_plantDetailDest"
-            app:destination="@id/plantDetailDialogDest"
-            app:enterAnim="@anim/from_bottom"
-            app:popExitAnim="@anim/to_bottom"/>
+            app:destination="@id/plantDetailDialogDest" />
 
     </fragment>
 
@@ -42,7 +40,7 @@
 
         <argument
             android:name="plantId"
-            app:argType="integer"/>
+            app:argType="integer" />
 
     </dialog>
 

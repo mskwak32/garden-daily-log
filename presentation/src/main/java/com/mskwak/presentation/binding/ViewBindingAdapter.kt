@@ -52,10 +52,12 @@ fun ImageView.setUri(uri: Uri?, asThumbnail: Boolean = false) {
             GlideApp.with(this)
                 .load(File(uri.path!!))
                 .override(100)
+                .centerCrop()
                 .into(this)
         } else {
             GlideApp.with(this)
                 .load(File(uri.path!!))
+                .centerCrop()
                 .into(this)
         }
     }

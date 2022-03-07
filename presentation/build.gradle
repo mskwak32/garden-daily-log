@@ -15,7 +15,6 @@ dependencies {
     implementation(Libraries.APP_COMPAT)
     implementation(Ui.MATERIAL)
     implementation(Ui.CONSTRAINT_LAYOUT)
-    implementation(Ui.SWITCH_BUTTON)
 
     implementation(Libraries.LIFECYCLE_VIEWMODEL)
     implementation(Libraries.LIFECYCLE_LIVEDATA)

@@ -5,9 +5,15 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.mskwak.presentation.detail.PlantDetailViewModel" />
+
+        <variable
+            name="dialog"
+            type="com.mskwak.presentation.detail.PlantDetailDialog" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -26,6 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
+                app:collapsedTitleGravity="center"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 tools:titleEnabled="false">
 
@@ -36,8 +43,9 @@
                     <ImageView
                         android:id="@+id/picture"
                         android:layout_width="match_parent"
-                        android:layout_height="320dp"
-                        android:background="@color/red_300"
+                        android:layout_height="300dp"
+                        android:background="@color/green_300"
+                        android:src="@drawable/ic_flower_pot"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <com.google.android.material.imageview.ShapeableImageView
@@ -45,7 +53,7 @@
                         android:layout_height="40dp"
                         android:background="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:shapeAppearanceOverlay="@style/plantDetailAppbarBottom" />
+                        app:shapeAppearanceOverlay="@style/plantDetailAppbarBottomDeco" />
 
                     <LinearLayout
                         android:id="@+id/plantBasicLayout"
@@ -53,7 +61,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
                         android:layout_marginRight="30dp"
-                        android:layout_marginBottom="20dp"
                         android:background="@drawable/rectangle_stroke_box_bg"
                         android:orientation="vertical"
                         android:padding="16dp"
@@ -83,8 +90,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
-                    app:menu="@menu/plant_detail_menu"
-                    app:navigationIcon="?attr/homeAsUpIndicator" />
+                    app:popupTheme="@style/popupMenuStyle">
+
+                    <ImageButton
+                        android:id="@+id/backButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_arrow_back_white"
+                        android:contentDescription="@string/cancel"
+                        android:onClick="@{() -> dialog.onBackClick()}" />
+
+                    <ImageButton
+                        android:id="@+id/menuButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/ic_more_horiz_white"
+                        android:contentDescription="@string/menu"
+                        android:onClick="@{() -> dialog.onMenuClick()}" />
+
+                </com.google.android.material.appbar.MaterialToolbar>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -185,14 +211,14 @@
                             tools:text="오전 09:00" />
 
 
-                        <com.suke.widget.SwitchButton
+                        <com.google.android.material.switchmaterial.SwitchMaterial
                             android:id="@+id/wateringAlarmSwitch"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_gravity="end|center_vertical"
+                            android:onClick="@{() -> viewModel.wateringAlarmToggle()}"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:sb_show_indicator="false" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -202,6 +228,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:backgroundTint="@color/blue_500"
+                        android:onClick="@{() -> viewModel.watering()}"
                         android:text="@string/watering"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
@@ -240,9 +267,11 @@
                     app:layout_constraintTop_toBottomOf="@id/memo" />
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/newDiaryButton"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:background="@drawable/rounded_stroke_box_bg"
+                    android:onClick="@{() -> dialog.newDiaryClick()}"
                     android:stateListAnimator="@null"
                     android:text="@string/new_diary"
                     app:layout_constraintBottom_toBottomOf="@id/diaryTitle"
@@ -272,6 +301,7 @@
                         android:background="@drawable/ic_diary" />
 
                     <TextView
+                        android:id="@+id/emptyDiaryText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -282,10 +312,12 @@
 
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/moreDiaryButton"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/rounded_stroke_box_bg"
+                    android:onClick="@{() -> dialog.moreDiaryClick()}"
                     android:stateListAnimator="@null"
                     android:text="@string/view_more"
                     app:layout_constraintLeft_toLeftOf="@id/diaryList"

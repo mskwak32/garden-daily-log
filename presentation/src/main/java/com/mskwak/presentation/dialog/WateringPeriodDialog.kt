@@ -38,6 +38,9 @@ class WateringPeriodDialog private constructor() : DialogFragment() {
             setOnValueChangedListener { _, _, newVal ->
                 days = newVal
             }
+            this.setFormatter {
+                if (it == 0) getString(R.string.none) else it.toString()
+            }
         }
     }
 

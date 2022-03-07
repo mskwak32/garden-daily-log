@@ -37,8 +37,7 @@ class PlantListAdapter(private val viewModel: HomeViewModel) :
         }
 
         private fun setDday(plant: Plant) {
-            val days = binding.viewModel?.getRemainWateringDate(plant)
-            binding.dDayCount.text = String.format("D-%02d", days)
+            binding.dDayCount.text = binding.viewModel?.getDdays(plant) ?: ""
         }
     }
 }

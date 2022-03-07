@@ -31,7 +31,6 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:onClick="@{() -> viewModel.onPhotoClick()}"
-                    android:scaleType="centerCrop"
                     android:src="@drawable/add_photo"
                     app:imageUri="@{viewModel.pictureUri}"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -214,15 +213,14 @@
                     app:localTime="@{viewModel.wateringAlarmTime}"
                     tools:text="오전 9:00" />
 
-                <com.suke.widget.SwitchButton
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/wateringAlarmSwitch"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:onClick="@{() -> viewModel.onWateringAlarmOnOffClick()}"
                     app:layout_constraintBottom_toBottomOf="@id/wateringAlarmTitle"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/wateringAlarmTitle"
-                    app:sb_show_indicator="false" />
+                    app:layout_constraintTop_toTopOf="@id/wateringAlarmTitle" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

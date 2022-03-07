@@ -11,7 +11,6 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 @RunWith(MockitoJUnitRunner::class)
 class UseCaseTest {
@@ -67,7 +66,7 @@ class UseCaseTest {
 
     @Test
     fun getDaysFromPlant_test() {
-        val plantDate = LocalDateTime.now().minusDays(10)
+        val plantDate = LocalDate.now().minusDays(10)
         `when`(plant.createdDate).thenReturn(plantDate)
 
         val days = useCase.getDaysFromPlant(plant)

@@ -52,12 +52,18 @@
         <item name="windowMinWidthMajor">0%</item>
         <item name="windowMinWidthMinor">0%</item>
     </style>
+
     <style name="fullScreenDialog" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowIsFloating">false</item>
     </style>
-    <style name="plantDetailAppbarBottom">
+
+    <style name="plantDetailAppbarBottomDeco">
         <item name="cornerSizeTopLeft">20dp</item>
         <item name="cornerSizeTopRight">20dp</item>
+    </style>
+
+    <style name="popupMenuStyle">
+        <item name="android:popupBackground">@drawable/rectangle_stroke_box_bg</item>
     </style>
 </resources>

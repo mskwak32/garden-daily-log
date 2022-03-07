@@ -44,19 +44,12 @@ class GardenUseCase(
             }
         }
 
-    fun getPlantWithRecords(plantId: Int): Pair<LiveData<Plant>, LiveData<List<Record>>> {
-        val plantLiveData = plantRepository.observePlant(plantId)
-        val recordsLiveData = recordRepository.observeRecordsByPlantId(plantId)
-        return Pair(plantLiveData, recordsLiveData)
+    fun observePlant(plantId: Int): LiveData<Plant> {
+        return plantRepository.observePlant(plantId)
     }
 
-    fun getPlant(plantId: Int, scope: CoroutineScope, onComplete: (plant: Plant) -> Unit) {
-        scope.launch {
-            val deferred = async(ioDispatcher) {
-                plantRepository.getPlant(plantId)
-            }
-            onComplete(deferred.await())
-        }
+    suspend fun getPlant(plantId: Int): Plant = withContext(ioDispatcher) {
+        plantRepository.getPlant(plantId)
     }
 
     suspend fun addPlant(plant: Plant) = withContext(ioDispatcher) {
@@ -75,6 +68,10 @@ class GardenUseCase(
 
     fun getRecords(): LiveData<List<Record>> {
         return recordRepository.observeRecods()
+    }
+
+    fun observeRecordByPlantId(plantId: Int): LiveData<List<Record>> {
+        return recordRepository.observeRecordsByPlantId(plantId)
     }
 
     fun addRecord(record: Record) {
@@ -100,6 +97,18 @@ class GardenUseCase(
             }
             deferred.await()
             onComplete.invoke()
+        }
+    }
+
+    /**
+     * 물주기 주기설정이 없는 경우 마지막 물준날짜로부터 D+00
+     * 물주기 주기설정이 있는 경우 다음 물주기까지 D-00
+     */
+    fun getDdayText(plant: Plant): String {
+        return if (plant.waterPeriod == 0) {
+            String.format("D+%02d", getDaysFromLastWatering(plant))
+        } else {
+            String.format("D-%02d", getRemainWateringDate(plant))
         }
     }
 
@@ -142,6 +151,17 @@ class GardenUseCase(
     fun deletePicture(uri: Uri) {
         CoroutineScope(ioDispatcher).launch {
             plantRepository.deletePlantPicture(uri)
+        }
+    }
+
+    suspend fun wateringNow(plantId: Int) = withContext(ioDispatcher) {
+        val date = LocalDate.now()
+        plantRepository.updateLastWateringDate(date, plantId)
+    }
+
+    fun updateWateringAlarmOnOff(isActive: Boolean, plantId: Int) {
+        CoroutineScope(ioDispatcher).launch {
+            plantRepository.updateWateringAlarmOnOff(isActive, plantId)
         }
     }
 

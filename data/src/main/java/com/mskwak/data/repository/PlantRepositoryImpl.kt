@@ -10,6 +10,7 @@ import com.mskwak.data.source.PlantDao
 import com.mskwak.domain.model.Plant
 import com.mskwak.domain.repository.PlantRepository
 import com.orhanobut.logger.Logger
+import java.time.LocalDate
 import javax.inject.Inject
 
 class PlantRepositoryImpl @Inject constructor(
@@ -54,6 +55,14 @@ class PlantRepositoryImpl @Inject constructor(
     override suspend fun deletePlantPicture(uri: Uri) {
         fileDataSource.deletePicture(uri)
         Logger.d("delete picture: ${uri.path}")
+    }
+
+    override suspend fun updateLastWateringDate(date: LocalDate, plantId: Int) {
+        plantDao.updateLastWatering(date, plantId)
+    }
+
+    override suspend fun updateWateringAlarmOnOff(isActive: Boolean, plantId: Int) {
+        plantDao.updateWateringAlarmOnOff(isActive, plantId)
     }
 
 }

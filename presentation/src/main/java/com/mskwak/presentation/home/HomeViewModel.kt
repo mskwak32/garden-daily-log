@@ -57,7 +57,7 @@ class HomeViewModel @Inject constructor(
         _deletePlantClickEvent.value = plant
     }
 
-    fun getRemainWateringDate(plant: Plant): Int {
-        return useCase.getRemainWateringDate(plant)
+    fun getDdays(plant: Plant): String {
+        return useCase.getDdayText(plant)
     }
 }

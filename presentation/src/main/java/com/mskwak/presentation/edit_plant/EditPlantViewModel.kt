@@ -110,17 +110,19 @@ class EditPlantViewModel @Inject constructor(
     }
 
     fun loadPlant(plantId: Int) {
-        useCase.getPlant(plantId, viewModelScope) { plant ->
-            this.plantId = plant.id
-            _pictureUri.value = plant.pictureUri
-            plantName.value = plant.name
-            plantDate.value = plant.createdDate
-            memo.value = plant.memo
-            lastWateringDate.value = plant.lastWateringDate
-            wateringPeriod.value = plant.waterPeriod
-            _wateringAlarmOnOff.value = plant.wateringAlarm.onOff
-            wateringAlarmTime.value = plant.wateringAlarm.time
-            isUpdatePlant = true
+        viewModelScope.launch {
+            useCase.getPlant(plantId).let { plant ->
+                this@EditPlantViewModel.plantId = plant.id
+                _pictureUri.value = plant.pictureUri
+                plantName.value = plant.name
+                plantDate.value = plant.createdDate
+                memo.value = plant.memo
+                lastWateringDate.value = plant.lastWateringDate
+                wateringPeriod.value = plant.waterPeriod
+                _wateringAlarmOnOff.value = plant.wateringAlarm.onOff
+                wateringAlarmTime.value = plant.wateringAlarm.time
+                isUpdatePlant = true
+            }
         }
     }
 

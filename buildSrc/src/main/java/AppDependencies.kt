@@ -6,7 +6,6 @@ object Versions {
     const val GSON = "2.9.0"
     const val MATERIAL = "1.5.0"
     const val CONSTRAINT_LAYOUT = "2.1.3"
-    const val SWITCH_BUTTON = "0.0.3@aar"
     const val HILT_CORE = "2.41"
     const val COROUTINES = "1.5.2"
 
@@ -45,7 +44,6 @@ object Ui {
     const val MATERIAL = "com.google.android.material:material:${Versions.MATERIAL}"
     const val CONSTRAINT_LAYOUT =
         "androidx.constraintlayout:constraintlayout:${Versions.CONSTRAINT_LAYOUT}"
-    const val SWITCH_BUTTON = "com.github.zcweng:switch-button:${Versions.SWITCH_BUTTON}"
     const val GLIDE = "com.github.bumptech.glide:glide:${Versions.GLIDE}"
     const val GLIDE_COMPILER = "com.github.bumptech.glide:compiler:${Versions.GLIDE}"
 }
