@@ -65,4 +65,8 @@ class PlantRepositoryImpl @Inject constructor(
         plantDao.updateWateringAlarmOnOff(isActive, plantId)
     }
 
+    override suspend fun getPlantName(plantId: Int): String {
+        return plantDao.getPlantName(plantId)
+    }
+
 }

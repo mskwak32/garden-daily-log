@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.mskwak.presentation.diary.edit_diary.EditDiaryViewModel" />
+
+        <variable
+            name="dialog"
+            type="com.mskwak.presentation.diary.edit_diary.EditDiaryDialog" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/transparent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@{viewModel.plantName}"
+                android:textColor="@color/dim_black_70"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="식물이름" />
+
+            <ImageButton
+                android:id="@+id/closeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_close_black"
+                android:onClick="@{() -> dialog.onCloseClick()}" />
+
+            <TextView
+                android:id="@+id/saveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="16dp"
+                android:onClick="@{() -> viewModel.saveDiary()}"
+                android:text="@string/save"
+                android:textColor="@color/dim_black_70"
+                android:textSize="18sp" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/spacer"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="16dp"
+                android:paddingTop="10dp"
+                android:paddingRight="16dp">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/addPictureButton"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:onClick="@{() -> dialog.onNewPictureClick()}"
+                    android:src="@drawable/add_photo"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/roundedCorner" />
+
+                <View
+                    android:id="@+id/pictureDivider"
+                    android:layout_width="1dp"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@color/bgray_400"
+                    app:layout_constraintLeft_toRightOf="@id/addPictureButton"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/pictureListView"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="8dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintLeft_toRightOf="@id/pictureDivider"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/layout_item_picture" />
+
+                <com.mskwak.presentation.custom_component.TextViewWithIcon
+                    android:id="@+id/dateTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:iconRes="@drawable/ic_event_black"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/addPictureButton"
+                    app:text="@string/date" />
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/rectangle_gray_box_bg"
+                    android:gravity="center_vertical"
+                    android:minHeight="40dp"
+                    android:onClick="@{() -> dialog.onDateClick()}"
+                    android:paddingLeft="16dp"
+                    android:textColor="@color/dim_black_70"
+                    app:layout_constraintTop_toBottomOf="@id/dateTitle"
+                    app:localDate="@{viewModel.diaryDate}"
+                    tools:text="2022.02.22" />
+
+                <EditText
+                    android:id="@+id/contentInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/rectangle_gray_box_bg"
+                    android:gravity="top"
+                    android:hint="@string/diary_content_hint"
+                    android:lines="17"
+                    android:maxLines="17"
+                    android:padding="8dp"
+                    android:scrollbars="vertical"
+                    android:text="@={viewModel.contentText}"
+                    app:layout_constraintTop_toBottomOf="@id/date" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+        <View
+            android:id="@+id/spacer"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

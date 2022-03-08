@@ -30,9 +30,7 @@ class PlantListAdapter(private val viewModel: HomeViewModel) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(plant: Plant) {
-            binding.apply {
-                this.plant = plant
-            }
+            binding.plant = plant
             setDday(plant)
         }
 
@@ -40,16 +38,16 @@ class PlantListAdapter(private val viewModel: HomeViewModel) :
             binding.dDayCount.text = binding.viewModel?.getDdays(plant) ?: ""
         }
     }
-}
 
-class PlantDiffCallback : DiffUtil.ItemCallback<Plant>() {
-    override fun areItemsTheSame(oldItem: Plant, newItem: Plant): Boolean {
-        return oldItem.id == newItem.id
-    }
+    class PlantDiffCallback : DiffUtil.ItemCallback<Plant>() {
+        override fun areItemsTheSame(oldItem: Plant, newItem: Plant): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    override fun areContentsTheSame(oldItem: Plant, newItem: Plant): Boolean {
-        return if (oldItem is PlantImpl && newItem is PlantImpl) {
-            oldItem == newItem
-        } else false
+        override fun areContentsTheSame(oldItem: Plant, newItem: Plant): Boolean {
+            return if (oldItem is PlantImpl && newItem is PlantImpl) {
+                oldItem == newItem
+            } else false
+        }
     }
 }

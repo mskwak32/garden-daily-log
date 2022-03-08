@@ -22,12 +22,10 @@ class EditPlantFragment : BaseFragment<FragmentEditPlantBinding>() {
     private val viewModel by viewModels<EditPlantViewModel>()
     private val args by navArgs<EditPlantFragmentArgs>()
 
-    override fun initView() {
+    override fun initialize() {
         binding?.viewModel = viewModel
         binding?.fragment = this
-    }
 
-    override fun initialize() {
         args.plantId?.let {
             viewModel.loadPlant(it.toInt())
         }

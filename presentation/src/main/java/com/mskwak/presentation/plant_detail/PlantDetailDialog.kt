@@ -1,22 +1,19 @@
-package com.mskwak.presentation.detail
+package com.mskwak.presentation.plant_detail
 
 import android.annotation.SuppressLint
-import android.os.Bundle
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import com.google.android.material.appbar.AppBarLayout
 import com.mskwak.domain.model.Plant
 import com.mskwak.presentation.R
+import com.mskwak.presentation.base.BaseFullScreenDialog
 import com.mskwak.presentation.binding.localDateToText
 import com.mskwak.presentation.binding.localTimeToText
 import com.mskwak.presentation.binding.setUri
 import com.mskwak.presentation.databinding.DialogPlantDetailBinding
+import com.mskwak.presentation.diary.edit_diary.EditDiaryDialog
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -24,36 +21,21 @@ import javax.inject.Inject
 import kotlin.math.abs
 
 @AndroidEntryPoint
-class PlantDetailDialog : DialogFragment() {
-    private lateinit var binding: DialogPlantDetailBinding
-    private val args by navArgs<PlantDetailDialogArgs>()
+class PlantDetailDialog(private val plantId: Int) :
+    BaseFullScreenDialog<DialogPlantDetailBinding>() {
+
+    override val layoutRes: Int = R.layout.dialog_plant_detail
 
     @Inject
     lateinit var viewModelAssistedFactory: PlantDetailViewModel.PlantDetailViewModelAssistedFactory
     private val viewModel by viewModels<PlantDetailViewModel> {
-        PlantDetailViewModel.provideFactory(viewModelAssistedFactory, args.plantId)
+        PlantDetailViewModel.provideFactory(viewModelAssistedFactory, plantId)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.fullScreenDialog)
-    }
+    override fun initialize() {
+        binding.dialog = this
+        binding.viewModel = viewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = DialogPlantDetailBinding.inflate(inflater, container, false).apply {
-            lifecycleOwner = viewLifecycleOwner
-            dialog = this@PlantDetailDialog
-            viewModel = this@PlantDetailDialog.viewModel
-        }
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         initToolbar()
         initObserver()
     }
@@ -110,11 +92,11 @@ class PlantDetailDialog : DialogFragment() {
     }
 
     fun newDiaryClick() {
-
+        EditDiaryDialog(plantId, null).show(childFragmentManager, null)
     }
 
     fun moreDiaryClick() {
-
+        //TODO
     }
 
     fun onBackClick() {

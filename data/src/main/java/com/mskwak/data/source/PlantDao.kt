@@ -30,4 +30,7 @@ interface PlantDao {
 
     @Query("UPDATE plant SET onOff = :isActive WHERE id = :plantId")
     suspend fun updateWateringAlarmOnOff(isActive: Boolean, plantId: Int)
+
+    @Query("SELECT name FROM plant WHERE id = :plantId")
+    suspend fun getPlantName(plantId: Int): String
 }

@@ -6,7 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.mskwak.domain.model.Record
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 @Entity(
     tableName = "gardeningRecord",
@@ -23,14 +23,14 @@ data class RecordData(
     @PrimaryKey(autoGenerate = true) override val id: Int = 0,
     override val plantId: Int,
     override val memo: String,
-    override val pictureList: List<Uri>,
-    override val createdTime: LocalDateTime
+    override val pictureList: List<Uri>?,
+    override val createdDate: LocalDate
 ) : Record {
     constructor(record: Record) : this(
         id = record.id,
         plantId = record.plantId,
         memo = record.memo,
         pictureList = record.pictureList,
-        createdTime = record.createdTime
+        createdDate = record.createdDate
     )
 }

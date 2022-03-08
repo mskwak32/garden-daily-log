@@ -18,4 +18,5 @@ interface PlantRepository {
     suspend fun deletePlantPicture(uri: Uri)
     suspend fun updateLastWateringDate(date: LocalDate, plantId: Int)
     suspend fun updateWateringAlarmOnOff(isActive: Boolean, plantId: Int)
+    suspend fun getPlantName(plantId: Int): String
 }

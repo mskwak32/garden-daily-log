@@ -74,10 +74,10 @@ class EditPlantViewModel @Inject constructor(
                 lastWateringDate.value!!,
                 alarm,
                 pictureUri,
-                memo.value
+                memo.value,
+                plantId
             )
             if (isUpdatePlant) {
-                plant.id = plantId
                 //delete old picture
                 this@EditPlantViewModel.pictureUri.value?.let { useCase.deletePicture(it) }
                 useCase.updatePlant(plant)

@@ -65,7 +65,7 @@ class SelectPhotoDialog : DialogFragment() {
             if (isGranted) {
                 openImageSelector()
             } else {
-                showDeniedSnackbar(R.string.photo_image_permission_message)
+                showDeniedSnackbar(R.string.message_photo_image_permission)
             }
         }
     private val cameraPermissionLauncher =
@@ -73,7 +73,7 @@ class SelectPhotoDialog : DialogFragment() {
             if (isGranted) {
                 openCamera()
             } else {
-                showDeniedSnackbar(R.string.photo_camera_permission_message)
+                showDeniedSnackbar(R.string.message_photo_camera_permission)
             }
         }
 
@@ -108,7 +108,7 @@ class SelectPhotoDialog : DialogFragment() {
             }
             shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
                 //이전에 권한 거부했음
-                showDeniedSnackbar(R.string.photo_camera_permission_message)
+                showDeniedSnackbar(R.string.message_photo_camera_permission)
             }
             else -> {
                 cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
@@ -125,7 +125,7 @@ class SelectPhotoDialog : DialogFragment() {
                 openImageSelector()
             }
             shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) -> {
-                showDeniedSnackbar(R.string.photo_image_permission_message)
+                showDeniedSnackbar(R.string.message_photo_image_permission)
             }
             else -> {
                 imagePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)

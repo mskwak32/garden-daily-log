@@ -8,7 +8,7 @@
         <item>심은날짜 오래된순</item>
         <item>급수일 가까운순</item>
     </string-array>
-    <string name="plant_list_empty">아직 등록된 식물이 없어요</string>
+    <string name="plant_list_empty">아직 등록된 식물이 없어요.</string>
     <string name="new_plant">식물추가하기</string>
     <string name="plant_name">식물 이름</string>
     <string name="plant_date">심은 날짜</string>
@@ -19,7 +19,7 @@
     <string name="watering_period_unit">%d일마다</string>
     <string name="watering_period_unit_dialog">일마다</string>
     <string name="watering_alarm">물주기 알림</string>
-    <string name="message_input_required_field">필수항목을 입력해주세요</string>
+    <string name="message_input_required_field">필수항목을 입력해주세요.</string>
     <string name="save">저장</string>
     <string name="cancel">취소</string>
     <string name="none">없음</string>
@@ -30,11 +30,15 @@
     <string name="delete_confirm_message">정말 삭제하시겠습니까?</string>
     <string name="photo_image">이미지</string>
     <string name="photo_camera">카메라</string>
-    <string name="photo_image_permission_message">이미지를 가져오려면 권한이 필요합니다.</string>
-    <string name="photo_camera_permission_message">카메라를 사용하려면 권한이 필요합니다.</string>
+    <string name="message_photo_image_permission">이미지를 가져오려면 권한이 필요합니다.</string>
+    <string name="message_photo_camera_permission">카메라를 사용하려면 권한이 필요합니다.</string>
     <string name="permission_setting_action">권한 설정</string>
     <string name="plant_diary">가꾸기 일지</string>
     <string name="view_more">더보기</string>
     <string name="new_diary">일지쓰기</string>
-    <string name="diary_list_empty">아직 %s에 대한 일지가 없어요</string>
+    <string name="diary_list_empty">아직 %s에 대한 일지가 없어요.</string>
+    <string name="diary_content_hint">내용을 입력해주세요.</string>
+    <string name="date">날짜</string>
+    <string name="message_no_more_picture">더이상 이미지를 추가할 수 없습니다.</string>
+    <string name="message_input_picture_or_content">사진이나 내용을 입력해주세요.</string>
 </resources>

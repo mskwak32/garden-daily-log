@@ -9,11 +9,11 @@
 
         <variable
             name="viewModel"
-            type="com.mskwak.presentation.detail.PlantDetailViewModel" />
+            type="com.mskwak.presentation.plant_detail.PlantDetailViewModel" />
 
         <variable
             name="dialog"
-            type="com.mskwak.presentation.detail.PlantDetailDialog" />
+            type="com.mskwak.presentation.plant_detail.PlantDetailDialog" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

@@ -1,4 +1,4 @@
-package com.mskwak.presentation.detail
+package com.mskwak.presentation.plant_detail
 
 import androidx.lifecycle.*
 import com.mskwak.domain.usecase.GardenUseCase

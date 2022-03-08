@@ -14,17 +14,17 @@ class RecordRepositoryImpl @Inject constructor(
 ) : RecordRepository {
     override suspend fun addRecord(record: Record) {
         recordDao.insertRecord(RecordData(record))
-        Logger.d("record id= ${record.id}")
+        Logger.d("add new record")
     }
 
     override suspend fun updateRecord(record: Record) {
         recordDao.updateRecord(RecordData(record))
-        Logger.d("record id= ${record.id}")
+        Logger.d("update record id= ${record.id}")
     }
 
     override suspend fun deleteRecord(record: Record) {
         recordDao.deleteRecord(RecordData(record))
-        Logger.d("record id= ${record.id}")
+        Logger.d("delete record id= ${record.id}")
     }
 
     override fun observeRecordsByPlantId(plantId: Int): LiveData<List<Record>> {
@@ -33,5 +33,9 @@ class RecordRepositoryImpl @Inject constructor(
 
     override fun observeRecods(): LiveData<List<Record>> {
         return recordDao.observeRecords().map { it }
+    }
+
+    override suspend fun getRecordById(id: Int): Record {
+        return recordDao.getRecordById(id)
     }
 }

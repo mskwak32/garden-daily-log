@@ -11,14 +11,10 @@
         tools:layout="@layout/fragment_home">
 
         <action
-            android:id="@+id/action_homeFragmentDest_to_editPlantFragmentDest"
+            android:id="@+id/action_homeFragment_to_editPlantFragment"
             app:destination="@id/editPlantFragmentDest"
             app:enterAnim="@anim/from_bottom"
             app:popExitAnim="@anim/to_bottom" />
-
-        <action
-            android:id="@+id/action_homeFragmentDest_to_plantDetailDest"
-            app:destination="@id/plantDetailDialogDest" />
 
     </fragment>
 
@@ -33,15 +29,5 @@
             app:nullable="true" />
 
     </fragment>
-
-    <dialog
-        android:id="@+id/plantDetailDialogDest"
-        android:name="com.mskwak.presentation.detail.PlantDetailDialog">
-
-        <argument
-            android:name="plantId"
-            app:argType="integer" />
-
-    </dialog>
 
 </navigation>

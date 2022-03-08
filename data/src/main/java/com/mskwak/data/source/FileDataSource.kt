@@ -15,7 +15,14 @@ class FileDataSource(private val baseDir: File) {
             dir.mkdirs()
         }
 
-        val file = File(dir, "${bitmap.hashCode()}")
+        var file = File(dir, "${bitmap.hashCode()}")
+
+        //중복저장 피하기
+        var postfixIndex = 0
+        while (file.exists()) {
+            file = File(dir, "${bitmap.hashCode()}_${++postfixIndex}")
+        }
+
         var out: FileOutputStream? = null
         try {
             file.createNewFile()

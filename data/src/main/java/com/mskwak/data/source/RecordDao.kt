@@ -19,6 +19,9 @@ interface RecordDao {
     @Query("SELECT * FROM gardeningRecord WHERE plantId = :plantId")
     fun observeRecordsByPlantId(plantId: Int): LiveData<List<RecordData>>
 
-    @Query("SELECT * FROM gardeningRecord ORDER BY createdTime DESC")
+    @Query("SELECT * FROM gardeningRecord ORDER BY createdDate DESC")
     fun observeRecords(): LiveData<List<RecordData>>
+
+    @Query("SELECT * FROM gardeningRecord WHERE id = :id")
+    suspend fun getRecordById(id: Int): RecordData
 }

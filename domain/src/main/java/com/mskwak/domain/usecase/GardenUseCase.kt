@@ -66,6 +66,10 @@ class GardenUseCase(
         }
     }
 
+    suspend fun getPlantName(plantId: Int) = withContext(ioDispatcher) {
+        plantRepository.getPlantName(plantId)
+    }
+
     fun getRecords(): LiveData<List<Record>> {
         return recordRepository.observeRecods()
     }
@@ -74,30 +78,22 @@ class GardenUseCase(
         return recordRepository.observeRecordsByPlantId(plantId)
     }
 
-    fun addRecord(record: Record) {
+    suspend fun addRecord(record: Record) = withContext(ioDispatcher) {
+        recordRepository.addRecord(record)
+    }
+
+    suspend fun updateRecord(record: Record) = withContext(ioDispatcher) {
+        recordRepository.updateRecord(record)
+    }
+
+    fun deleteRecord(record: Record) {
         CoroutineScope(ioDispatcher).launch {
-            recordRepository.addRecord(record)
+            recordRepository.deleteRecord(record)
         }
     }
 
-    fun updateRecord(record: Record, scope: CoroutineScope, onComplete: () -> Unit) {
-        scope.launch {
-            val deferred = async(ioDispatcher) {
-                recordRepository.updateRecord(record)
-            }
-            deferred.await()
-            onComplete.invoke()
-        }
-    }
-
-    fun deleteRecord(record: Record, scope: CoroutineScope, onComplete: () -> Unit) {
-        scope.launch {
-            val deferred = async(ioDispatcher) {
-                recordRepository.deleteRecord(record)
-            }
-            deferred.await()
-            onComplete.invoke()
-        }
+    suspend fun getRecordById(recordId: Int): Record {
+        return recordRepository.getRecordById(recordId)
     }
 
     /**
@@ -148,9 +144,9 @@ class GardenUseCase(
         plantRepository.savePlantPicture(bitmap)
     }
 
-    fun deletePicture(uri: Uri) {
+    fun deletePicture(vararg uri: Uri) {
         CoroutineScope(ioDispatcher).launch {
-            plantRepository.deletePlantPicture(uri)
+            uri.forEach { plantRepository.deletePlantPicture(it) }
         }
     }
 

@@ -54,8 +54,15 @@
     </style>
 
     <style name="fullScreenDialog" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:windowFullscreen">false</item>
         <item name="android:windowIsFloating">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/green_600</item>
+    </style>
+
+    <style name="dialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/from_bottom</item>
+        <item name="android:windowExitAnimation">@anim/to_bottom</item>
     </style>
 
     <style name="plantDetailAppbarBottomDeco">

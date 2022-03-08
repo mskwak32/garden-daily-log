@@ -14,9 +14,10 @@ import com.mskwak.domain.model.Plant
 import com.mskwak.domain.usecase.PlantListSortOrder
 import com.mskwak.presentation.R
 import com.mskwak.presentation.base.BaseFragment
-import com.mskwak.presentation.custom_component.ListItemDecoration
+import com.mskwak.presentation.custom_component.ListItemDecoVertical
 import com.mskwak.presentation.databinding.FragmentHomeBinding
 import com.mskwak.presentation.dialog.DeletePlantConfirmDialog
+import com.mskwak.presentation.plant_detail.PlantDetailDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,16 +26,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val viewModel by viewModels<HomeViewModel>()
     private val adapter: PlantListAdapter by lazy { PlantListAdapter(viewModel) }
 
-    override fun initView() {
+    override fun initialize() {
         binding?.viewModel = viewModel
         binding?.fragment = this
-        binding?.plantListView?.adapter = adapter
 
         initRecyclerView()
         initSortSpinner()
-    }
-
-    override fun initialize() {
         viewModel.plants.observe(viewLifecycleOwner) { plants ->
             adapter.submitList(plants)
         }
@@ -48,6 +45,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initRecyclerView() {
+        binding?.plantListView?.adapter = adapter
         val dividerHeight =
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics)
                 .toInt()
@@ -55,7 +53,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         val itemTouchHelper = ItemTouchHelper(swipeHelperCallback)
         itemTouchHelper.attachToRecyclerView(binding?.plantListView)
         binding?.plantListView?.apply {
-            addItemDecoration(ListItemDecoration(dividerHeight))
+            addItemDecoration(ListItemDecoVertical(dividerHeight))
             setOnTouchListener { _, _ ->
                 swipeHelperCallback.removePreviousClamp(this)
                 false
@@ -101,12 +99,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun openPlantDetail(plantId: Int) {
-        val action = HomeFragmentDirections.actionHomeFragmentDestToPlantDetailDest(plantId)
-        findNavController().navigate(action)
+        PlantDetailDialog(plantId).show(childFragmentManager, null)
     }
 
     fun onAddPlantClick() {
-        val action = HomeFragmentDirections.actionHomeFragmentDestToEditPlantFragmentDest(null)
+        val action = HomeFragmentDirections.actionHomeFragmentToEditPlantFragment(null)
         findNavController().navigate(action)
     }
 

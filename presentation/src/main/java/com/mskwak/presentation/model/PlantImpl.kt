@@ -11,9 +11,10 @@ data class PlantImpl(
     override val lastWateringDate: LocalDate,
     override val wateringAlarm: AlarmImpl,
     override val pictureUri: Uri?,
-    override val memo: String?
+    override val memo: String?,
+    override val id: Int = 0
 ) : Plant {
-    override var id: Int = 0
+
 
     constructor(plant: Plant) : this(
         plant.name,
@@ -22,8 +23,7 @@ data class PlantImpl(
         plant.lastWateringDate,
         AlarmImpl(plant.wateringAlarm),
         plant.pictureUri,
-        plant.memo
-    ) {
-        this.id = plant.id
-    }
+        plant.memo,
+        plant.id
+    )
 }
