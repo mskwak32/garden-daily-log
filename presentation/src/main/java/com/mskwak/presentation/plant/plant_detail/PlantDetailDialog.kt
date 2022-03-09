@@ -1,4 +1,4 @@
-package com.mskwak.presentation.plant_detail
+package com.mskwak.presentation.plant.plant_detail
 
 import android.annotation.SuppressLint
 import android.util.TypedValue

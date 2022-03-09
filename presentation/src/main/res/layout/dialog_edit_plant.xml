@@ -6,12 +6,12 @@
     <data>
 
         <variable
-            name="fragment"
-            type="com.mskwak.presentation.edit_plant.EditPlantFragment" />
+            name="dialog"
+            type="com.mskwak.presentation.plant.edit_plant.EditPlantDialog" />
 
         <variable
             name="viewModel"
-            type="com.mskwak.presentation.edit_plant.EditPlantViewModel" />
+            type="com.mskwak.presentation.plant.edit_plant.EditPlantViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +34,7 @@
                     android:id="@+id/picture"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:onClick="@{() -> fragment.onPhotoClick()}"
+                    android:onClick="@{() -> dialog.onPhotoClick()}"
                     android:src="@drawable/add_photo"
                     app:imageUri="@{viewModel.pictureUri}"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -92,7 +92,7 @@
                     android:background="@drawable/rectangle_gray_box_bg"
                     android:gravity="center_vertical"
                     android:minHeight="40dp"
-                    android:onClick="@{() -> fragment.onPlantDateClick()}"
+                    android:onClick="@{() -> dialog.onPlantDateClick()}"
                     android:paddingLeft="16dp"
                     android:textColor="@color/dim_black_70"
                     app:layout_constraintTop_toBottomOf="@id/plantDateTitle"
@@ -158,7 +158,7 @@
                     android:background="@drawable/rectangle_gray_box_bg"
                     android:gravity="center_vertical"
                     android:minHeight="40dp"
-                    android:onClick="@{() -> fragment.onLastWateringDateClick()}"
+                    android:onClick="@{() -> dialog.onLastWateringDateClick()}"
                     android:paddingLeft="16dp"
                     android:textColor="@color/dim_black_70"
                     app:layout_constraintTop_toBottomOf="@id/lastWateringTitle"
@@ -183,7 +183,7 @@
                     android:background="@drawable/rectangle_gray_box_bg"
                     android:gravity="center_vertical"
                     android:minHeight="40dp"
-                    android:onClick="@{() -> fragment.onWateringPeriodClick()}"
+                    android:onClick="@{() -> dialog.onWateringPeriodClick()}"
                     android:paddingLeft="16dp"
                     android:textColor="@color/dim_black_70"
                     app:layout_constraintTop_toBottomOf="@id/wateringPeriodTitle"
@@ -209,7 +209,7 @@
                     android:background="@drawable/rectangle_gray_box_bg"
                     android:gravity="center_vertical"
                     android:minHeight="45dp"
-                    android:onClick="@{() -> fragment.onWateringAlarmClick()}"
+                    android:onClick="@{() -> dialog.onWateringAlarmClick()}"
                     android:paddingLeft="16dp"
                     android:textColor="@color/dim_black_70"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -235,7 +235,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/ic_close_black"
-            android:onClick="@{() -> fragment.onCloseClick()}"
+            android:onClick="@{() -> dialog.onCloseClick()}"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

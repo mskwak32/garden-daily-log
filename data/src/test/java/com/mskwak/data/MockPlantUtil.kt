@@ -23,6 +23,6 @@ object MockPlantUtil {
         plantId = plantId,
         memo = "memo",
         pictureList = listOf(),
-        createdDate = LocalDateTime.now()
+        createdDate = LocalDate.now()
     )
 }

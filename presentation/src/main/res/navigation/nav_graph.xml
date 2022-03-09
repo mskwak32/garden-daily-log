@@ -10,24 +10,6 @@
         android:name="com.mskwak.presentation.home.HomeFragment"
         tools:layout="@layout/fragment_home">
 
-        <action
-            android:id="@+id/action_homeFragment_to_editPlantFragment"
-            app:destination="@id/editPlantFragmentDest"
-            app:enterAnim="@anim/from_bottom"
-            app:popExitAnim="@anim/to_bottom" />
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/editPlantFragmentDest"
-        android:name="com.mskwak.presentation.edit_plant.EditPlantFragment"
-        tools:layout="@layout/fragment_edit_plant">
-
-        <argument
-            android:name="plantId"
-            app:argType="string"
-            app:nullable="true" />
-
     </fragment>
 
 </navigation>

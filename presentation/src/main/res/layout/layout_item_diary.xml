@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="com.mskwak.presentation.plant_detail.PlantDetailViewModel" />
+            type="com.mskwak.presentation.plant.plant_detail.PlantDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

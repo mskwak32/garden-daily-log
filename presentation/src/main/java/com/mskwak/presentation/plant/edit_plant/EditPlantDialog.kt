@@ -1,14 +1,13 @@
-package com.mskwak.presentation.edit_plant
+package com.mskwak.presentation.plant.edit_plant
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.mskwak.presentation.R
-import com.mskwak.presentation.base.BaseFragment
-import com.mskwak.presentation.databinding.FragmentEditPlantBinding
+import com.mskwak.presentation.base.BaseFullScreenDialog
+import com.mskwak.presentation.databinding.DialogEditPlantBinding
 import com.mskwak.presentation.dialog.SelectPhotoDialog
 import com.mskwak.presentation.dialog.WateringPeriodDialog
 import com.mskwak.presentation.util.setupSnackbar
@@ -17,20 +16,19 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 @AndroidEntryPoint
-class EditPlantFragment : BaseFragment<FragmentEditPlantBinding>() {
-    override val layoutRes: Int = R.layout.fragment_edit_plant
+class EditPlantDialog(private val plantId: Int?) : BaseFullScreenDialog<DialogEditPlantBinding>() {
+    override val layoutRes: Int = R.layout.dialog_edit_plant
     private val viewModel by viewModels<EditPlantViewModel>()
-    private val args by navArgs<EditPlantFragmentArgs>()
 
     override fun initialize() {
-        binding?.viewModel = viewModel
-        binding?.fragment = this
+        binding.viewModel = viewModel
+        binding.dialog = this
 
-        args.plantId?.let {
-            viewModel.loadPlant(it.toInt())
+        plantId?.let {
+            viewModel.loadPlant(it)
         }
         viewModel.wateringAlarmOnOff.observe(viewLifecycleOwner) {
-            binding?.wateringAlarmSwitch?.isChecked = it
+            binding.wateringAlarmSwitch.isChecked = it
         }
         viewModel.onSavedEvent.observe(viewLifecycleOwner) {
             findNavController().popBackStack()
@@ -41,7 +39,7 @@ class EditPlantFragment : BaseFragment<FragmentEditPlantBinding>() {
     fun onPhotoClick() {
         SelectPhotoDialog().apply {
             imageBitmapListener = { bitmap ->
-                binding?.picture?.setImageBitmap(bitmap)
+                binding.picture.setImageBitmap(bitmap)
                 viewModel.setNewPicture(bitmap)
             }
         }.show(childFragmentManager, null)

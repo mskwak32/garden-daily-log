@@ -1,4 +1,4 @@
-package com.mskwak.presentation.edit_plant
+package com.mskwak.presentation.plant.edit_plant
 
 import android.graphics.Bitmap
 import android.net.Uri
