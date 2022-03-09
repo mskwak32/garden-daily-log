@@ -47,14 +47,11 @@ class PlantRepositoryImpl @Inject constructor(
     }
 
     override suspend fun savePlantPicture(bitmap: Bitmap): Uri {
-        val uri = fileDataSource.savePicture(FileDataSource.PLANT_PICTURE_DIR, bitmap)
-        Logger.d("save picture: ${uri.path}")
-        return uri
+        return fileDataSource.savePicture(FileDataSource.PLANT_PICTURE_DIR, bitmap)
     }
 
     override suspend fun deletePlantPicture(uri: Uri) {
         fileDataSource.deletePicture(uri)
-        Logger.d("delete picture: ${uri.path}")
     }
 
     override suspend fun updateLastWateringDate(date: LocalDate, plantId: Int) {

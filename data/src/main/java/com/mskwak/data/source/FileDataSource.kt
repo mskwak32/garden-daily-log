@@ -28,6 +28,7 @@ class FileDataSource(private val baseDir: File) {
             file.createNewFile()
             out = FileOutputStream(file)
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out)
+            Logger.d("save picture: ${file.toUri().path}")
         } catch (e: Exception) {
             Logger.e("save bitmap fail: ${e.message}")
         } finally {
@@ -41,6 +42,7 @@ class FileDataSource(private val baseDir: File) {
         val file = File(uri.path!!)
         if (file.exists()) {
             file.delete()
+            Logger.d("delete picture: ${uri.path}")
         }
     }
 

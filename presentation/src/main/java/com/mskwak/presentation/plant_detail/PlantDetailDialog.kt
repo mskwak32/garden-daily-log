@@ -125,7 +125,7 @@ class PlantDetailDialog(private val plantId: Int) :
             0,
             R.style.popupMenuStyle
         ).run {
-            menuInflater.inflate(R.menu.plant_detail_menu, menu)
+            menuInflater.inflate(R.menu.modify_menu, menu)
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menu_editPlant -> {

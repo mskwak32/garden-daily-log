@@ -62,6 +62,7 @@ class GardenUseCase(
 
     fun deletePlant(plant: Plant) {
         CoroutineScope(ioDispatcher).launch {
+            recordRepository.deleteRecordsByPlantId(plant.id)
             plantRepository.deletePlant(plant)
         }
     }

@@ -14,8 +14,7 @@ import java.time.LocalDate
         entity = PlantData::class,
         parentColumns = ["id"],
         childColumns = ["plantId"],
-        onUpdate = ForeignKey.CASCADE,
-        onDelete = ForeignKey.CASCADE
+        onUpdate = ForeignKey.CASCADE
     )],
     indices = [Index(value = ["plantId"])]
 )
