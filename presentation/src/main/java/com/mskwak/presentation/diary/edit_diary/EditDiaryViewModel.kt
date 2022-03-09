@@ -54,7 +54,7 @@ class EditDiaryViewModel @Inject constructor(
             val record = RecordImpl(
                 plantId!!,
                 contentText.value ?: "",
-                _pictureList.value?.toList(),
+                _pictureList.value?.toList() ?: emptyList(),
                 diaryDate.value!!,
                 diaryId
             )
