@@ -10,23 +10,23 @@ import com.mskwak.presentation.databinding.LayoutItemPlantBinding
 import com.mskwak.presentation.model.PlantImpl
 
 class PlantListAdapter(private val viewModel: HomeViewModel) :
-    ListAdapter<Plant, PlantListAdapter.ViewHolder>(PlantDiffCallback()) {
+    ListAdapter<Plant, PlantListAdapter.ItemViewHolder>(ItemDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = LayoutItemPlantBinding.inflate(inflater, parent, false).apply {
             this.viewModel = this@PlantListAdapter.viewModel
         }
-        return ViewHolder(binding)
+        return ItemViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holderItem: ItemViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holderItem.bind(item)
     }
 
 
-    class ViewHolder(private val binding: LayoutItemPlantBinding) :
+    class ItemViewHolder(private val binding: LayoutItemPlantBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(plant: Plant) {
@@ -39,7 +39,7 @@ class PlantListAdapter(private val viewModel: HomeViewModel) :
         }
     }
 
-    class PlantDiffCallback : DiffUtil.ItemCallback<Plant>() {
+    class ItemDiffCallback : DiffUtil.ItemCallback<Plant>() {
         override fun areItemsTheSame(oldItem: Plant, newItem: Plant): Boolean {
             return oldItem.id == newItem.id
         }

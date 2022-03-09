@@ -1,12 +1,15 @@
 package com.mskwak.presentation.plant_detail
 
 import androidx.lifecycle.*
+import com.mskwak.domain.AppSettings
 import com.mskwak.domain.usecase.GardenUseCase
+import com.mskwak.presentation.model.RecordImpl
 import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.launch
+import kotlin.math.min
 
 class PlantDetailViewModel @AssistedInject constructor(
     @Assisted private val plantId: Int,
@@ -14,7 +17,10 @@ class PlantDetailViewModel @AssistedInject constructor(
 ) : ViewModel() {
 
     var plant = useCase.observePlant(plantId)
-    var records = useCase.observeRecordByPlantId(plantId)
+    var records = useCase.observeRecordByPlantId(plantId).map { list ->
+        val maxSize = min(list.size, AppSettings.MAX_DIARY_SIZE_ON_PLANT_DETAIL)    //정한 갯수까지만 노출
+        list.subList(0, maxSize).map { RecordImpl(it) }
+    }
     val isEmptyRecords: LiveData<Boolean> = records.map {
         it.isNullOrEmpty()
     }

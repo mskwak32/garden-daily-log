@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mskwak.presentation.databinding.LayoutItemPictureBinding
 
 class PictureListAdapter(private val viewModel: EditDiaryViewModel) :
-    ListAdapter<Uri, PictureListAdapter.ItemViewHolder>(PictureDiffCallback()) {
+    ListAdapter<Uri, PictureListAdapter.ItemViewHolder>(ItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -31,7 +31,7 @@ class PictureListAdapter(private val viewModel: EditDiaryViewModel) :
         }
     }
 
-    class PictureDiffCallback : DiffUtil.ItemCallback<Uri>() {
+    class ItemDiffCallback : DiffUtil.ItemCallback<Uri>() {
         override fun areItemsTheSame(oldItem: Uri, newItem: Uri): Boolean {
             return oldItem == newItem
         }

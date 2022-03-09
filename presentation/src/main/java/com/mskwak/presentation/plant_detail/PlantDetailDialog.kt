@@ -1,6 +1,7 @@
 package com.mskwak.presentation.plant_detail
 
 import android.annotation.SuppressLint
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.widget.PopupMenu
@@ -12,6 +13,7 @@ import com.mskwak.presentation.base.BaseFullScreenDialog
 import com.mskwak.presentation.binding.localDateToText
 import com.mskwak.presentation.binding.localTimeToText
 import com.mskwak.presentation.binding.setUri
+import com.mskwak.presentation.custom_component.ListItemDecoVertical
 import com.mskwak.presentation.databinding.DialogPlantDetailBinding
 import com.mskwak.presentation.diary.edit_diary.EditDiaryDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,6 +27,7 @@ class PlantDetailDialog(private val plantId: Int) :
     BaseFullScreenDialog<DialogPlantDetailBinding>() {
 
     override val layoutRes: Int = R.layout.dialog_plant_detail
+    private val diaryAdapter by lazy { DiaryListAdapter(viewModel) }
 
     @Inject
     lateinit var viewModelAssistedFactory: PlantDetailViewModel.PlantDetailViewModelAssistedFactory
@@ -38,6 +41,7 @@ class PlantDetailDialog(private val plantId: Int) :
 
         initToolbar()
         initObserver()
+        initRecyclerView()
     }
 
     private fun initToolbar() {
@@ -66,10 +70,20 @@ class PlantDetailDialog(private val plantId: Int) :
             binding.moreDiaryButton.visibility = if (isEmpty) View.GONE else View.VISIBLE
         }
         viewModel.records.observe(viewLifecycleOwner) { records ->
-            //TODO
+            diaryAdapter.submitList(records)
         }
         viewModel.wateringCompleted.observe(viewLifecycleOwner) {
             //TODO 물주기완료 애니메이션
+        }
+    }
+
+    private fun initRecyclerView() {
+        val dividerHeight =
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4f, resources.displayMetrics)
+                .toInt()
+        binding.diaryList.apply {
+            adapter = diaryAdapter
+            addItemDecoration(ListItemDecoVertical(dividerHeight))
         }
     }
 

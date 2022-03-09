@@ -33,7 +33,7 @@ class SwipeHelperCallback : ItemTouchHelper.Callback() {
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
 
     private fun getView(viewHolder: RecyclerView.ViewHolder): View {
-        return (viewHolder as PlantListAdapter.ViewHolder).itemView.findViewById(R.id.container)
+        return (viewHolder as PlantListAdapter.ItemViewHolder).itemView.findViewById(R.id.container)
     }
 
     override fun onChildDraw(

@@ -41,7 +41,7 @@
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/plant_card_bg"
+            android:background="@drawable/card_gray_bg"
             android:onClick="@{() -> viewModel.openPlant(plant)}"
             android:padding="8dp"
             tools:ignore="SpUsage">
