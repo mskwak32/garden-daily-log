@@ -94,4 +94,8 @@ class EditPlantFragment : BaseFragment<FragmentEditPlantBinding>() {
             .show()
     }
 
+    fun onCloseClick() {
+        findNavController().popBackStack()
+    }
+
 }
