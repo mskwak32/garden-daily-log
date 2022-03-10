@@ -35,8 +35,9 @@ dependencies {
     testImplementation("org.robolectric:robolectric:${Versions.ROBOLECTRIC}")
     androidTestImplementation("androidx.test.espresso:espresso-core:${Versions.ESPRESSO}")
 
-    implementation(Libraries.LOGGER)
     implementation(Libraries.TIMBER)
     implementation(Ui.GLIDE)
     kapt(Ui.GLIDE_COMPILER)
+    implementation(Ui.VIEW_PAGER)
+    implementation(Ui.DOTS_INDICATOR)
 }

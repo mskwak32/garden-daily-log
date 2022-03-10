@@ -35,6 +35,7 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:onClick="@{() -> dialog.onPhotoClick()}"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/add_photo"
                     app:imageUri="@{viewModel.pictureUri}"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -232,7 +233,7 @@
         <ImageButton
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="13dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/ic_close_black"
             android:onClick="@{() -> dialog.onCloseClick()}"

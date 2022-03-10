@@ -20,21 +20,21 @@ fun TextViewWithIcon.setFieldEmpty(isFieldEmpty: Boolean) {
 }
 
 @BindingAdapter("localDate")
-fun TextView.localDateToText(localDate: LocalDate) {
+fun TextView.localDateToText(localDate: LocalDate?) {
     val format = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
-    this.text = localDate.format(format)
+    this.text = localDate?.format(format) ?: ""
 }
 
 @BindingAdapter("localTime")
-fun TextView.localTimeToText(localTime: LocalTime) {
+fun TextView.localTimeToText(localTime: LocalTime?) {
     val format = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
-    this.text = localTime.format(format)
+    this.text = localTime?.format(format) ?: ""
 }
 
 @BindingAdapter("localDateTime")
-fun TextView.localDateTimeToText(localDateTime: LocalDateTime) {
+fun TextView.localDateTimeToText(localDateTime: LocalDateTime?) {
     val format = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
-    this.text = localDateTime.format(format)
+    this.text = localDateTime?.format(format) ?: ""
 }
 
 @BindingAdapter("wateringPeriod")
@@ -52,12 +52,10 @@ fun ImageView.setUri(uri: Uri?, asThumbnail: Boolean = false) {
             GlideApp.with(this)
                 .load(File(uri.path!!))
                 .override(100)
-                .centerCrop()
                 .into(this)
         } else {
             GlideApp.with(this)
                 .load(File(uri.path!!))
-                .centerCrop()
                 .into(this)
         }
     }

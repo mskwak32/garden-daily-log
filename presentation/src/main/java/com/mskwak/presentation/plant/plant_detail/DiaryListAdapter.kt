@@ -14,6 +14,8 @@ import com.mskwak.presentation.model.RecordImpl
 class DiaryListAdapter(private val viewModel: PlantDetailViewModel) :
     ListAdapter<Record, DiaryListAdapter.ItemViewHolder>(ItemDiffCallback()) {
 
+    var onItemClickListener: ((record: Record) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = LayoutItemDiaryBinding.inflate(inflater, parent, false).apply {
@@ -29,6 +31,12 @@ class DiaryListAdapter(private val viewModel: PlantDetailViewModel) :
 
     inner class ItemViewHolder(private val binding: LayoutItemDiaryBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            itemView.setOnClickListener {
+                onItemClickListener?.invoke(getItem(adapterPosition))
+            }
+        }
 
         fun bind(record: Record) {
             binding.record = record

@@ -15,6 +15,7 @@ import com.mskwak.presentation.binding.localTimeToText
 import com.mskwak.presentation.binding.setUri
 import com.mskwak.presentation.custom_component.ListItemDecoVertical
 import com.mskwak.presentation.databinding.DialogPlantDetailBinding
+import com.mskwak.presentation.diary.diary_detail.DiaryDetailDialog
 import com.mskwak.presentation.diary.edit_diary.EditDiaryDialog
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.format.DateTimeFormatter
@@ -85,6 +86,9 @@ class PlantDetailDialog(private val plantId: Int) :
             adapter = diaryAdapter
             addItemDecoration(ListItemDecoVertical(dividerHeight))
         }
+        diaryAdapter.onItemClickListener = {
+            openDiaryDetail(it.id)
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -128,16 +132,20 @@ class PlantDetailDialog(private val plantId: Int) :
             menuInflater.inflate(R.menu.modify_menu, menu)
             setOnMenuItemClickListener {
                 when (it.itemId) {
-                    R.id.menu_editPlant -> {
-
+                    R.id.menu_edit -> {
+                        //TODO 식물 수정
                     }
-                    R.id.menu_deletePlant -> {
-
+                    R.id.menu_delete -> {
+                        //TODO 식물 삭제 다이얼로그
                     }
                 }
                 true
             }
             show()
         }
+    }
+
+    private fun openDiaryDetail(recordId: Int) {
+        DiaryDetailDialog(recordId).show(childFragmentManager, null)
     }
 }

@@ -28,8 +28,8 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.mskwak.presentation.R
 import com.mskwak.presentation.databinding.DialogSelectPhotoBinding
-import com.orhanobut.logger.Logger
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class SelectPhotoDialog : DialogFragment() {
@@ -45,7 +45,7 @@ class SelectPhotoDialog : DialogFragment() {
                 }
                 dismiss()
             } else {
-                Logger.d("getImageFail: resultCode= ${result.resultCode}")
+                Timber.d("getImageFail: resultCode= ${result.resultCode}")
             }
         }
     private val cameraResultLauncher: ActivityResultLauncher<Intent> =
@@ -57,7 +57,7 @@ class SelectPhotoDialog : DialogFragment() {
                 }
                 dismiss()
             } else {
-                Logger.d("getCameraFail: resultCode= ${result.resultCode}")
+                Timber.d("getCameraFail: resultCode= ${result.resultCode}")
             }
         }
     private val imagePermissionLauncher =

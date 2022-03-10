@@ -3,10 +3,8 @@ object Versions {
     const val APP_COMPAT = "1.4.1"
     const val LIFECYCLE_KTX = "2.4.1"
     const val NAVIGATION_KTX = "2.4.1"
-    const val GSON = "2.9.0"
     const val MATERIAL = "1.5.0"
     const val CONSTRAINT_LAYOUT = "2.1.3"
-    const val HILT_CORE = "2.41"
     const val COROUTINES = "1.5.2"
 
     const val JUNIT = "4.13.2"
@@ -19,9 +17,11 @@ object Versions {
 
     const val ROOM = "2.4.1"
     const val GLIDE = "4.13.0"
-    const val DATASTORE = "1.0.0"
     const val TIMBER = "5.0.1"
-    const val LOGGER = "2.2.0"
+    const val HILT_CORE = "2.41"
+    const val GSON = "2.9.0"
+    const val VIEW_PAGER = "1.0.0"
+    const val DOTS_INDICATOR = "4.2"
 }
 
 object Libraries {
@@ -35,9 +35,7 @@ object Libraries {
         "androidx.navigation:navigation-fragment-ktx:${Versions.NAVIGATION_KTX}"
     const val NAVIGATION_UI = "androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATION_KTX}"
     const val GSON = "com.google.code.gson:gson:${Versions.GSON}"
-    const val LOGGER = "com.orhanobut:logger:${Versions.LOGGER}"
     const val TIMBER = "com.jakewharton.timber:timber:${Versions.TIMBER}"
-    const val DATASTORE = "androidx.datastore:datastore:${Versions.DATASTORE}"
 }
 
 object Ui {
@@ -46,6 +44,8 @@ object Ui {
         "androidx.constraintlayout:constraintlayout:${Versions.CONSTRAINT_LAYOUT}"
     const val GLIDE = "com.github.bumptech.glide:glide:${Versions.GLIDE}"
     const val GLIDE_COMPILER = "com.github.bumptech.glide:compiler:${Versions.GLIDE}"
+    const val VIEW_PAGER = "androidx.viewpager2:viewpager2:${Versions.VIEW_PAGER}"
+    const val DOTS_INDICATOR = "com.tbuonomo:dotsindicator:${Versions.DOTS_INDICATOR}"
 }
 
 object Di {

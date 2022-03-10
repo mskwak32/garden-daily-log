@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.mskwak.presentation.databinding.LayoutItemPictureBinding
+import com.mskwak.presentation.databinding.LayoutItemAddPictureBinding
 
 class PictureListAdapter(private val viewModel: EditDiaryViewModel) :
     ListAdapter<Uri, PictureListAdapter.ItemViewHolder>(ItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = LayoutItemPictureBinding.inflate(inflater, parent, false).apply {
+        val binding = LayoutItemAddPictureBinding.inflate(inflater, parent, false).apply {
             this.viewModel = this@PictureListAdapter.viewModel
         }
         return ItemViewHolder(binding)
@@ -23,7 +23,7 @@ class PictureListAdapter(private val viewModel: EditDiaryViewModel) :
         holderItem.bind(getItem(position))
     }
 
-    inner class ItemViewHolder(private val binding: LayoutItemPictureBinding) :
+    inner class ItemViewHolder(private val binding: LayoutItemAddPictureBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(uri: Uri) {

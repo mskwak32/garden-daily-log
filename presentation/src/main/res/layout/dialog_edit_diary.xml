@@ -31,7 +31,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="@{viewModel.plantName}"
                 android:textColor="@color/dim_black_70"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="식물이름" />
 
@@ -98,7 +98,7 @@
                     app:layout_constraintLeft_toRightOf="@id/pictureDivider"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:listitem="@layout/layout_item_picture" />
+                    tools:listitem="@layout/layout_item_add_picture" />
 
                 <com.mskwak.presentation.custom_component.TextViewWithIcon
                     android:id="@+id/dateTitle"
@@ -135,7 +135,7 @@
                     android:hint="@string/diary_content_hint"
                     android:lines="17"
                     android:maxLines="17"
-                    android:padding="8dp"
+                    android:padding="10dp"
                     android:scrollbars="vertical"
                     android:text="@={viewModel.contentText}"
                     app:layout_constraintTop_toBottomOf="@id/date" />

@@ -3,7 +3,6 @@ package com.mskwak.presentation.plant.edit_plant
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.mskwak.presentation.R
 import com.mskwak.presentation.base.BaseFullScreenDialog
@@ -31,7 +30,7 @@ class EditPlantDialog(private val plantId: Int?) : BaseFullScreenDialog<DialogEd
             binding.wateringAlarmSwitch.isChecked = it
         }
         viewModel.onSavedEvent.observe(viewLifecycleOwner) {
-            findNavController().popBackStack()
+            dismiss()
         }
         view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarMessage, Snackbar.LENGTH_SHORT)
     }
@@ -93,7 +92,7 @@ class EditPlantDialog(private val plantId: Int?) : BaseFullScreenDialog<DialogEd
     }
 
     fun onCloseClick() {
-        findNavController().popBackStack()
+        dismiss()
     }
 
 }

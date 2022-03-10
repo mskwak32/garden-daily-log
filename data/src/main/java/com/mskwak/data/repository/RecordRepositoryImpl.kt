@@ -7,7 +7,7 @@ import com.mskwak.data.source.FileDataSource
 import com.mskwak.data.source.RecordDao
 import com.mskwak.domain.model.Record
 import com.mskwak.domain.repository.RecordRepository
-import com.orhanobut.logger.Logger
+import timber.log.Timber
 import javax.inject.Inject
 
 class RecordRepositoryImpl @Inject constructor(
@@ -16,18 +16,18 @@ class RecordRepositoryImpl @Inject constructor(
 ) : RecordRepository {
     override suspend fun addRecord(record: Record) {
         recordDao.insertRecord(RecordData(record))
-        Logger.d("add new record")
+        Timber.d("add new record")
     }
 
     override suspend fun updateRecord(record: Record) {
         recordDao.updateRecord(RecordData(record))
-        Logger.d("update record id= ${record.id}")
+        Timber.d("update record id= ${record.id}")
     }
 
     override suspend fun deleteRecord(record: Record) {
         deleteRecordPictures(record)
         recordDao.deleteRecord(RecordData(record))
-        Logger.d("delete record id= ${record.id}")
+        Timber.d("delete record id= ${record.id}")
     }
 
     override suspend fun deleteRecordsByPlantId(plantId: Int) {

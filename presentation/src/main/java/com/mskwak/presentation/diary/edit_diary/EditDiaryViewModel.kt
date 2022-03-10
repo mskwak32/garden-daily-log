@@ -8,9 +8,9 @@ import com.mskwak.domain.usecase.GardenUseCase
 import com.mskwak.presentation.R
 import com.mskwak.presentation.model.RecordImpl
 import com.mskwak.presentation.util.SingleLiveEvent
-import com.orhanobut.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -46,7 +46,7 @@ class EditDiaryViewModel @Inject constructor(
         }
 
         if (plantId == null) {
-            Logger.e("plant id is null")
+            Timber.e("plant id is null")
             throw Exception("must load plant and set plantId before save diary")
         }
 
