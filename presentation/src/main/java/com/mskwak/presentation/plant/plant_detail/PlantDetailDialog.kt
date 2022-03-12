@@ -65,8 +65,8 @@ class PlantDetailDialog(private val plantId: Int) :
         viewModel.plant.observe(viewLifecycleOwner) { plant ->
             setupPlant(plant)
         }
-        viewModel.records.observe(viewLifecycleOwner) { records ->
-            diaryAdapter.submitList(records)
+        viewModel.diaries.observe(viewLifecycleOwner) { diaries ->
+            diaryAdapter.submitList(diaries)
         }
         viewModel.wateringCompleted.observe(viewLifecycleOwner) {
             //TODO 물주기완료 애니메이션
@@ -140,7 +140,7 @@ class PlantDetailDialog(private val plantId: Int) :
         }
     }
 
-    private fun openDiaryDetail(recordId: Int) {
-        DiaryDetailDialog(recordId).show(childFragmentManager, null)
+    private fun openDiaryDetail(diaryId: Int) {
+        DiaryDetailDialog(diaryId).show(childFragmentManager, null)
     }
 }

@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="record"
-            type="com.mskwak.domain.model.Record" />
+            name="diary"
+            type="com.mskwak.domain.model.Diary" />
 
         <variable
             name="viewModel"
@@ -40,7 +40,7 @@
             android:textColor="@color/dim_black_70"
             app:layout_constraintLeft_toRightOf="@id/picture"
             app:layout_constraintTop_toTopOf="parent"
-            app:localDate="@{record.createdDate}"
+            app:localDate="@{diary.createdDate}"
             tools:text="2022.02.22" />
 
         <TextView
@@ -51,7 +51,7 @@
             android:ellipsize="end"
             android:lines="2"
             android:maxLines="2"
-            android:text="@{record.memo}"
+            android:text="@{diary.memo}"
             app:layout_constraintLeft_toLeftOf="@id/dateText"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dateText"

@@ -295,7 +295,7 @@
                     android:background="@color/white"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:visibility="@{viewModel.isEmptyRecords() ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{viewModel.isEmptyList() ? View.VISIBLE : View.GONE}"
                     app:layout_constraintTop_toTopOf="@id/diaryList">
 
                     <ImageView
@@ -323,7 +323,7 @@
                     android:onClick="@{() -> dialog.moreDiaryClick()}"
                     android:stateListAnimator="@null"
                     android:text="@string/view_more"
-                    android:visibility="@{viewModel.isEmptyRecords()? View.GONE : View.VISIBLE}"
+                    android:visibility="@{viewModel.isEmptyList()? View.GONE : View.VISIBLE}"
                     app:layout_constraintLeft_toLeftOf="@id/diaryList"
                     app:layout_constraintRight_toRightOf="@id/diaryList"
                     app:layout_constraintTop_toBottomOf="@id/diaryList" />

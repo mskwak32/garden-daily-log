@@ -19,14 +19,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DiaryDetailDialog(private val recordId: Int) : BottomSheetDialogFragment() {
+class DiaryDetailDialog(private val diaryId: Int) : BottomSheetDialogFragment() {
     private lateinit var binding: DialogDiaryDetailBinding
     private val pictureAdapter by lazy { PictureViewPagerAdapter() }
 
     @Inject
     lateinit var viewModelFactory: DiaryDetailViewModel.DiaryDetailViewModelFactory
     private val viewModel by viewModels<DiaryDetailViewModel> {
-        DiaryDetailViewModel.provideFactory(viewModelFactory, recordId)
+        DiaryDetailViewModel.provideFactory(viewModelFactory, diaryId)
     }
 
     override fun onCreateView(

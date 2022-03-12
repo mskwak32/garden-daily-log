@@ -1,7 +1,7 @@
 package com.mskwak.gardendailylog.di
 
+import com.mskwak.domain.repository.DiaryRepository
 import com.mskwak.domain.repository.PlantRepository
-import com.mskwak.domain.repository.RecordRepository
 import com.mskwak.domain.usecase.GardenUseCase
 import dagger.Module
 import dagger.Provides
@@ -17,8 +17,8 @@ class UseCaseModule {
     @Provides
     fun provideGardenUseCase(
         plantRepository: PlantRepository,
-        recordRepository: RecordRepository
+        diaryRepository: DiaryRepository
     ): GardenUseCase {
-        return GardenUseCase(plantRepository, recordRepository)
+        return GardenUseCase(plantRepository, diaryRepository)
     }
 }

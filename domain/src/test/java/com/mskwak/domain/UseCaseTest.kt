@@ -1,8 +1,8 @@
 package com.mskwak.domain
 
 import com.mskwak.domain.model.Plant
+import com.mskwak.domain.repository.DiaryRepository
 import com.mskwak.domain.repository.PlantRepository
-import com.mskwak.domain.repository.RecordRepository
 import com.mskwak.domain.usecase.GardenUseCase
 import org.junit.Before
 import org.junit.Test
@@ -18,7 +18,7 @@ class UseCaseTest {
     lateinit var plantRepository: PlantRepository
 
     @Mock
-    lateinit var recordRepository: RecordRepository
+    lateinit var diaryRepository: DiaryRepository
 
     @Mock
     lateinit var plant: Plant
@@ -26,7 +26,7 @@ class UseCaseTest {
 
     @Before
     fun init() {
-        useCase = GardenUseCase(plantRepository, recordRepository)
+        useCase = GardenUseCase(plantRepository, diaryRepository)
     }
 
     @Test

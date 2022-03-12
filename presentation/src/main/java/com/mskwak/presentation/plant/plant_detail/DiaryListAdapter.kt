@@ -6,16 +6,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.mskwak.domain.model.Record
+import com.mskwak.domain.model.Diary
 import com.mskwak.presentation.R
 import com.mskwak.presentation.binding.setUri
 import com.mskwak.presentation.databinding.LayoutItemDiaryBinding
-import com.mskwak.presentation.model.RecordImpl
+import com.mskwak.presentation.model.DiaryImpl
 
 class DiaryListAdapter(private val viewModel: PlantDetailViewModel) :
-    ListAdapter<Record, DiaryListAdapter.ItemViewHolder>(ItemDiffCallback()) {
+    ListAdapter<Diary, DiaryListAdapter.ItemViewHolder>(ItemDiffCallback()) {
 
-    var onItemClickListener: ((record: Record) -> Unit)? = null
+    var onItemClickListener: ((diary: Diary) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -39,27 +39,27 @@ class DiaryListAdapter(private val viewModel: PlantDetailViewModel) :
             }
         }
 
-        fun bind(record: Record) {
-            binding.record = record
-            setPicture(record)
+        fun bind(diary: Diary) {
+            binding.diary = diary
+            setPicture(diary)
         }
 
-        private fun setPicture(record: Record) {
-            if (record.pictureList?.isNotEmpty() == true) {
-                binding.picture.setUri(record.pictureList!!.first(), true)
+        private fun setPicture(diary: Diary) {
+            if (diary.pictureList?.isNotEmpty() == true) {
+                binding.picture.setUri(diary.pictureList!!.first(), true)
             } else {
                 binding.picture.setBackgroundResource(R.drawable.plant_default)
             }
         }
     }
 
-    class ItemDiffCallback : DiffUtil.ItemCallback<Record>() {
-        override fun areItemsTheSame(oldItem: Record, newItem: Record): Boolean {
+    class ItemDiffCallback : DiffUtil.ItemCallback<Diary>() {
+        override fun areItemsTheSame(oldItem: Diary, newItem: Diary): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Record, newItem: Record): Boolean {
-            return if (oldItem is RecordImpl && newItem is RecordImpl) {
+        override fun areContentsTheSame(oldItem: Diary, newItem: Diary): Boolean {
+            return if (oldItem is DiaryImpl && newItem is DiaryImpl) {
                 oldItem == newItem
             } else false
         }

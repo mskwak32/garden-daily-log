@@ -10,7 +10,7 @@ class DiaryDetailViewModel @AssistedInject constructor(
     @Assisted private val diaryId: Int,
     private val useCase: GardenUseCase
 ) : ViewModel() {
-    val diary = useCase.observeRecordById(diaryId)
+    val diary = useCase.observeDiaryById(diaryId)
 
     val plantName: LiveData<String> = diary.switchMap {
         liveData {
@@ -24,7 +24,7 @@ class DiaryDetailViewModel @AssistedInject constructor(
 
 
     fun deleteDiary() {
-        diary.value?.let { useCase.deleteRecord(it) }
+        diary.value?.let { useCase.deleteDiary(it) }
     }
 
     @AssistedFactory

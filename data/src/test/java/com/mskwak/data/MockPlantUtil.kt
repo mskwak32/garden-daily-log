@@ -1,10 +1,9 @@
 package com.mskwak.data
 
 import com.mskwak.data.model.AlarmData
+import com.mskwak.data.model.DiaryData
 import com.mskwak.data.model.PlantData
-import com.mskwak.data.model.RecordData
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
 
 object MockPlantUtil {
@@ -19,7 +18,7 @@ object MockPlantUtil {
         memo = null
     )
 
-    fun mockRecord(plantId: Int) = RecordData(
+    fun mockDiary(plantId: Int) = DiaryData(
         plantId = plantId,
         memo = "memo",
         pictureList = listOf(),

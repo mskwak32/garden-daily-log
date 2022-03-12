@@ -5,11 +5,11 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.mskwak.domain.model.Record
+import com.mskwak.domain.model.Diary
 import java.time.LocalDate
 
 @Entity(
-    tableName = "gardeningRecord",
+    tableName = "diary",
     foreignKeys = [ForeignKey(
         entity = PlantData::class,
         parentColumns = ["id"],
@@ -18,18 +18,18 @@ import java.time.LocalDate
     )],
     indices = [Index(value = ["plantId"])]
 )
-data class RecordData(
+data class DiaryData(
     @PrimaryKey(autoGenerate = true) override val id: Int = 0,
     override val plantId: Int,
     override val memo: String,
     override val pictureList: List<Uri>?,
     override val createdDate: LocalDate
-) : Record {
-    constructor(record: Record) : this(
-        id = record.id,
-        plantId = record.plantId,
-        memo = record.memo,
-        pictureList = record.pictureList,
-        createdDate = record.createdDate
+) : Diary {
+    constructor(diary: Diary) : this(
+        id = diary.id,
+        plantId = diary.plantId,
+        memo = diary.memo,
+        pictureList = diary.pictureList,
+        createdDate = diary.createdDate
     )
 }

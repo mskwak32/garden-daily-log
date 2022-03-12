@@ -6,7 +6,7 @@ import androidx.lifecycle.*
 import com.mskwak.domain.AppSettings
 import com.mskwak.domain.usecase.GardenUseCase
 import com.mskwak.presentation.R
-import com.mskwak.presentation.model.RecordImpl
+import com.mskwak.presentation.model.DiaryImpl
 import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -51,7 +51,7 @@ class EditDiaryViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            val record = RecordImpl(
+            val diary = DiaryImpl(
                 plantId!!,
                 contentText.value ?: "",
                 _pictureList.value?.toList() ?: emptyList(),
@@ -61,11 +61,11 @@ class EditDiaryViewModel @Inject constructor(
 
             if (isUpdate) {
                 deleteOldPicture()
-                useCase.updateRecord(record)
+                useCase.updateDiary(diary)
             } else {
-                useCase.addRecord(record)
+                useCase.addDiary(diary)
             }
-            //새로 추가한 사진 중 record로 저장되는 사진을 제외하고 세팅 -> 삭제되도록함
+            //새로 추가한 사진 중 diary로 저장되는 사진을 제외하고 세팅 -> 삭제되도록함
             newPictures =
                 newPictures.filter { _pictureList.value?.contains(it) == false }.toMutableList()
             _onSavedEvent.call()
@@ -86,7 +86,7 @@ class EditDiaryViewModel @Inject constructor(
     }
 
     fun isPictureFull(): Boolean {
-        return if (_pictureList.value?.size ?: 0 <= AppSettings.MAX_PICTURE_PER_RECORD) {
+        return if (_pictureList.value?.size ?: 0 <= AppSettings.MAX_PICTURE_PER_DIARY) {
             false
         } else {
             _snackbarMessage.value = R.string.message_no_more_picture
@@ -110,7 +110,7 @@ class EditDiaryViewModel @Inject constructor(
 
     fun loadDiary(id: Int) {
         viewModelScope.launch {
-            useCase.getRecordById(id).let {
+            useCase.getDiaryById(id).let {
                 diaryId = it.id
                 plantId = it.plantId
                 diaryDate.value = it.createdDate

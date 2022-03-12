@@ -5,10 +5,10 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
+import com.mskwak.domain.model.Diary
 import com.mskwak.domain.model.Plant
-import com.mskwak.domain.model.Record
+import com.mskwak.domain.repository.DiaryRepository
 import com.mskwak.domain.repository.PlantRepository
-import com.mskwak.domain.repository.RecordRepository
 import kotlinx.coroutines.*
 import java.time.LocalDate
 import java.time.Period
@@ -16,7 +16,7 @@ import java.time.temporal.ChronoUnit
 
 class GardenUseCase(
     private val plantRepository: PlantRepository,
-    private val recordRepository: RecordRepository,
+    private val diaryRepository: DiaryRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
@@ -62,7 +62,7 @@ class GardenUseCase(
 
     fun deletePlant(plant: Plant) {
         CoroutineScope(ioDispatcher).launch {
-            recordRepository.deleteRecordsByPlantId(plant.id)
+            diaryRepository.deleteDiariesByPlantId(plant.id)
             plantRepository.deletePlant(plant)
         }
     }
@@ -71,34 +71,34 @@ class GardenUseCase(
         plantRepository.getPlantName(plantId)
     }
 
-    fun getRecords(): LiveData<List<Record>> {
-        return recordRepository.observeRecods()
+    fun getDiaries(): LiveData<List<Diary>> {
+        return diaryRepository.observeDiaries()
     }
 
-    fun observeRecordsByPlantId(plantId: Int): LiveData<List<Record>> {
-        return recordRepository.observeRecordsByPlantId(plantId)
+    fun observeDiariesByPlantId(plantId: Int): LiveData<List<Diary>> {
+        return diaryRepository.observeDiariesByPlantId(plantId)
     }
 
-    suspend fun addRecord(record: Record) = withContext(ioDispatcher) {
-        recordRepository.addRecord(record)
+    suspend fun addDiary(diary: Diary) = withContext(ioDispatcher) {
+        diaryRepository.addDiary(diary)
     }
 
-    suspend fun updateRecord(record: Record) = withContext(ioDispatcher) {
-        recordRepository.updateRecord(record)
+    suspend fun updateDiary(diary: Diary) = withContext(ioDispatcher) {
+        diaryRepository.updateDiary(diary)
     }
 
-    fun deleteRecord(record: Record) {
+    fun deleteDiary(diary: Diary) {
         CoroutineScope(ioDispatcher).launch {
-            recordRepository.deleteRecord(record)
+            diaryRepository.deleteDiary(diary)
         }
     }
 
-    suspend fun getRecordById(recordId: Int): Record {
-        return recordRepository.getRecordById(recordId)
+    suspend fun getDiaryById(diaryId: Int): Diary {
+        return diaryRepository.getDiaryById(diaryId)
     }
 
-    fun observeRecordById(recordId: Int): LiveData<Record> {
-        return recordRepository.observeRecordById(recordId)
+    fun observeDiaryById(diaryId: Int): LiveData<Diary> {
+        return diaryRepository.observeDiaryById(diaryId)
     }
 
     /**

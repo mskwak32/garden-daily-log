@@ -2,10 +2,10 @@ package com.mskwak.gardendailylog.di
 
 import android.app.Application
 import androidx.room.Room
+import com.mskwak.data.source.DiaryDao
 import com.mskwak.data.source.FileDataSource
 import com.mskwak.data.source.GardenDatabase
 import com.mskwak.data.source.PlantDao
-import com.mskwak.data.source.RecordDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,8 +30,8 @@ class DataSourceModule {
 
     @Provides
     @Singleton
-    fun providesRecordDao(db: GardenDatabase): RecordDao {
-        return db.recordDao()
+    fun providesRecordDao(db: GardenDatabase): DiaryDao {
+        return db.diaryDao()
     }
 
     @Provides

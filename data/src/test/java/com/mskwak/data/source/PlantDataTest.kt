@@ -16,12 +16,12 @@ class PlantDataTest : LocalDatabase() {
     var instantExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var plantDao: PlantDao
-    private lateinit var recordDao: RecordDao
+    private lateinit var diaryDao: DiaryDao
 
     @Before
     fun init() {
         plantDao = db.plantDao()
-        recordDao = db.recordDao()
+        diaryDao = db.diaryDao()
     }
 
     @Test
@@ -29,19 +29,19 @@ class PlantDataTest : LocalDatabase() {
         val mockPlant = MockPlantUtil.mockPlant()
         plantDao.insertPlant(mockPlant)
         val plant = plantDao.observePlants().getOrAwaitValue().first().also {
-            val mockRecords = listOf(
-                MockPlantUtil.mockRecord(it.id),
-                MockPlantUtil.mockRecord(it.id)
+            val mockDiaries = listOf(
+                MockPlantUtil.mockDiary(it.id),
+                MockPlantUtil.mockDiary(it.id)
             )
-            mockRecords.forEach { record ->
-                recordDao.insertRecord(record)
+            mockDiaries.forEach { record ->
+                diaryDao.insertDiary(record)
             }
         }
-        var records = recordDao.observeRecordsByPlantId(plant.id).getOrAwaitValue()
+        var records = diaryDao.observeDiariesByPlantId(plant.id).getOrAwaitValue()
         assert(records.isNotEmpty())
 
         plantDao.deletePlant(plant)
-        records = recordDao.observeRecordsByPlantId(plant.id).getOrAwaitValue()
+        records = diaryDao.observeDiariesByPlantId(plant.id).getOrAwaitValue()
 
         assert(records.isEmpty())
     }
