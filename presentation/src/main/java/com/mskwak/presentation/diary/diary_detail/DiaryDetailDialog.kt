@@ -1,5 +1,6 @@
 package com.mskwak.presentation.diary.diary_detail
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -9,15 +10,24 @@ import android.widget.PopupMenu
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mskwak.presentation.R
+import com.mskwak.presentation.binding.localDateToText
 import com.mskwak.presentation.custom_component.ZoomOutPageTransformer
 import com.mskwak.presentation.databinding.DialogDiaryDetailBinding
+import com.mskwak.presentation.dialog.DeleteConfirmDialog
+import com.mskwak.presentation.diary.edit_diary.EditDiaryDialog
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DiaryDetailDialog(private val recordId: Int) : BottomSheetDialogFragment() {
     private lateinit var binding: DialogDiaryDetailBinding
-    private val viewModel by viewModels<DiaryDetailViewModel>()
     private val pictureAdapter by lazy { PictureViewPagerAdapter() }
+
+    @Inject
+    lateinit var viewModelFactory: DiaryDetailViewModel.DiaryDetailViewModelFactory
+    private val viewModel by viewModels<DiaryDetailViewModel> {
+        DiaryDetailViewModel.provideFactory(viewModelFactory, recordId)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,8 +46,6 @@ class DiaryDetailDialog(private val recordId: Int) : BottomSheetDialogFragment()
         super.onViewCreated(view, savedInstanceState)
         initViewPager()
         initObserver()
-
-        viewModel.loadDiary(recordId)
     }
 
     private fun initViewPager() {
@@ -48,9 +56,12 @@ class DiaryDetailDialog(private val recordId: Int) : BottomSheetDialogFragment()
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun initObserver() {
-        viewModel.pictureList.observe(viewLifecycleOwner) { list ->
-            pictureAdapter.itemList = list
+        viewModel.diary.observe(viewLifecycleOwner) { diary ->
+            binding.date.localDateToText(diary.createdDate)
+            binding.memoText.text = diary.memo.ifBlank { getString(R.string.diary_content_empty) }
+            pictureAdapter.itemList = diary.pictureList
             pictureAdapter.notifyDataSetChanged()
         }
     }
@@ -71,15 +82,29 @@ class DiaryDetailDialog(private val recordId: Int) : BottomSheetDialogFragment()
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menu_edit -> {
-                        //TODO 일지 수정
+                        showEditDiary()
                     }
                     R.id.menu_delete -> {
-                        //TODO 일지 삭제 다이얼로그
+                        showDeleteConfirm()
                     }
                 }
                 true
             }
             show()
         }
+    }
+
+    private fun showDeleteConfirm() {
+        DeleteConfirmDialog().apply {
+            deleteClickListener = {
+                viewModel.deleteDiary()
+                this@DiaryDetailDialog.dismiss()
+            }
+        }.show(childFragmentManager, null)
+    }
+
+    private fun showEditDiary() {
+        EditDiaryDialog(viewModel.diary.value!!.plantId, viewModel.diary.value!!.id)
+            .show(childFragmentManager, null)
     }
 }

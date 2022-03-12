@@ -17,7 +17,7 @@ class PlantDetailViewModel @AssistedInject constructor(
 ) : ViewModel() {
 
     var plant = useCase.observePlant(plantId)
-    var records = useCase.observeRecordByPlantId(plantId).map { list ->
+    var records = useCase.observeRecordsByPlantId(plantId).map { list ->
         val maxSize = min(list.size, AppSettings.MAX_DIARY_SIZE_ON_PLANT_DETAIL)    //정한 갯수까지만 노출
         list.subList(0, maxSize).map { RecordImpl(it) }
     }

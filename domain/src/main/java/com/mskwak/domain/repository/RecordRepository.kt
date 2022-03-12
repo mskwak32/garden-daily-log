@@ -11,5 +11,6 @@ interface RecordRepository {
     fun observeRecordsByPlantId(plantId: Int): LiveData<List<Record>>
     fun observeRecods(): LiveData<List<Record>>
     suspend fun getRecordById(id: Int): Record
+    fun observeRecordById(id: Int): LiveData<Record>
     suspend fun deleteRecordsByPlantId(plantId: Int)
 }

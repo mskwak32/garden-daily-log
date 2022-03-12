@@ -1,43 +1,46 @@
 package com.mskwak.presentation.diary.diary_detail
 
-import android.net.Uri
 import androidx.lifecycle.*
 import com.mskwak.domain.usecase.GardenUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
-import java.time.LocalDate
-import javax.inject.Inject
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 
-@HiltViewModel
-class DiaryDetailViewModel @Inject constructor(
+class DiaryDetailViewModel @AssistedInject constructor(
+    @Assisted private val diaryId: Int,
     private val useCase: GardenUseCase
 ) : ViewModel() {
+    val diary = useCase.observeRecordById(diaryId)
 
-    private val _plantName = MutableLiveData<String>()
-    val plantName: LiveData<String> = _plantName
-
-    private val _date = MutableLiveData<LocalDate>()
-    val date: LiveData<LocalDate> = _date
-
-    private val _memo = MutableLiveData<String>()
-    val memo: LiveData<String> = _memo
-
-    private val _pictureList = MutableLiveData<List<Uri>>()
-    val pictureList: LiveData<List<Uri>> = _pictureList
-
-    val isPictureListEmpty = pictureList.switchMap {
+    val plantName: LiveData<String> = diary.switchMap {
         liveData {
-            emit(it.isNullOrEmpty())
+            useCase.getPlantName(it.plantId)
         }
     }
 
-    fun loadDiary(recordId: Int) {
-        viewModelScope.launch {
-            useCase.getRecordById(recordId).let {
-                _plantName.value = useCase.getPlantName(it.plantId)
-                _date.value = it.createdDate
-                _memo.value = it.memo
-                _pictureList.value = it.pictureList
+    val isPictureListEmpty = diary.map {
+        it.pictureList.isNullOrEmpty()
+    }
+
+
+    fun deleteDiary() {
+        diary.value?.let { useCase.deleteRecord(it) }
+    }
+
+    @AssistedFactory
+    interface DiaryDetailViewModelFactory {
+        fun create(diaryId: Int): DiaryDetailViewModel
+    }
+
+    companion object {
+
+        @Suppress("UNCHECKED_CAST")
+        fun provideFactory(
+            assistedFactory: DiaryDetailViewModelFactory,
+            diaryId: Int
+        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return assistedFactory.create(diaryId) as T
             }
         }
     }

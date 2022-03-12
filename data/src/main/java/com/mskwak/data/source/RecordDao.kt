@@ -25,6 +25,9 @@ interface RecordDao {
     @Query("SELECT * FROM gardeningRecord WHERE id = :id")
     suspend fun getRecordById(id: Int): RecordData
 
+    @Query("SELECT * FROM gardeningRecord WHERE id = :id")
+    fun observeRecordbyId(id: Int): LiveData<RecordData>
+
     @Query("SELECT * FROM gardeningRecord WHERE plantId = :plantId")
     suspend fun getRecordsByPlantId(plantId: Int): List<RecordData>
 }

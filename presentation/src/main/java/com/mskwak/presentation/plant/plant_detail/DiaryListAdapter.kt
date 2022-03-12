@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mskwak.domain.model.Record
+import com.mskwak.presentation.R
 import com.mskwak.presentation.binding.setUri
 import com.mskwak.presentation.databinding.LayoutItemDiaryBinding
 import com.mskwak.presentation.model.RecordImpl
@@ -46,6 +47,8 @@ class DiaryListAdapter(private val viewModel: PlantDetailViewModel) :
         private fun setPicture(record: Record) {
             if (record.pictureList?.isNotEmpty() == true) {
                 binding.picture.setUri(record.pictureList!!.first(), true)
+            } else {
+                binding.picture.setBackgroundResource(R.drawable.plant_default)
             }
         }
     }

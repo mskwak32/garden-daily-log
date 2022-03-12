@@ -119,6 +119,7 @@ class EditDiaryViewModel @Inject constructor(
                     _pictureList.value = list.toMutableList()
                     originPictures = list
                 }
+                isUpdate = true
             }
         }
     }

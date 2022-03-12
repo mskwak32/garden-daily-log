@@ -48,6 +48,10 @@ class RecordRepositoryImpl @Inject constructor(
         return recordDao.getRecordById(id)
     }
 
+    override fun observeRecordById(id: Int): LiveData<Record> {
+        return recordDao.observeRecordbyId(id).map { it }
+    }
+
     private fun deleteRecordPictures(record: Record) {
         record.pictureList?.forEach {
             fileDataSource.deletePicture(it)

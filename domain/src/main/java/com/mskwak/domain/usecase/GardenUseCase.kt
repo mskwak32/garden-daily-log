@@ -75,7 +75,7 @@ class GardenUseCase(
         return recordRepository.observeRecods()
     }
 
-    fun observeRecordByPlantId(plantId: Int): LiveData<List<Record>> {
+    fun observeRecordsByPlantId(plantId: Int): LiveData<List<Record>> {
         return recordRepository.observeRecordsByPlantId(plantId)
     }
 
@@ -95,6 +95,10 @@ class GardenUseCase(
 
     suspend fun getRecordById(recordId: Int): Record {
         return recordRepository.getRecordById(recordId)
+    }
+
+    fun observeRecordById(recordId: Int): LiveData<Record> {
+        return recordRepository.observeRecordById(recordId)
     }
 
     /**

@@ -8,7 +8,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.mskwak.domain.model.Plant
 import com.mskwak.domain.usecase.PlantListSortOrder
@@ -16,7 +15,7 @@ import com.mskwak.presentation.R
 import com.mskwak.presentation.base.BaseFragment
 import com.mskwak.presentation.custom_component.ListItemDecoVertical
 import com.mskwak.presentation.databinding.FragmentHomeBinding
-import com.mskwak.presentation.dialog.DeletePlantConfirmDialog
+import com.mskwak.presentation.dialog.DeleteConfirmDialog
 import com.mskwak.presentation.plant.edit_plant.EditPlantDialog
 import com.mskwak.presentation.plant.plant_detail.PlantDetailDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -108,7 +107,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun openDeleteConfirm(plant: Plant) {
-        DeletePlantConfirmDialog().apply {
+        DeleteConfirmDialog().apply {
             deleteClickListener = {
                 viewModel.deletePlant(plant)
             }

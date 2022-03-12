@@ -3,7 +3,6 @@ package com.mskwak.presentation.plant.plant_detail
 import android.annotation.SuppressLint
 import android.util.TypedValue
 import android.view.Gravity
-import android.view.View
 import android.widget.PopupMenu
 import androidx.fragment.app.viewModels
 import com.google.android.material.appbar.AppBarLayout
@@ -65,10 +64,6 @@ class PlantDetailDialog(private val plantId: Int) :
     private fun initObserver() {
         viewModel.plant.observe(viewLifecycleOwner) { plant ->
             setupPlant(plant)
-        }
-        viewModel.isEmptyRecords.observe(viewLifecycleOwner) { isEmpty ->
-            binding.emptyDiaryView.visibility = if (isEmpty) View.VISIBLE else View.GONE
-            binding.moreDiaryButton.visibility = if (isEmpty) View.GONE else View.VISIBLE
         }
         viewModel.records.observe(viewLifecycleOwner) { records ->
             diaryAdapter.submitList(records)
