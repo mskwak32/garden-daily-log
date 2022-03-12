@@ -13,8 +13,8 @@ class DiaryDetailViewModel @AssistedInject constructor(
     val diary = useCase.observeDiaryById(diaryId)
 
     val plantName: LiveData<String> = diary.switchMap {
-        liveData {
-            useCase.getPlantName(it.plantId)
+        liveData(context = viewModelScope.coroutineContext) {
+            emit(useCase.getPlantName(it.plantId))
         }
     }
 
