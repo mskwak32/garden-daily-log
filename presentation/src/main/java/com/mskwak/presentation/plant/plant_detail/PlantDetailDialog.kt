@@ -14,8 +14,10 @@ import com.mskwak.presentation.binding.localTimeToText
 import com.mskwak.presentation.binding.setUri
 import com.mskwak.presentation.custom_component.ListItemDecoVertical
 import com.mskwak.presentation.databinding.DialogPlantDetailBinding
+import com.mskwak.presentation.dialog.DeleteConfirmDialog
 import com.mskwak.presentation.diary.diary_detail.DiaryDetailDialog
 import com.mskwak.presentation.diary.edit_diary.EditDiaryDialog
+import com.mskwak.presentation.plant.edit_plant.EditPlantDialog
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -128,10 +130,10 @@ class PlantDetailDialog(private val plantId: Int) :
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menu_edit -> {
-                        //TODO 식물 수정
+                        openEditPlant()
                     }
                     R.id.menu_delete -> {
-                        //TODO 식물 삭제 다이얼로그
+                        showDeleteConfirm()
                     }
                 }
                 true
@@ -142,5 +144,18 @@ class PlantDetailDialog(private val plantId: Int) :
 
     private fun openDiaryDetail(diaryId: Int) {
         DiaryDetailDialog(diaryId).show(childFragmentManager, null)
+    }
+
+    private fun showDeleteConfirm() {
+        DeleteConfirmDialog().apply {
+            deleteClickListener = {
+                viewModel.deletePlant()
+                this@PlantDetailDialog.dismiss()
+            }
+        }.show(childFragmentManager, null)
+    }
+
+    private fun openEditPlant() {
+        EditPlantDialog(viewModel.plant.value?.id).show(childFragmentManager, null)
     }
 }

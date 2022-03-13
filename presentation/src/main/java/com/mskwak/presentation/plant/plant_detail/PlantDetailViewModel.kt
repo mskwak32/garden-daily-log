@@ -45,6 +45,10 @@ class PlantDetailViewModel @AssistedInject constructor(
         return plant.value?.let { useCase.getDdayText(it) } ?: ""
     }
 
+    fun deletePlant() {
+        if (plant.value != null) useCase.deletePlant(plant.value!!)
+    }
+
     @AssistedFactory
     interface PlantDetailViewModelAssistedFactory {
         fun create(plantId: Int): PlantDetailViewModel
