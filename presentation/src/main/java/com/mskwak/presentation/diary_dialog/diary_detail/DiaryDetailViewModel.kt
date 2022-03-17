@@ -1,4 +1,4 @@
-package com.mskwak.presentation.diary.diary_detail
+package com.mskwak.presentation.diary_dialog.diary_detail
 
 import androidx.lifecycle.*
 import com.mskwak.domain.usecase.GardenUseCase
@@ -10,7 +10,7 @@ class DiaryDetailViewModel @AssistedInject constructor(
     @Assisted private val diaryId: Int,
     private val useCase: GardenUseCase
 ) : ViewModel() {
-    val diary = useCase.observeDiaryById(diaryId)
+    val diary = useCase.getDiaryLiveData(diaryId)
 
     val plantName: LiveData<String> = diary.switchMap {
         liveData(context = viewModelScope.coroutineContext) {

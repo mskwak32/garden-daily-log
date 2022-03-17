@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
+import com.mskwak.domain.AppSettings
 import com.mskwak.domain.model.Diary
 import com.mskwak.domain.model.Plant
 import com.mskwak.domain.repository.DiaryRepository
@@ -21,7 +22,7 @@ class GardenUseCase(
 ) {
 
     fun getPlantsWithSortOrder(sortOrder: PlantListSortOrder): LiveData<List<Plant>> {
-        val plantsLiveData = plantRepository.observePlants()
+        val plantsLiveData = plantRepository.getPlants()
         return plantsLiveData.switchMap { list ->
             liveData {
                 emit(list.applySort(sortOrder))
@@ -44,8 +45,8 @@ class GardenUseCase(
             }
         }
 
-    fun observePlant(plantId: Int): LiveData<Plant> {
-        return plantRepository.observePlant(plantId)
+    fun getPlantLiveData(plantId: Int): LiveData<Plant> {
+        return plantRepository.getPlantLiveData(plantId)
     }
 
     suspend fun getPlant(plantId: Int): Plant = withContext(ioDispatcher) {
@@ -71,12 +72,11 @@ class GardenUseCase(
         plantRepository.getPlantName(plantId)
     }
 
-    fun getDiaries(): LiveData<List<Diary>> {
-        return diaryRepository.observeDiaries()
-    }
-
-    fun observeDiariesByPlantId(plantId: Int): LiveData<List<Diary>> {
-        return diaryRepository.observeDiariesByPlantId(plantId)
+    fun getDiariesByPlantId(plantId: Int): LiveData<List<Diary>> {
+        return diaryRepository.getDiariesByPlantId(
+            plantId,
+            AppSettings.MAX_DIARY_SIZE_ON_PLANT_DETAIL
+        )
     }
 
     suspend fun addDiary(diary: Diary) = withContext(ioDispatcher) {
@@ -93,13 +93,43 @@ class GardenUseCase(
         }
     }
 
-    suspend fun getDiaryById(diaryId: Int): Diary {
-        return diaryRepository.getDiaryById(diaryId)
+    suspend fun getDiary(diaryId: Int): Diary {
+        return diaryRepository.getDiary(diaryId)
     }
 
-    fun observeDiaryById(diaryId: Int): LiveData<Diary> {
-        return diaryRepository.observeDiaryById(diaryId)
+    fun getDiaryLiveData(diaryId: Int): LiveData<Diary> {
+        return diaryRepository.getDiaryLiveData(diaryId)
     }
+
+    suspend fun getPlantNames(): Map<Int, String> {
+        return plantRepository.getPlantNames()
+    }
+
+    fun getDiaries(
+        year: Int,
+        month: Int,
+        sortOrder: DiaryListSortOrder,
+        plantId: Int? = null
+    ): LiveData<List<Diary>> {
+        val diariesLiveData = diaryRepository.getDiaries(year, month, plantId)
+        return diariesLiveData.switchMap { list ->
+            liveData {
+                emit(list.applySort(sortOrder))
+            }
+        }
+    }
+
+    private suspend fun List<Diary>.applySort(sortOrder: DiaryListSortOrder): List<Diary> =
+        withContext(Dispatchers.Default) {
+            when (sortOrder) {
+                DiaryListSortOrder.CREATED_LATEST -> {
+                    sortedByDescending { diary -> diary.createdDate }
+                }
+                DiaryListSortOrder.CREATED_OLDEST -> {
+                    sortedBy { diary -> diary.createdDate }
+                }
+            }
+        }
 
     /**
      * 물주기 주기설정이 없는 경우 마지막 물준날짜로부터 D+00

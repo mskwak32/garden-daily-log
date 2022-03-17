@@ -2,7 +2,6 @@ package com.mskwak.data.model
 
 import android.net.Uri
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.mskwak.domain.model.Diary
@@ -10,12 +9,6 @@ import java.time.LocalDate
 
 @Entity(
     tableName = "diary",
-    foreignKeys = [ForeignKey(
-        entity = PlantData::class,
-        parentColumns = ["id"],
-        childColumns = ["plantId"],
-        onUpdate = ForeignKey.CASCADE
-    )],
     indices = [Index(value = ["plantId"])]
 )
 data class DiaryData(

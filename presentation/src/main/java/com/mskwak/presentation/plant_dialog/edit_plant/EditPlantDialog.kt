@@ -1,4 +1,4 @@
-package com.mskwak.presentation.plant.edit_plant
+package com.mskwak.presentation.plant_dialog.edit_plant
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog

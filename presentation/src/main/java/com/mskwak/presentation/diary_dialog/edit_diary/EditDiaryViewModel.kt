@@ -1,4 +1,4 @@
-package com.mskwak.presentation.diary.edit_diary
+package com.mskwak.presentation.diary_dialog.edit_diary
 
 import android.graphics.Bitmap
 import android.net.Uri
@@ -110,7 +110,7 @@ class EditDiaryViewModel @Inject constructor(
 
     fun loadDiary(id: Int) {
         viewModelScope.launch {
-            useCase.getDiaryById(id).let {
+            useCase.getDiary(id).let {
                 diaryId = it.id
                 plantId = it.plantId
                 diaryDate.value = it.createdDate

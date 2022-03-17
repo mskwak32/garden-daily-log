@@ -3,60 +3,77 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="diary"
-            type="com.mskwak.domain.model.Diary" />
-
-        <variable
-            name="viewModel"
-            type="com.mskwak.presentation.plant.plant_detail.PlantDetailViewModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rectangle_stroke_box_bg"
-        android:padding="4dp">
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/picture"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="8dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/plant_default"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/roundedCorner" />
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/dateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:textColor="@color/dim_black_70"
-            app:layout_constraintLeft_toRightOf="@id/picture"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:localDate="@{diary.createdDate}"
-            tools:text="2022.02.22" />
+            tools:text="03.16\n수" />
 
-        <TextView
-            android:id="@+id/memoText"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:ellipsize="end"
-            android:lines="2"
-            android:maxLines="2"
-            android:text="@{diary.memo}"
-            app:layout_constraintLeft_toLeftOf="@id/dateText"
+            android:layout_marginLeft="50dp"
+            android:background="@drawable/card_gray_bg"
+            android:padding="8dp"
+            app:layout_constraintLeft_toRightOf="@id/dateText"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dateText"
-            tools:text="memo" />
+            app:layout_constraintTop_toTopOf="parent">
 
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/picture"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/plant_default"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/roundedCorner" />
+
+            <ImageView
+                android:id="@+id/plantIcon"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_leaf"
+                app:layout_constraintBottom_toBottomOf="@id/plantName"
+                app:layout_constraintLeft_toRightOf="@id/picture"
+                app:layout_constraintTop_toTopOf="@id/plantName" />
+
+            <TextView
+                android:id="@+id/plantName"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="4dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toRightOf="@id/plantIcon"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="식물이름" />
+
+            <TextView
+                android:id="@+id/memoText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                app:layout_constraintLeft_toLeftOf="@id/plantIcon"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/plantName"
+                tools:text="memo" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

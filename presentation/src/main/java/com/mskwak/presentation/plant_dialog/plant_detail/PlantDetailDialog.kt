@@ -1,4 +1,4 @@
-package com.mskwak.presentation.plant.plant_detail
+package com.mskwak.presentation.plant_dialog.plant_detail
 
 import android.annotation.SuppressLint
 import android.util.TypedValue
@@ -15,9 +15,9 @@ import com.mskwak.presentation.binding.setUri
 import com.mskwak.presentation.custom_component.ListItemDecoVertical
 import com.mskwak.presentation.databinding.DialogPlantDetailBinding
 import com.mskwak.presentation.dialog.DeleteConfirmDialog
-import com.mskwak.presentation.diary.diary_detail.DiaryDetailDialog
-import com.mskwak.presentation.diary.edit_diary.EditDiaryDialog
-import com.mskwak.presentation.plant.edit_plant.EditPlantDialog
+import com.mskwak.presentation.diary_dialog.diary_detail.DiaryDetailDialog
+import com.mskwak.presentation.diary_dialog.edit_diary.EditDiaryDialog
+import com.mskwak.presentation.plant_dialog.edit_plant.EditPlantDialog
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -29,7 +29,7 @@ class PlantDetailDialog(private val plantId: Int) :
     BaseFullScreenDialog<DialogPlantDetailBinding>() {
 
     override val layoutRes: Int = R.layout.dialog_plant_detail
-    private val diaryAdapter by lazy { DiaryListAdapter(viewModel) }
+    private val diaryAdapter by lazy { DiarySummaryAdapter(viewModel) }
 
     @Inject
     lateinit var viewModelAssistedFactory: PlantDetailViewModel.PlantDetailViewModelAssistedFactory

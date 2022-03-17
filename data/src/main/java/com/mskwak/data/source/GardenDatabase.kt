@@ -8,7 +8,8 @@ import com.mskwak.data.model.PlantData
 
 @Database(
     entities = [PlantData::class, DiaryData::class],
-    version = 1
+    version = 1,
+    exportSchema = true
 )
 @TypeConverters(DatabaseConverter::class)
 abstract class GardenDatabase : RoomDatabase() {

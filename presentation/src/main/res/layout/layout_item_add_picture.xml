@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="com.mskwak.presentation.diary.edit_diary.EditDiaryViewModel" />
+            type="com.mskwak.presentation.diary_dialog.edit_diary.EditDiaryViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -38,12 +38,12 @@ class PlantRepositoryImpl @Inject constructor(
         return plantDao.getPlant(plantId)
     }
 
-    override fun observePlants(): LiveData<List<Plant>> {
-        return plantDao.observePlants().map { it }
+    override fun getPlants(): LiveData<List<Plant>> {
+        return plantDao.getPlants().map { it }
     }
 
-    override fun observePlant(plantId: Int): LiveData<Plant> {
-        return plantDao.observePlant(plantId).map { it }
+    override fun getPlantLiveData(plantId: Int): LiveData<Plant> {
+        return plantDao.getPlantLiveData(plantId).map { it }
     }
 
     override suspend fun savePlantPicture(bitmap: Bitmap): Uri {
@@ -64,6 +64,10 @@ class PlantRepositoryImpl @Inject constructor(
 
     override suspend fun getPlantName(plantId: Int): String {
         return plantDao.getPlantName(plantId)
+    }
+
+    override suspend fun getPlantNames(): Map<Int, String> {
+        return plantDao.getPlantNames()
     }
 
 }

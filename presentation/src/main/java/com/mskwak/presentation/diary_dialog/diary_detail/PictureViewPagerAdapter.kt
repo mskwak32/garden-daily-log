@@ -1,4 +1,4 @@
-package com.mskwak.presentation.diary.diary_detail
+package com.mskwak.presentation.diary_dialog.diary_detail
 
 import android.net.Uri
 import android.view.LayoutInflater

@@ -19,6 +19,12 @@ fun TextViewWithIcon.setFieldEmpty(isFieldEmpty: Boolean) {
     this.setFieldEmpty(isFieldEmpty)
 }
 
+@BindingAdapter("localMonth")
+fun TextView.localMonthToText(localDate: LocalDate?) {
+    val formatter = DateTimeFormatter.ofPattern("yyyy. MM")
+    this.text = localDate?.format(formatter) ?: ""
+}
+
 @BindingAdapter("localDate")
 fun TextView.localDateToText(localDate: LocalDate?) {
     val format = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)

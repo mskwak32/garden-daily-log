@@ -8,14 +8,15 @@ import java.time.LocalTime
 
 object MockPlantUtil {
 
-    fun mockPlant() = PlantData(
+    fun mockPlant(id: Int = 0) = PlantData(
         name = "plant",
         createdDate = LocalDate.now(),
         waterPeriod = 1,
         lastWateringDate = LocalDate.now(),
         wateringAlarm = AlarmData(LocalTime.now(), false),
         pictureUri = null,
-        memo = null
+        memo = null,
+        id = id
     )
 
     fun mockDiary(plantId: Int) = DiaryData(
@@ -23,5 +24,12 @@ object MockPlantUtil {
         memo = "memo",
         pictureList = listOf(),
         createdDate = LocalDate.now()
+    )
+
+    fun mockDiary(plantId: Int, createDate: LocalDate) = DiaryData(
+        plantId = plantId,
+        memo = "memo",
+        pictureList = listOf(),
+        createdDate = createDate
     )
 }

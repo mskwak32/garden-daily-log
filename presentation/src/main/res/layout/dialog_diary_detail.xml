@@ -9,11 +9,11 @@
 
         <variable
             name="viewModel"
-            type="com.mskwak.presentation.diary.diary_detail.DiaryDetailViewModel" />
+            type="com.mskwak.presentation.diary_dialog.diary_detail.DiaryDetailViewModel" />
 
         <variable
             name="dialog"
-            type="com.mskwak.presentation.diary.diary_detail.DiaryDetailDialog" />
+            type="com.mskwak.presentation.diary_dialog.diary_detail.DiaryDetailDialog" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -93,10 +93,10 @@
                     android:id="@+id/viewPager"
                     android:layout_width="300dp"
                     android:layout_height="200dp"
+                    android:visibility="@{viewModel.isPictureListEmpty()? View.GONE : View.VISIBLE}"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:visibility="@{viewModel.isPictureListEmpty()? View.GONE : View.VISIBLE}"
                     tools:background="@color/green_300" />
 
                 <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator

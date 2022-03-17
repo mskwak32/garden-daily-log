@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <CheckedTextView
+        android:id="@+id/chip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/chip_selector"
+        android:checked="true"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLength="10"
+        android:maxLines="1"
+        android:minWidth="60dp"
+        android:padding="8dp"
+        android:textColor="@color/chip_text_color"
+        tools:text="@string/select_all" />
+</layout>

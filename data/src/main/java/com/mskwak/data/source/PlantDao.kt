@@ -20,10 +20,10 @@ interface PlantDao {
     suspend fun getPlant(plantId: Int): PlantData
 
     @Query("SELECT * FROM plant")
-    fun observePlants(): LiveData<List<PlantData>>
+    fun getPlants(): LiveData<List<PlantData>>
 
     @Query("SELECT * FROM plant WHERE id = :plantId")
-    fun observePlant(plantId: Int): LiveData<PlantData>
+    fun getPlantLiveData(plantId: Int): LiveData<PlantData>
 
     @Query("UPDATE plant SET lastWateringDate = :date WHERE id = :plantId")
     suspend fun updateLastWatering(date: LocalDate, plantId: Int)
@@ -33,4 +33,8 @@ interface PlantDao {
 
     @Query("SELECT name FROM plant WHERE id = :plantId")
     suspend fun getPlantName(plantId: Int): String
+
+    @MapInfo(keyColumn = "plantId", valueColumn = "plantName")
+    @Query("SELECT id AS plantId, name AS plantName FROM plant")
+    suspend fun getPlantNames(): Map<Int, String>
 }

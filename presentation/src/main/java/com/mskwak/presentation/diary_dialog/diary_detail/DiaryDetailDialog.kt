@@ -1,4 +1,4 @@
-package com.mskwak.presentation.diary.diary_detail
+package com.mskwak.presentation.diary_dialog.diary_detail
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -14,7 +14,7 @@ import com.mskwak.presentation.binding.localDateToText
 import com.mskwak.presentation.custom_component.ZoomOutPageTransformer
 import com.mskwak.presentation.databinding.DialogDiaryDetailBinding
 import com.mskwak.presentation.dialog.DeleteConfirmDialog
-import com.mskwak.presentation.diary.edit_diary.EditDiaryDialog
+import com.mskwak.presentation.diary_dialog.edit_diary.EditDiaryDialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

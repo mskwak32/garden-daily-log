@@ -1,4 +1,4 @@
-package com.mskwak.presentation.diary.edit_diary
+package com.mskwak.presentation.diary_dialog.edit_diary
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog

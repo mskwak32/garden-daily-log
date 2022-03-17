@@ -12,11 +12,12 @@ interface PlantRepository {
     suspend fun updatePlant(plant: Plant)
     suspend fun deletePlant(plant: Plant)
     suspend fun getPlant(plantId: Int): Plant
-    fun observePlants(): LiveData<List<Plant>>
-    fun observePlant(plantId: Int): LiveData<Plant>
+    fun getPlants(): LiveData<List<Plant>>
+    fun getPlantLiveData(plantId: Int): LiveData<Plant>
     suspend fun savePlantPicture(bitmap: Bitmap): Uri
     suspend fun deletePlantPicture(uri: Uri)
     suspend fun updateLastWateringDate(date: LocalDate, plantId: Int)
     suspend fun updateWateringAlarmOnOff(isActive: Boolean, plantId: Int)
     suspend fun getPlantName(plantId: Int): String
+    suspend fun getPlantNames(): Map<Int, String>
 }
