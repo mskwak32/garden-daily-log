@@ -30,7 +30,6 @@ class DiaryViewModel @Inject constructor(
     val diaries: LiveData<List<Diary>> = _diaries
 
     var selectedPlantId = SELECT_ALL_KEY
-        private set
     private var sortOrder = DiaryListSortOrder.CREATED_LATEST
     private var loadJob: Job? = null
 

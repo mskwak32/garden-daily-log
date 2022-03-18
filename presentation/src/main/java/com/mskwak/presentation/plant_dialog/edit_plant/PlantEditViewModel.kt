@@ -18,7 +18,7 @@ import java.time.LocalTime
 import javax.inject.Inject
 
 @HiltViewModel
-class EditPlantViewModel @Inject constructor(
+class PlantEditViewModel @Inject constructor(
     private val useCase: GardenUseCase
 ) : ViewModel() {
 
@@ -79,7 +79,7 @@ class EditPlantViewModel @Inject constructor(
             )
             if (isUpdatePlant) {
                 //delete old picture
-                this@EditPlantViewModel.pictureUri.value?.let { useCase.deletePicture(it) }
+                this@PlantEditViewModel.pictureUri.value?.let { useCase.deletePicture(it) }
                 useCase.updatePlant(plant)
             } else {
                 useCase.addPlant(plant)
@@ -91,7 +91,7 @@ class EditPlantViewModel @Inject constructor(
     fun loadPlant(plantId: Int) {
         viewModelScope.launch {
             useCase.getPlant(plantId).let { plant ->
-                this@EditPlantViewModel.plantId = plant.id
+                this@PlantEditViewModel.plantId = plant.id
                 _pictureUri.value = plant.pictureUri
                 plantName.value = plant.name
                 plantDate.value = plant.createdDate

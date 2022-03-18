@@ -6,7 +6,7 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.mskwak.presentation.R
 import com.mskwak.presentation.base.BaseFullScreenDialog
-import com.mskwak.presentation.databinding.DialogEditPlantBinding
+import com.mskwak.presentation.databinding.DialogPlantEditBinding
 import com.mskwak.presentation.dialog.SelectPhotoDialog
 import com.mskwak.presentation.dialog.WateringPeriodDialog
 import com.mskwak.presentation.util.setupSnackbar
@@ -15,9 +15,9 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 @AndroidEntryPoint
-class EditPlantDialog(private val plantId: Int?) : BaseFullScreenDialog<DialogEditPlantBinding>() {
-    override val layoutRes: Int = R.layout.dialog_edit_plant
-    private val viewModel by viewModels<EditPlantViewModel>()
+class PlantEditDialog(private val plantId: Int?) : BaseFullScreenDialog<DialogPlantEditBinding>() {
+    override val layoutRes: Int = R.layout.dialog_plant_edit
+    private val viewModel by viewModels<PlantEditViewModel>()
 
     override fun initialize() {
         binding.viewModel = viewModel

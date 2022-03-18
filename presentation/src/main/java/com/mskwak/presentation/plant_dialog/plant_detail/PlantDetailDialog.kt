@@ -5,6 +5,7 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.widget.PopupMenu
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.AppBarLayout
 import com.mskwak.domain.model.Plant
 import com.mskwak.presentation.R
@@ -16,8 +17,9 @@ import com.mskwak.presentation.custom_component.ListItemDecoVertical
 import com.mskwak.presentation.databinding.DialogPlantDetailBinding
 import com.mskwak.presentation.dialog.DeleteConfirmDialog
 import com.mskwak.presentation.diary_dialog.diary_detail.DiaryDetailDialog
-import com.mskwak.presentation.diary_dialog.edit_diary.EditDiaryDialog
-import com.mskwak.presentation.plant_dialog.edit_plant.EditPlantDialog
+import com.mskwak.presentation.diary_dialog.edit_diary.DiaryEditDialog
+import com.mskwak.presentation.home.HomeFragmentDirections
+import com.mskwak.presentation.plant_dialog.edit_plant.PlantEditDialog
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -107,11 +109,13 @@ class PlantDetailDialog(private val plantId: Int) :
     }
 
     fun newDiaryClick() {
-        EditDiaryDialog(plantId, null).show(childFragmentManager, null)
+        DiaryEditDialog(plantId, null).show(childFragmentManager, null)
     }
 
     fun moreDiaryClick() {
         //TODO
+        val action = HomeFragmentDirections.homeToDiary(plantId.toString())
+        findNavController().navigate(action)
     }
 
     fun onBackClick() {
@@ -156,6 +160,6 @@ class PlantDetailDialog(private val plantId: Int) :
     }
 
     private fun openEditPlant() {
-        EditPlantDialog(viewModel.plant.value?.id).show(childFragmentManager, null)
+        PlantEditDialog(viewModel.plant.value?.id).show(childFragmentManager, null)
     }
 }

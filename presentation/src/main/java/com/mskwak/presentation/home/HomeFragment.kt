@@ -14,7 +14,7 @@ import com.mskwak.presentation.custom_component.ListItemDecoVertical
 import com.mskwak.presentation.custom_component.SortAdapter
 import com.mskwak.presentation.databinding.FragmentHomeBinding
 import com.mskwak.presentation.dialog.DeleteConfirmDialog
-import com.mskwak.presentation.plant_dialog.edit_plant.EditPlantDialog
+import com.mskwak.presentation.plant_dialog.edit_plant.PlantEditDialog
 import com.mskwak.presentation.plant_dialog.plant_detail.PlantDetailDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -85,7 +85,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     fun onAddPlantClick() {
-        EditPlantDialog(null).show(childFragmentManager, null)
+        PlantEditDialog(null).show(childFragmentManager, null)
     }
 
     private fun openDeleteConfirm(plant: Plant) {

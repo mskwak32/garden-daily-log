@@ -15,7 +15,7 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
-class EditDiaryViewModel @Inject constructor(
+class DiaryEditViewModel @Inject constructor(
     private val useCase: GardenUseCase
 ) : ViewModel() {
     private var plantId: Int? = null
@@ -126,7 +126,7 @@ class EditDiaryViewModel @Inject constructor(
 
     fun loadPlantName(plantId: Int) {
         viewModelScope.launch {
-            this@EditDiaryViewModel.plantId = plantId
+            this@DiaryEditViewModel.plantId = plantId
             _plantName.value = useCase.getPlantName(plantId)
         }
     }

@@ -7,11 +7,11 @@
 
         <variable
             name="dialog"
-            type="com.mskwak.presentation.plant_dialog.edit_plant.EditPlantDialog" />
+            type="com.mskwak.presentation.plant_dialog.edit_plant.PlantEditDialog" />
 
         <variable
             name="viewModel"
-            type="com.mskwak.presentation.plant_dialog.edit_plant.EditPlantViewModel" />
+            type="com.mskwak.presentation.plant_dialog.edit_plant.PlantEditViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

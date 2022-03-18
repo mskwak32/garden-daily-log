@@ -8,12 +8,37 @@
     <fragment
         android:id="@+id/homeFragmentDest"
         android:name="com.mskwak.presentation.home.HomeFragment"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/home_to_diary"
+            app:destination="@id/diaryFragmentDest" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/diaryFragmentDest"
         android:name="com.mskwak.presentation.diary_page.DiaryFragment"
-        tools:layout="@layout/fragment_diary" />
+        tools:layout="@layout/fragment_diary">
+
+        <argument
+            android:name="plantId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+
+    <action
+        android:id="@+id/action_global_diaryFragmentDest"
+        app:destination="@id/diaryFragmentDest"
+        app:launchSingleTop="true" />
+
+    <action
+        android:id="@+id/action_global_homeFragmentDest"
+        app:destination="@id/homeFragmentDest"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="true"
+        app:launchSingleTop="true" />
 
 
 </navigation>

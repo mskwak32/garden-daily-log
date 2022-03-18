@@ -279,39 +279,44 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@id/diaryTitle" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/diaryList"
+                <FrameLayout
+                    android:id="@+id/diaryLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:minHeight="200dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@id/diaryTitle" />
+                    app:layout_constraintTop_toBottomOf="@id/diaryTitle">
 
-                <LinearLayout
-                    android:id="@+id/emptyDiaryView"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:background="@color/white"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:visibility="@{viewModel.isEmptyList() ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintTop_toTopOf="@id/diaryList">
-
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:background="@drawable/ic_diary" />
-
-                    <TextView
-                        android:id="@+id/emptyDiaryText"
-                        android:layout_width="wrap_content"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/diaryList"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:textSize="16sp"
-                        tools:text="@string/diary_list_empty" />
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-                </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/emptyDiaryView"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="@{viewModel.isEmptyList() ? View.VISIBLE : View.GONE}">
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/ic_diary" />
+
+                        <TextView
+                            android:id="@+id/emptyDiaryText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:textSize="16sp"
+                            tools:text="@string/diary_list_empty" />
+
+                    </LinearLayout>
+
+                </FrameLayout>
 
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -324,9 +329,9 @@
                     android:stateListAnimator="@null"
                     android:text="@string/view_more"
                     android:visibility="@{viewModel.isEmptyList()? View.GONE : View.VISIBLE}"
-                    app:layout_constraintLeft_toLeftOf="@id/diaryList"
-                    app:layout_constraintRight_toRightOf="@id/diaryList"
-                    app:layout_constraintTop_toBottomOf="@id/diaryList" />
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/diaryLayout" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

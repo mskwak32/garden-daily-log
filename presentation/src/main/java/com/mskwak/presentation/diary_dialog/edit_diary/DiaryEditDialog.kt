@@ -9,18 +9,18 @@ import com.google.android.material.snackbar.Snackbar
 import com.mskwak.presentation.R
 import com.mskwak.presentation.base.BaseFullScreenDialog
 import com.mskwak.presentation.custom_component.ListItemDecoHorizontal
-import com.mskwak.presentation.databinding.DialogEditDiaryBinding
+import com.mskwak.presentation.databinding.DialogDiaryEditBinding
 import com.mskwak.presentation.dialog.SelectPhotoDialog
 import com.mskwak.presentation.util.setupSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 
 @AndroidEntryPoint
-class EditDiaryDialog(private val plantId: Int, private val diaryId: Int?) :
-    BaseFullScreenDialog<DialogEditDiaryBinding>() {
+class DiaryEditDialog(private val plantId: Int, private val diaryId: Int?) :
+    BaseFullScreenDialog<DialogDiaryEditBinding>() {
 
-    override val layoutRes: Int = R.layout.dialog_edit_diary
-    private val viewModel by viewModels<EditDiaryViewModel>()
+    override val layoutRes: Int = R.layout.dialog_diary_edit
+    private val viewModel by viewModels<DiaryEditViewModel>()
     private val pictureAdapter by lazy { PictureListAdapter(viewModel) }
 
     override fun initialize() {

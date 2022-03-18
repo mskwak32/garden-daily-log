@@ -24,5 +24,18 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
         val navController = navHost.navController
         binding.bottomNav.setupWithNavController(navController)
+        binding.bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.homeFragmentDest -> {
+                    navController.navigate(R.id.action_global_homeFragmentDest)
+                    true
+                }
+                R.id.diaryFragmentDest -> {
+                    navController.navigate(R.id.action_global_diaryFragmentDest)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 }

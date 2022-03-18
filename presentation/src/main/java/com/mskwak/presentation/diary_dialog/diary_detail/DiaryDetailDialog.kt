@@ -14,7 +14,7 @@ import com.mskwak.presentation.binding.localDateToText
 import com.mskwak.presentation.custom_component.ZoomOutPageTransformer
 import com.mskwak.presentation.databinding.DialogDiaryDetailBinding
 import com.mskwak.presentation.dialog.DeleteConfirmDialog
-import com.mskwak.presentation.diary_dialog.edit_diary.EditDiaryDialog
+import com.mskwak.presentation.diary_dialog.edit_diary.DiaryEditDialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -104,7 +104,7 @@ class DiaryDetailDialog(private val diaryId: Int) : BottomSheetDialogFragment() 
     }
 
     private fun showEditDiary() {
-        EditDiaryDialog(viewModel.diary.value!!.plantId, viewModel.diary.value!!.id)
+        DiaryEditDialog(viewModel.diary.value!!.plantId, viewModel.diary.value!!.id)
             .show(childFragmentManager, null)
     }
 }

@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
+import androidx.navigation.fragment.navArgs
 import com.mskwak.domain.model.Diary
 import com.mskwak.domain.usecase.DiaryListSortOrder
 import com.mskwak.presentation.R
@@ -25,6 +26,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>() {
     private val viewModel by viewModels<DiaryViewModel>()
     private val filterAdapter by lazy { FilterAdapter(viewModel) }
     private val diaryListAdapter by lazy { DiaryListAdapter(viewModel) }
+    private val args by navArgs<DiaryFragmentArgs>()
 
     override fun initialize() {
         binding.fragment = this
@@ -64,6 +66,10 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>() {
         binding.plantFilter.apply {
             adapter = filterAdapter
             addItemDecoration(ListItemDecoHorizontal(dividerWidth))
+        }
+
+        if (args.plantId?.toIntOrNull() != null) {
+            viewModel.selectedPlantId = args.plantId!!.toInt()
         }
 
         viewModel.plantNameMap.observe(viewLifecycleOwner) {
