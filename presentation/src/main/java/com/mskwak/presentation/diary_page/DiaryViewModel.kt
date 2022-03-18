@@ -33,6 +33,8 @@ class DiaryViewModel @Inject constructor(
     private var sortOrder = DiaryListSortOrder.CREATED_LATEST
     private var loadJob: Job? = null
 
+    val isEmptyList: LiveData<Boolean> = diaries.map { it.isNullOrEmpty() }
+
 
     fun previousMonth() {
         _month.value = month.value?.minusMonths(1)

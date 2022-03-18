@@ -104,7 +104,8 @@ class PlantDetailDialog(private val plantId: Int) :
             wateringAlarm.localTimeToText(plant.wateringAlarm.time)
             binding.wateringAlarmSwitch.isChecked = plant.wateringAlarm.onOff
             memo.text = plant.memo
-            binding.emptyDiaryText.text = getString(R.string.diary_list_empty, plant.name)
+            binding.emptyDiaryText.text =
+                getString(R.string.diary_list_empty_with_plantName, plant.name)
         }
     }
 

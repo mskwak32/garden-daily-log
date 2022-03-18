@@ -41,7 +41,8 @@
     <string name="plant_diary">가꾸기 일지</string>
     <string name="view_more">더보기</string>
     <string name="new_diary">일지쓰기</string>
-    <string name="diary_list_empty">아직 %s에 대한 일지가 없어요</string>
+    <string name="diary_list_empty_with_plantName">아직 %s에 대한 일지가 없어요</string>
+    <string name="diary_list_empty">해당하는 일지가 없어요</string>
     <string name="diary_content_hint">내용을 입력해주세요.</string>
     <string name="diary_content_empty">기록된 내용이 없습니다.</string>
     <string name="date">날짜</string>

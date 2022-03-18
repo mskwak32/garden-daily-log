@@ -29,6 +29,7 @@ class DiaryListAdapter(private val viewModel: DiaryViewModel) :
         holder.bind(item)
     }
 
+
     inner class ItemViewHolder(private val binding: LayoutItemDiaryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -40,14 +41,27 @@ class DiaryListAdapter(private val viewModel: DiaryViewModel) :
 
         fun bind(diary: Diary) {
             binding.memoText.text = diary.memo
-            binding.picture.setUri(diary.pictureList?.first(), true)
-            setDate(diary.createdDate)
+            if (diary.pictureList?.isNotEmpty() == true) {
+                binding.picture.setUri(diary.pictureList?.first(), true)
+            }
             binding.plantName.text = viewModel.plantNameMap.value?.get(diary.plantId) ?: ""
+
+            if (isHeader(adapterPosition)) {
+                binding.dateText.text = getDateText(diary.createdDate)
+            }
         }
 
-        private fun setDate(date: LocalDate) {
+        private fun isHeader(position: Int): Boolean {
+            if (position == 0) return true
+
+            val previousDate = getItem(position - 1).createdDate.dayOfMonth
+            val currentDate = getItem(position).createdDate.dayOfMonth
+            return previousDate != currentDate
+        }
+
+        private fun getDateText(date: LocalDate): String {
             val formatter = DateTimeFormatter.ofPattern("MM.dd\nE", Locale.getDefault())
-            binding.dateText.text = date.format(formatter)
+            return date.format(formatter)
         }
     }
 

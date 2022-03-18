@@ -18,7 +18,6 @@ import com.mskwak.presentation.databinding.FragmentDiaryBinding
 import com.mskwak.presentation.dialog.SelectMonthDialog
 import com.mskwak.presentation.diary_dialog.diary_detail.DiaryDetailDialog
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class DiaryFragment : BaseFragment<FragmentDiaryBinding>() {
@@ -95,12 +94,14 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>() {
                 .toInt()
 
         diaryListAdapter.onClickListener = { diary -> openDiaryDetail(diary) }
-        binding.diaryList.adapter = diaryListAdapter
-        binding.diaryList.addItemDecoration(ListItemDecoVertical(dividerHeight))
+        binding.diaryList.apply {
+            adapter = diaryListAdapter
+            addItemDecoration(ListItemDecoVertical(dividerHeight))
+        }
+
         viewModel.diaries.observe(viewLifecycleOwner) {
             lifecycle.coroutineScope.launchWhenResumed {
                 diaryListAdapter.submitList(it)
-                Timber.d("diaryList size= ${it.size}")
             }
         }
     }
