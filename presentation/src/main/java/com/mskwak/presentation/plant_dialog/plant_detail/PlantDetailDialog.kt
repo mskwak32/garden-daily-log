@@ -3,6 +3,7 @@ package com.mskwak.presentation.plant_dialog.plant_detail
 import android.annotation.SuppressLint
 import android.util.TypedValue
 import android.view.Gravity
+import android.view.View
 import android.widget.PopupMenu
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -101,7 +102,15 @@ class PlantDetailDialog(private val plantId: Int) :
             plantDate.text = "${getString(R.string.plant_date)}: $dateString"
             wateringDdays.text = viewModel?.getDdays() ?: ""
             lastWateringDate.localDateToText(plant.lastWateringDate)
-            wateringAlarm.localTimeToText(plant.wateringAlarm.time)
+
+            if (plant.waterPeriod == 0) {        //물주기 간격 설정 없음
+                wateringAlarm.text = getText(R.string.none)
+                wateringAlarmSwitch.visibility = View.GONE
+            } else {
+                wateringAlarm.localTimeToText(plant.wateringAlarm.time)
+                wateringAlarmSwitch.visibility = View.VISIBLE
+            }
+
             binding.wateringAlarmSwitch.isChecked = plant.wateringAlarm.onOff
             memo.text = plant.memo
             binding.emptyDiaryText.text =
@@ -114,7 +123,6 @@ class PlantDetailDialog(private val plantId: Int) :
     }
 
     fun moreDiaryClick() {
-        //TODO
         val action = HomeFragmentDirections.homeToDiary(plantId.toString())
         findNavController().navigate(action)
     }
