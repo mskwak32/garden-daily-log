@@ -61,7 +61,7 @@
                     android:layout_gravity="center"
                     android:text="@{viewModel.plantName}"
                     android:textColor="@color/dim_black_70"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/text_medium"
                     android:textStyle="bold"
                     tools:text="식물이름" />
 
@@ -126,6 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
+                    android:textSize="@dimen/text_body"
                     app:layout_constraintBottom_toBottomOf="@id/dateTitle"
                     app:layout_constraintLeft_toRightOf="@id/dateTitle"
                     app:layout_constraintTop_toTopOf="@id/dateTitle"
@@ -138,6 +139,7 @@
                     android:layout_marginTop="16dp"
                     android:background="@drawable/rectangle_stroke_box_bg"
                     android:padding="10dp"
+                    android:textSize="@dimen/text_body"
                     app:layout_constraintTop_toBottomOf="@id/dateTitle"
                     tools:text="@string/diary_content_empty" />
 

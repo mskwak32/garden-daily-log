@@ -56,7 +56,7 @@
                         android:gravity="center"
                         android:onClick="@{() -> fragment.onMonthClick()}"
                         android:textColor="@color/black"
-                        android:textSize="22dp"
+                        android:textSize="@dimen/text_xlarge"
                         android:textStyle="bold"
                         app:localMonth="@{viewModel.month}"
                         tools:text="2022. 03" />
@@ -126,7 +126,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_medium"
                 android:text="@string/diary_list_empty"
                 android:layout_marginTop="16dp" />
 

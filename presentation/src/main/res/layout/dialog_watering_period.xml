@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:text="@string/watering_period_unit_dialog"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_large"
             app:layout_constraintBottom_toBottomOf="@id/numberPicker"
             app:layout_constraintLeft_toRightOf="@id/numberPicker"
             app:layout_constraintRight_toRightOf="parent"

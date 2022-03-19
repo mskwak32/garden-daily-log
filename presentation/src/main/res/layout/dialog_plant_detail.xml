@@ -71,7 +71,7 @@
                             android:id="@+id/plantName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_xlarge"
                             android:textStyle="bold"
                             tools:text="식물이름" />
 
@@ -80,6 +80,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
+                            android:textSize="@dimen/text_medium"
                             tools:text="심은날짜 : 2022.02.02" />
 
                     </LinearLayout>
@@ -169,7 +170,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/text_medium"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@id/waterAnimation"
                         app:layout_constraintLeft_toRightOf="@id/waterIcon"
@@ -182,6 +183,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/watering_last_date"
+                        android:textSize="@dimen/text_body"
                         app:layout_constraintHorizontal_chainStyle="spread_inside"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toLeftOf="@id/lastWateringDate"
@@ -191,6 +193,7 @@
                         android:id="@+id/lastWateringDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_body"
                         app:layout_constraintBaseline_toBaselineOf="@id/lastWateringTitle"
                         app:layout_constraintLeft_toRightOf="@id/lastWateringTitle"
                         app:layout_constraintRight_toRightOf="parent"
@@ -208,6 +211,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
+                            android:textSize="@dimen/text_body"
                             android:text="@string/watering_alarm"
                             app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -217,6 +221,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="end|center_vertical"
                             android:gravity="center_vertical"
+                            android:textSize="@dimen/text_body"
                             app:layout_constraintRight_toLeftOf="@id/wateringAlarmSwitch"
                             tools:text="오전 09:00" />
 
@@ -253,7 +258,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:text="@string/memo"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/text_large"
                     android:textStyle="bold"
                     app:layout_constraintTop_toBottomOf="@id/wateringLayout" />
 
@@ -264,6 +269,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/rectangle_stroke_box_bg"
                     android:padding="10dp"
+                    android:textSize="@dimen/text_body"
                     app:layout_constraintTop_toBottomOf="@id/memoTitle"
                     tools:text="memo\nmemo" />
 
@@ -273,7 +279,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
                     android:text="@string/plant_diary"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/text_large"
                     android:textStyle="bold"
                     app:layout_constraintTop_toBottomOf="@id/memo" />
 
@@ -321,7 +327,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:textSize="16sp"
+                            android:textSize="@dimen/text_medium"
                             tools:text="@string/diary_list_empty_with_plantName" />
 
                     </LinearLayout>

@@ -31,7 +31,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="@{viewModel.plantName}"
                 android:textColor="@color/dim_black_70"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_large"
                 android:textStyle="bold"
                 tools:text="식물이름" />
 
@@ -50,8 +50,9 @@
                 android:layout_marginRight="16dp"
                 android:onClick="@{() -> viewModel.saveDiary()}"
                 android:text="@string/save"
+                android:textStyle="bold"
                 android:textColor="@color/dim_black_70"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_medium" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -120,6 +121,7 @@
                     android:minHeight="40dp"
                     android:onClick="@{() -> dialog.onDateClick()}"
                     android:paddingLeft="16dp"
+                    android:textSize="@dimen/text_medium"
                     android:textColor="@color/dim_black_70"
                     app:layout_constraintTop_toBottomOf="@id/dateTitle"
                     app:localDate="@{viewModel.diaryDate}"

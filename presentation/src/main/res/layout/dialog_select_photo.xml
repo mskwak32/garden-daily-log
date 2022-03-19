@@ -38,6 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:textSize="@dimen/text_medium"
                 android:text="@string/photo_image"
                 android:textColor="@color/bgray_600" />
 
@@ -66,6 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:textSize="@dimen/text_medium"
                 android:text="@string/photo_camera"
                 android:textColor="@color/bgray_600" />
 
