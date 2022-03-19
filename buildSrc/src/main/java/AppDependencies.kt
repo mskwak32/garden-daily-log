@@ -17,12 +17,12 @@ object Versions {
 
     const val ROOM = "2.4.1"
     const val GLIDE = "4.13.0"
-    const val TIMBER = "5.0.1"
     const val HILT_CORE = "2.41"
     const val GSON = "2.9.0"
     const val VIEW_PAGER = "1.0.0"
     const val DOTS_INDICATOR = "4.2"
     const val LOGGER = "2.2.0"
+    const val LOTTIE = "5.0.3"
 }
 
 object Libraries {
@@ -36,7 +36,6 @@ object Libraries {
         "androidx.navigation:navigation-fragment-ktx:${Versions.NAVIGATION_KTX}"
     const val NAVIGATION_UI = "androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATION_KTX}"
     const val GSON = "com.google.code.gson:gson:${Versions.GSON}"
-    const val TIMBER = "com.jakewharton.timber:timber:${Versions.TIMBER}"
     const val LOGGER = "com.orhanobut:logger:${Versions.LOGGER}"
 }
 
@@ -48,6 +47,7 @@ object Ui {
     const val GLIDE_COMPILER = "com.github.bumptech.glide:compiler:${Versions.GLIDE}"
     const val VIEW_PAGER = "androidx.viewpager2:viewpager2:${Versions.VIEW_PAGER}"
     const val DOTS_INDICATOR = "com.tbuonomo:dotsindicator:${Versions.DOTS_INDICATOR}"
+    const val LOTTIE = "com.airbnb.android:lottie:${Versions.LOTTIE}"
 }
 
 object Di {

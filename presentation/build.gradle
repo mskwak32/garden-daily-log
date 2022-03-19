@@ -40,4 +40,5 @@ dependencies {
     implementation(Ui.VIEW_PAGER)
     implementation(Ui.DOTS_INDICATOR)
     implementation(Libraries.LOGGER)
+    implementation(Ui.LOTTIE)
 }

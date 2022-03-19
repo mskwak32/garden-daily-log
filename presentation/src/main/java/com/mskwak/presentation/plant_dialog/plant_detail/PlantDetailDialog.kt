@@ -1,6 +1,7 @@
 package com.mskwak.presentation.plant_dialog.plant_detail
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -22,6 +23,7 @@ import com.mskwak.presentation.diary_dialog.edit_diary.DiaryEditDialog
 import com.mskwak.presentation.home.HomeFragmentDirections
 import com.mskwak.presentation.plant_dialog.edit_plant.PlantEditDialog
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import javax.inject.Inject
@@ -74,7 +76,10 @@ class PlantDetailDialog(private val plantId: Int) :
             diaryAdapter.submitList(diaries)
         }
         viewModel.wateringCompleted.observe(viewLifecycleOwner) {
-            //TODO 물주기완료 애니메이션
+            binding.waterIcon.backgroundTintList =
+                ColorStateList.valueOf(resources.getColor(R.color.white, null))
+            binding.waterAnimation.visibility = View.VISIBLE
+            binding.waterAnimation.playAnimation()
         }
     }
 
@@ -101,7 +106,20 @@ class PlantDetailDialog(private val plantId: Int) :
                 plant.createdDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
             plantDate.text = "${getString(R.string.plant_date)}: $dateString"
             wateringDdays.text = viewModel?.getDdays() ?: ""
-            lastWateringDate.localDateToText(plant.lastWateringDate)
+
+            //마지막 물준 날짜 세팅
+            val today = LocalDate.now()
+            when (plant.lastWateringDate) {
+                today -> {
+                    lastWateringDate.text = getText(R.string.today)
+                }
+                today.minusDays(1) -> {
+                    lastWateringDate.text = getText(R.string.yesterday)
+                }
+                else -> {
+                    lastWateringDate.localDateToText(plant.lastWateringDate)
+                }
+            }
 
             if (plant.waterPeriod == 0) {        //물주기 간격 설정 없음
                 wateringAlarm.text = getText(R.string.none)

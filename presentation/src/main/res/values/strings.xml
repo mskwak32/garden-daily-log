@@ -48,4 +48,6 @@
     <string name="date">날짜</string>
     <string name="message_no_more_picture">더이상 이미지를 추가할 수 없습니다.</string>
     <string name="message_input_picture_or_content">사진이나 내용을 입력해주세요.</string>
+    <string name="today">오늘</string>
+    <string name="yesterday">어제</string>
 </resources>
