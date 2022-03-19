@@ -37,8 +37,7 @@
         android:id="@+id/action_global_homeFragmentDest"
         app:destination="@id/homeFragmentDest"
         app:popUpTo="@id/nav_graph"
-        app:popUpToInclusive="true"
-        app:launchSingleTop="true" />
+        app:popUpToInclusive="true" />
 
 
 </navigation>

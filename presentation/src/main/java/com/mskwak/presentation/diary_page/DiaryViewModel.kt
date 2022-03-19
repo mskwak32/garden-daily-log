@@ -82,8 +82,8 @@ class DiaryViewModel @Inject constructor(
                 month.value!!.monthValue,
                 sortOrder,
                 if (selectedPlantId != SELECT_ALL_KEY) selectedPlantId else null
-            ).map {
-                it.map { diary -> DiaryImpl(diary) }
+            ).map { list ->
+                list.map { diary -> DiaryImpl(diary) }
             }
 
             yield()
