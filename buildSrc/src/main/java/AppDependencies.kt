@@ -22,6 +22,7 @@ object Versions {
     const val GSON = "2.9.0"
     const val VIEW_PAGER = "1.0.0"
     const val DOTS_INDICATOR = "4.2"
+    const val LOGGER = "2.2.0"
 }
 
 object Libraries {
@@ -36,6 +37,7 @@ object Libraries {
     const val NAVIGATION_UI = "androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATION_KTX}"
     const val GSON = "com.google.code.gson:gson:${Versions.GSON}"
     const val TIMBER = "com.jakewharton.timber:timber:${Versions.TIMBER}"
+    const val LOGGER = "com.orhanobut:logger:${Versions.LOGGER}"
 }
 
 object Ui {

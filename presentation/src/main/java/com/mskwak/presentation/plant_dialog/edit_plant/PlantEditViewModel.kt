@@ -64,7 +64,7 @@ class PlantEditViewModel @Inject constructor(
             //사진 저장 후 uri받아오기
             val pictureUri = newPictureBitmap?.let {
                 useCase.savePicture(it)
-            }
+            } ?: _pictureUri.value
 
             val alarm = AlarmImpl(wateringAlarmTime.value!!, wateringAlarmOnOff.value!!)
             val plant = PlantImpl(
@@ -79,7 +79,9 @@ class PlantEditViewModel @Inject constructor(
             )
             if (isUpdatePlant) {
                 //delete old picture
-                this@PlantEditViewModel.pictureUri.value?.let { useCase.deletePicture(it) }
+                if (newPictureBitmap != null) {
+                    this@PlantEditViewModel.pictureUri.value?.let { useCase.deletePicture(it) }
+                }
                 useCase.updatePlant(plant)
             } else {
                 useCase.addPlant(plant)

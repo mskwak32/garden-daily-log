@@ -3,7 +3,7 @@ package com.mskwak.data.source
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.core.net.toUri
-import timber.log.Timber
+import com.orhanobut.logger.Logger
 import java.io.File
 import java.io.FileOutputStream
 
@@ -28,9 +28,9 @@ class FileDataSource(private val baseDir: File) {
             file.createNewFile()
             out = FileOutputStream(file)
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out)
-            Timber.d("save picture: ${file.toUri().path}")
+            Logger.d("save picture: ${file.toUri().path}")
         } catch (e: Exception) {
-            Timber.e("save bitmap fail: ${e.message}")
+            Logger.e("save bitmap fail: ${e.message}")
         } finally {
             out?.flush()
             out?.close()
@@ -42,7 +42,7 @@ class FileDataSource(private val baseDir: File) {
         val file = File(uri.path!!)
         if (file.exists()) {
             file.delete()
-            Timber.d("delete picture: ${uri.path}")
+            Logger.d("delete picture: ${uri.path}")
         }
     }
 

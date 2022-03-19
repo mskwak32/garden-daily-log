@@ -28,5 +28,5 @@ dependencies {
     implementation(Room.ROOM_RUNTIME)
     kapt(Room.ROOM_COMPILER)
     implementation(Room.ROOM_KTX)
-    implementation(Libraries.TIMBER)
+    implementation(Libraries.LOGGER)
 }

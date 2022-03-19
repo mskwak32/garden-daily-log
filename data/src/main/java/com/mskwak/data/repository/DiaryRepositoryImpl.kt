@@ -7,7 +7,7 @@ import com.mskwak.data.source.DiaryDao
 import com.mskwak.data.source.FileDataSource
 import com.mskwak.domain.model.Diary
 import com.mskwak.domain.repository.DiaryRepository
-import timber.log.Timber
+import com.orhanobut.logger.Logger
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -17,18 +17,18 @@ class DiaryRepositoryImpl @Inject constructor(
 ) : DiaryRepository {
     override suspend fun addDiary(diary: Diary) {
         diaryDao.insertDiary(DiaryData(diary))
-        Timber.d("add new diary")
+        Logger.d("add new diary")
     }
 
     override suspend fun updateDiary(diary: Diary) {
         diaryDao.updateDiary(DiaryData(diary))
-        Timber.d("update diary id= ${diary.id}")
+        Logger.d("update diary id= ${diary.id}")
     }
 
     override suspend fun deleteDiary(diary: Diary) {
         deleteDiaryPictures(diary)
         diaryDao.deleteDiary(DiaryData(diary))
-        Timber.d("delete diary id= ${diary.id}")
+        Logger.d("delete diary id= ${diary.id}")
     }
 
     override suspend fun deleteDiariesByPlantId(plantId: Int) {
