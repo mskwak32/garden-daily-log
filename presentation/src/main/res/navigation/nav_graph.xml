@@ -28,6 +28,11 @@
             android:defaultValue="@null" />
     </fragment>
 
+    <fragment
+        android:id="@+id/settingFragmentDest"
+        android:name="com.mskwak.presentation.setting.SettingFragment"
+        tools:layout="@layout/fragment_setting" />
+
     <action
         android:id="@+id/action_global_diaryFragmentDest"
         app:destination="@id/diaryFragmentDest"
@@ -36,8 +41,12 @@
     <action
         android:id="@+id/action_global_homeFragmentDest"
         app:destination="@id/homeFragmentDest"
-        app:popUpTo="@id/nav_graph"
-        app:popUpToInclusive="true" />
+        app:popUpTo="@id/nav_graph" />
+
+    <action
+        android:id="@+id/action_global_settingFragmentDest"
+        app:destination="@id/settingFragmentDest"
+        app:popUpTo="@id/nav_graph" />
 
 
 </navigation>

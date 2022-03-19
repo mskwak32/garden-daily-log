@@ -34,6 +34,10 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.action_global_diaryFragmentDest)
                     true
                 }
+                R.id.settingFragmentDest -> {
+                    navController.navigate(R.id.action_global_settingFragmentDest)
+                    true
+                }
                 else -> false
             }
         }

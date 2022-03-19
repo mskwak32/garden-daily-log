@@ -10,7 +10,7 @@
         android:icon="@drawable/ic_home_black"
         android:title="@string/bottom_nav_home" />
     <item
-        android:id="@+id/bottomNav_setting"
+        android:id="@id/settingFragmentDest"
         android:icon="@drawable/ic_settings_black"
         android:title="@string/bottom_nav_setting" />
 </menu>
