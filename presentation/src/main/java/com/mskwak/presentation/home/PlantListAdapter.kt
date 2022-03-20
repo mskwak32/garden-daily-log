@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mskwak.domain.model.Plant
+import com.mskwak.presentation.R
 import com.mskwak.presentation.databinding.LayoutItemPlantBinding
 import com.mskwak.presentation.model.PlantImpl
 
@@ -35,7 +36,17 @@ class PlantListAdapter(private val viewModel: HomeViewModel) :
         }
 
         private fun setDday(plant: Plant) {
-            binding.dDayCount.text = binding.viewModel?.getDdays(plant) ?: ""
+            val pair = binding.viewModel?.getDdays(plant)
+            val dateText = pair?.first ?: ""
+            val isDateOver = pair?.second ?: false
+
+            binding.dDayCount.text = dateText
+
+            if (isDateOver) {
+                binding.waterIcon.setBackgroundResource(R.drawable.ic_water_drop_red)
+            } else {
+                binding.waterIcon.setBackgroundResource(R.drawable.ic_water_drop_blue)
+            }
         }
     }
 

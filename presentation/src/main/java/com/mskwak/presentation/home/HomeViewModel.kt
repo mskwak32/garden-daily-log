@@ -51,7 +51,10 @@ class HomeViewModel @Inject constructor(
         useCase.deletePlant(plant)
     }
 
-    fun getDdays(plant: Plant): String {
+    /**
+     * return Pair(d-day, isDateOver)
+     */
+    fun getDdays(plant: Plant): Pair<String, Boolean> {
         return useCase.getDdayText(plant)
     }
 }

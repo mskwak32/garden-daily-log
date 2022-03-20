@@ -7,6 +7,7 @@ import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class PlantDetailViewModel @AssistedInject constructor(
@@ -34,12 +35,16 @@ class PlantDetailViewModel @AssistedInject constructor(
     fun watering() {
         viewModelScope.launch {
             useCase.wateringNow(plantId)
+            delay(200)
             _wateringCompleted.call()
         }
     }
 
-    fun getDdays(): String {
-        return plant.value?.let { useCase.getDdayText(it) } ?: ""
+    /**
+     * return Pair(d-day, isDateOver)
+     */
+    fun getDdays(): Pair<String, Boolean> {
+        return plant.value?.let { useCase.getDdayText(it) } ?: Pair("", false)
     }
 
     fun deletePlant() {

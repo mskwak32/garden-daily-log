@@ -44,7 +44,7 @@ class UseCaseTest {
         `when`(plant.lastWateringDate).thenReturn(lastWateringDate)
 
         days = useCase.getRemainWateringDate(plant)
-        assert(days == 0)
+        assert(days == -7)
     }
 
     @Test

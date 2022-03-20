@@ -1,7 +1,6 @@
 package com.mskwak.presentation.plant_dialog.plant_detail
 
 import android.annotation.SuppressLint
-import android.content.res.ColorStateList
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -35,6 +34,7 @@ class PlantDetailDialog(private val plantId: Int) :
 
     override val layoutRes: Int = R.layout.dialog_plant_detail
     private val diaryAdapter by lazy { DiarySummaryAdapter(viewModel) }
+    private var isWateringFlag = false
 
     @Inject
     lateinit var viewModelAssistedFactory: PlantDetailViewModel.PlantDetailViewModelAssistedFactory
@@ -76,10 +76,10 @@ class PlantDetailDialog(private val plantId: Int) :
             diaryAdapter.submitList(diaries)
         }
         viewModel.wateringCompleted.observe(viewLifecycleOwner) {
-            binding.waterIcon.backgroundTintList =
-                ColorStateList.valueOf(resources.getColor(R.color.white, null))
+            binding.waterIcon.setBackgroundResource(R.drawable.ic_water_drop_white)
             binding.waterAnimation.visibility = View.VISIBLE
             binding.waterAnimation.playAnimation()
+            isWateringFlag = false
         }
     }
 
@@ -102,16 +102,35 @@ class PlantDetailDialog(private val plantId: Int) :
             picture.setUri(plant.pictureUri)
             plantName.text = plant.name
             collapsingToolbar.title = plant.name
-            val dateString =
+
+            val plantDateString =
                 plant.createdDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
-            plantDate.text = "${getString(R.string.plant_date)}: $dateString"
-            wateringDdays.text = viewModel?.getDdays() ?: ""
+            plantDate.text = "${getString(R.string.plant_date)}: $plantDateString"
+
+            val pair = this@PlantDetailDialog.viewModel.getDdays()
+            binding.wateringDdays.text = pair.first
+
+            //물주기 버튼으로 인한 갱신시에는 동작하지 않도록함
+            if (!isWateringFlag) {
+                if (pair.second) {
+                    binding.waterIcon.setBackgroundResource(R.drawable.ic_water_drop_red)
+                } else {
+                    binding.waterIcon.setBackgroundResource(R.drawable.ic_water_drop_blue)
+                }
+            }
 
             //마지막 물준 날짜 세팅
             val today = LocalDate.now()
             when (plant.lastWateringDate) {
                 today -> {
                     lastWateringDate.text = getText(R.string.today)
+
+                    //물주기 버튼으로 인한 갱신시에는 동작하지 않도록함
+                    if (!isWateringFlag) {
+                        binding.waterIcon.setBackgroundResource(R.drawable.ic_water_drop_white)
+                        binding.waterAnimation.progress = 1f
+                        binding.waterAnimation.visibility = View.VISIBLE
+                    }
                 }
                 today.minusDays(1) -> {
                     lastWateringDate.text = getText(R.string.yesterday)
@@ -171,6 +190,11 @@ class PlantDetailDialog(private val plantId: Int) :
             }
             show()
         }
+    }
+
+    fun onWateringClick() {
+        isWateringFlag = true
+        viewModel.watering()
     }
 
     private fun openDiaryDetail(diaryId: Int) {

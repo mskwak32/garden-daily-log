@@ -39,7 +39,6 @@
 
     <style name="bottomSheetStyle" parent="Widget.MaterialComponents.BottomSheet">
         <item name="shapeAppearanceOverlay">@style/bottomSheetShapeAppearance</item>
-        <item name="behavior_skipCollapsed">true</item>
     </style>
 
     <style name="bottomSheetShapeAppearance">

@@ -14,6 +14,7 @@ import kotlinx.coroutines.*
 import java.time.LocalDate
 import java.time.Period
 import java.time.temporal.ChronoUnit
+import kotlin.math.abs
 
 class GardenUseCase(
     private val plantRepository: PlantRepository,
@@ -134,22 +135,34 @@ class GardenUseCase(
     /**
      * 물주기 주기설정이 없는 경우 마지막 물준날짜로부터 D+00
      * 물주기 주기설정이 있는 경우 다음 물주기까지 D-00
+     * 물주기가 지난 경우 D+00
+     *
+     * return Pair(d-day, isDateOver)
      */
-    fun getDdayText(plant: Plant): String {
+    fun getDdayText(plant: Plant): Pair<String, Boolean> {
         return if (plant.waterPeriod == 0) {
-            String.format("D+%02d", getDaysFromLastWatering(plant))
+            val text = String.format("D+%02d", getDaysFromLastWatering(plant))
+            Pair(text, false)
         } else {
-            String.format("D-%02d", getRemainWateringDate(plant))
+            val days = getRemainWateringDate(plant)
+            val format = if (days >= 0) "D-%02d" else "D+%02d"
+            val text = String.format(format, abs(days))
+            Pair(text, days < 0)
         }
     }
 
+    /**
+     * 물주기 기간이 남은 경우 양수 예) 2일 후 = 2
+     * 물주기 기간이 지난 경우 음수 예) 2일 전 = -2
+     * 물주기 설정이 없는 경우 10000
+     */
     fun getRemainWateringDate(plant: Plant): Int {
+        if (plant.waterPeriod == 0) {
+            return 10000
+        }
+
         val today = LocalDate.now()
         val nextDate = plant.lastWateringDate.plusDays(plant.waterPeriod.toLong())
-
-        if (!today.isBefore(nextDate)) {
-            return 0
-        }
 
         return ChronoUnit.DAYS.between(today, nextDate).toInt()
     }
