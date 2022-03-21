@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragmentDest"
-        android:name="com.mskwak.presentation.home.HomeFragment"
+        android:name="com.mskwak.presentation.ui.home.HomeFragment"
         tools:layout="@layout/fragment_home">
 
         <action
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/diaryFragmentDest"
-        android:name="com.mskwak.presentation.diary_page.DiaryFragment"
+        android:name="com.mskwak.presentation.ui.diary_page.DiaryFragment"
         tools:layout="@layout/fragment_diary">
 
         <argument
@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/settingFragmentDest"
-        android:name="com.mskwak.presentation.setting.SettingFragment"
+        android:name="com.mskwak.presentation.ui.setting.SettingFragment"
         tools:layout="@layout/fragment_setting" />
 
     <action

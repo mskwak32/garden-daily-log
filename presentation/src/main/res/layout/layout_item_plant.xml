@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.mskwak.presentation.home.HomeViewModel" />
+            type="com.mskwak.presentation.ui.home.HomeViewModel" />
 
         <variable
             name="plant"

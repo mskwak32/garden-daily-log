@@ -6,7 +6,7 @@
 
         <variable
             name="dialog"
-            type="com.mskwak.presentation.dialog.DeleteConfirmDialog" />
+            type="com.mskwak.presentation.ui.dialog.DeleteConfirmDialog" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -59,4 +59,7 @@
     <string name="setting_app_estimation">앱 평가하기</string>
     <string name="not_ready_message">준비중이에요</string>
     <string name="setting_made_by">made by mskwak</string>
+    <string name="noti_watering_title">물주기 알림</string>
+    <string name="noti_watering_message">%s에 물을 줄 시간이에요</string>
+    <string name="noti_watering_channel_name">물주기 알림</string>
 </resources>

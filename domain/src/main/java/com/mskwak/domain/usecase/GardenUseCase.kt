@@ -5,7 +5,8 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
-import com.mskwak.domain.AppSettings
+import com.mskwak.domain.AppConstValue
+import com.mskwak.domain.manager.WateringAlarmManager
 import com.mskwak.domain.model.Diary
 import com.mskwak.domain.model.Plant
 import com.mskwak.domain.repository.DiaryRepository
@@ -19,7 +20,9 @@ import kotlin.math.abs
 class GardenUseCase(
     private val plantRepository: PlantRepository,
     private val diaryRepository: DiaryRepository,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val wateringAlarmManager: WateringAlarmManager,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
 
     fun getPlantsWithSortOrder(sortOrder: PlantListSortOrder): LiveData<List<Plant>> {
@@ -32,7 +35,7 @@ class GardenUseCase(
     }
 
     private suspend fun List<Plant>.applySort(sortOrder: PlantListSortOrder): List<Plant> =
-        withContext(Dispatchers.Default) {
+        withContext(defaultDispatcher) {
             when (sortOrder) {
                 PlantListSortOrder.CREATED_LATEST -> {
                     sortedByDescending { plant -> plant.createdDate }
@@ -56,16 +59,19 @@ class GardenUseCase(
 
     suspend fun addPlant(plant: Plant) = withContext(ioDispatcher) {
         plantRepository.addPlant(plant)
+        setWateringAlarm(plant, isActive = plant.wateringAlarm.onOff)
     }
 
     suspend fun updatePlant(plant: Plant) = withContext(ioDispatcher) {
         plantRepository.updatePlant(plant)
+        setWateringAlarm(plant, isActive = plant.wateringAlarm.onOff)
     }
 
     fun deletePlant(plant: Plant) {
         CoroutineScope(ioDispatcher).launch {
             diaryRepository.deleteDiariesByPlantId(plant.id)
             plantRepository.deletePlant(plant)
+            setWateringAlarm(plant, isActive = false)
         }
     }
 
@@ -76,7 +82,7 @@ class GardenUseCase(
     fun getDiariesByPlantId(plantId: Int): LiveData<List<Diary>> {
         return diaryRepository.getDiariesByPlantId(
             plantId,
-            AppSettings.MAX_DIARY_SIZE_ON_PLANT_DETAIL
+            AppConstValue.MAX_DIARY_SIZE_ON_PLANT_DETAIL
         )
     }
 
@@ -121,7 +127,7 @@ class GardenUseCase(
     }
 
     private suspend fun List<Diary>.applySort(sortOrder: DiaryListSortOrder): List<Diary> =
-        withContext(Dispatchers.Default) {
+        withContext(defaultDispatcher) {
             when (sortOrder) {
                 DiaryListSortOrder.CREATED_LATEST -> {
                     sortedByDescending { diary -> diary.createdDate }
@@ -203,10 +209,20 @@ class GardenUseCase(
         plantRepository.updateLastWateringDate(date, plantId)
     }
 
-    fun updateWateringAlarmOnOff(isActive: Boolean, plantId: Int) {
+    fun updateWateringAlarmOnOff(isActive: Boolean, plant: Plant) {
         CoroutineScope(ioDispatcher).launch {
-            plantRepository.updateWateringAlarmOnOff(isActive, plantId)
+            plantRepository.updateWateringAlarmOnOff(isActive, plant.id)
+
+            setWateringAlarm(plant, isActive)
         }
     }
 
+    private suspend fun setWateringAlarm(plant: Plant, isActive: Boolean) =
+        withContext(defaultDispatcher) {
+            if (isActive) {
+                wateringAlarmManager.setWateringAlarm(plant)
+            } else {
+                wateringAlarmManager.cancelWateringAlarm(plant.wateringAlarm)
+            }
+        }
 }

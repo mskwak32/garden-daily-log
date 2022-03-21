@@ -6,7 +6,7 @@
 
         <variable
             name="dialog"
-            type="com.mskwak.presentation.dialog.SelectPhotoDialog" />
+            type="com.mskwak.presentation.ui.dialog.SelectPhotoDialog" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

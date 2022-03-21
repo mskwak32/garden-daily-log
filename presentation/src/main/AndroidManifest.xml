@@ -3,8 +3,18 @@
     package="com.mskwak.presentation">
 
     <application>
+        <receiver
+            android:name="com.mskwak.presentation.alarm.BootReceiver"
+            android:enabled="false">
+
+        </receiver>
+        <receiver
+            android:name=".alarm.WateringAlarmReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity
-            android:name="com.mskwak.presentation.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

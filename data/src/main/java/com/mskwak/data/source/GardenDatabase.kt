@@ -19,4 +19,6 @@ abstract class GardenDatabase : RoomDatabase() {
     companion object {
         const val DB_NAME = "garden.db"
     }
+
+
 }

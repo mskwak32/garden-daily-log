@@ -9,11 +9,11 @@
 
         <variable
             name="viewModel"
-            type="com.mskwak.presentation.diary_dialog.diary_detail.DiaryDetailViewModel" />
+            type="com.mskwak.presentation.ui.diary_dialog.diary_detail.DiaryDetailViewModel" />
 
         <variable
             name="dialog"
-            type="com.mskwak.presentation.diary_dialog.diary_detail.DiaryDetailDialog" />
+            type="com.mskwak.presentation.ui.diary_dialog.diary_detail.DiaryDetailDialog" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -111,7 +111,7 @@
                     app:layout_constraintLeft_toLeftOf="@id/viewPager"
                     app:layout_constraintRight_toRightOf="@id/viewPager" />
 
-                <com.mskwak.presentation.custom_component.TextViewWithIcon
+                <com.mskwak.presentation.ui.custom_component.TextViewWithIcon
                     android:id="@+id/dateTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

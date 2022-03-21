@@ -1,5 +1,6 @@
 package com.mskwak.gardendailylog.di
 
+import com.mskwak.domain.manager.WateringAlarmManager
 import com.mskwak.domain.repository.DiaryRepository
 import com.mskwak.domain.repository.PlantRepository
 import com.mskwak.domain.usecase.GardenUseCase
@@ -17,8 +18,9 @@ class UseCaseModule {
     @Provides
     fun provideGardenUseCase(
         plantRepository: PlantRepository,
-        diaryRepository: DiaryRepository
+        diaryRepository: DiaryRepository,
+        wateringAlarmManager: WateringAlarmManager
     ): GardenUseCase {
-        return GardenUseCase(plantRepository, diaryRepository)
+        return GardenUseCase(plantRepository, diaryRepository, wateringAlarmManager)
     }
 }
