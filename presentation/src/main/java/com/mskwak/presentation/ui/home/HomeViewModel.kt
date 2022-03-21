@@ -6,7 +6,6 @@ import com.mskwak.domain.usecase.GardenUseCase
 import com.mskwak.domain.usecase.PlantListSortOrder
 import com.mskwak.presentation.model.PlantImpl
 import com.mskwak.presentation.util.SingleLiveEvent
-import com.orhanobut.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -26,7 +25,6 @@ class HomeViewModel @Inject constructor(
 
     var plants: LiveData<List<Plant>> = _sortOrder.switchMap { sortOrder ->
         useCase.getPlantsWithSortOrder(sortOrder).map {
-            Logger.d("plantList refresh: size = ${it.size} sort = ${sortOrder.name}")
             _isEmptyList.value = it.isNullOrEmpty()
             it.map { plant -> PlantImpl(plant) }
         }

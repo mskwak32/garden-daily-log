@@ -49,9 +49,6 @@ class PlantEditViewModel @Inject constructor(
     private var isUpdatePlant = false
     private var plantId = 0
 
-    //업데이트 시에 알람코드가 바뀌지 않아야 함
-    private var alarmCode = System.currentTimeMillis().toInt()
-
     fun onWateringAlarmOnOffClick() {
         _wateringAlarmOnOff.value = !wateringAlarmOnOff.value!!
     }
@@ -69,7 +66,7 @@ class PlantEditViewModel @Inject constructor(
                 useCase.savePicture(it)
             } ?: _pictureUri.value
 
-            val alarm = AlarmImpl(wateringAlarmTime.value!!, wateringAlarmOnOff.value!!, alarmCode)
+            val alarm = AlarmImpl(wateringAlarmTime.value!!, wateringAlarmOnOff.value!!)
             val plant = PlantImpl(
                 plantName.value!!,
                 plantDate.value!!,
@@ -105,7 +102,6 @@ class PlantEditViewModel @Inject constructor(
                 wateringPeriod.value = plant.waterPeriod
                 _wateringAlarmOnOff.value = plant.wateringAlarm.onOff
                 wateringAlarmTime.value = plant.wateringAlarm.time
-                alarmCode = plant.wateringAlarm.alarmCode
                 isUpdatePlant = true
             }
         }

@@ -5,8 +5,7 @@ import java.time.LocalTime
 
 data class AlarmData(
     override val time: LocalTime,
-    override val onOff: Boolean,
-    override val alarmCode: Int
+    override val onOff: Boolean
 ) : Alarm {
-    constructor(alarm: Alarm) : this(alarm.time, alarm.onOff, alarm.alarmCode)
+    constructor(alarm: Alarm) : this(alarm.time, alarm.onOff)
 }

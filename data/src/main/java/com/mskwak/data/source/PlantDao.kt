@@ -8,7 +8,7 @@ import java.time.LocalDate
 @Dao
 interface PlantDao {
     @Insert
-    suspend fun insertPlant(plant: PlantData)
+    suspend fun insertPlant(plant: PlantData): Long
 
     @Update
     suspend fun updatePlant(plant: PlantData)

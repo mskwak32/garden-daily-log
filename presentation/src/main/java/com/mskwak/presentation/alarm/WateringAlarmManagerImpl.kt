@@ -5,7 +5,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import com.mskwak.domain.manager.WateringAlarmManager
-import com.mskwak.domain.model.Alarm
 import com.mskwak.domain.model.Plant
 import com.orhanobut.logger.Logger
 import kotlinx.coroutines.CoroutineDispatcher
@@ -24,11 +23,11 @@ class WateringAlarmManagerImpl(
     override fun setWateringAlarm(plant: Plant) {
         val intent = Intent(context, WateringAlarmReceiver::class.java)
         intent.putExtra(WateringAlarmReceiver.PLANT_NAME_KEY, plant.name)
-        intent.putExtra(WateringAlarmReceiver.ALARM_CODE_KEY, plant.wateringAlarm.alarmCode)
+        intent.putExtra(WateringAlarmReceiver.PLANT_ID_KEY, plant.id)
 
         val pendingIntent = PendingIntent.getBroadcast(
             context,
-            plant.wateringAlarm.alarmCode,
+            plant.id,
             intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT
         )
@@ -47,7 +46,7 @@ class WateringAlarmManagerImpl(
         )
 
         Logger.d(
-            """set watering alarm: alarmCode= ${plant.wateringAlarm.alarmCode} 
+            """set watering alarm: plantId= ${plant.id} 
                 trigger= ${Date(triggerTime)}, interval = ${interval / 60000}min"""
         )
     }
@@ -79,15 +78,15 @@ class WateringAlarmManagerImpl(
         calender.timeInMillis
     }
 
-    override fun cancelWateringAlarm(alarm: Alarm) {
+    override fun cancelWateringAlarm(plant: Plant) {
         val pendingIntent = PendingIntent.getBroadcast(
             context,
-            alarm.alarmCode,
+            plant.id,
             Intent(context, WateringAlarmReceiver::class.java),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT
         )
 
         alarmManager.cancel(pendingIntent)
-        Logger.d("cancel watering alarm: alarmCode= ${alarm.alarmCode}")
+        Logger.d("cancel watering alarm: plantId= ${plant.id}")
     }
 }

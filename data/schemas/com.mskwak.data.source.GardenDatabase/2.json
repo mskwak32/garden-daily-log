@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "4f10f5088c6408d479356b22d414c15a",
+    "identityHash": "6b3cf9bbc01e50ee061846d178fb1c87",
     "entities": [
       {
         "tableName": "plant",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `createdDate` TEXT NOT NULL, `waterPeriod` INTEGER NOT NULL, `lastWateringDate` TEXT NOT NULL, `pictureUri` TEXT, `memo` TEXT, `time` TEXT NOT NULL, `onOff` INTEGER NOT NULL, `alarmCode` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `createdDate` TEXT NOT NULL, `waterPeriod` INTEGER NOT NULL, `lastWateringDate` TEXT NOT NULL, `pictureUri` TEXT, `memo` TEXT, `time` TEXT NOT NULL, `onOff` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -59,12 +59,6 @@
           {
             "fieldPath": "wateringAlarm.onOff",
             "columnName": "onOff",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "wateringAlarm.alarmCode",
-            "columnName": "alarmCode",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -136,7 +130,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4f10f5088c6408d479356b22d414c15a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6b3cf9bbc01e50ee061846d178fb1c87')"
     ]
   }
 }

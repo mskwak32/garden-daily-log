@@ -7,7 +7,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationCompat.VISIBILITY_PUBLIC
 import androidx.core.app.NotificationManagerCompat
 import com.mskwak.presentation.R
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,7 +15,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class WateringAlarmReceiver : BroadcastReceiver() {
 
-    //TODO 알림 그룹
     @Inject
     lateinit var notificationPendingIntent: PendingIntent
 
@@ -24,8 +22,8 @@ class WateringAlarmReceiver : BroadcastReceiver() {
         createNotificationChannel(context)
 
         val plantName = intent.getStringExtra(PLANT_NAME_KEY)
-        val alarmCode = intent.getIntExtra(ALARM_CODE_KEY, DEFAULT_ALARM_CODE)
-        deliverNotification(context, plantName, alarmCode)
+        val plantId = intent.getIntExtra(PLANT_ID_KEY, DEFAULT_PLANT_ID)
+        deliverNotification(context, plantName, plantId)
     }
 
     private fun createNotificationChannel(context: Context) {
@@ -40,7 +38,7 @@ class WateringAlarmReceiver : BroadcastReceiver() {
         notificationManager.createNotificationChannel(notificationChannel)
     }
 
-    private fun deliverNotification(context: Context, plantName: String?, alarmCode: Int) {
+    private fun deliverNotification(context: Context, plantName: String?, plantId: Int) {
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_leaf)
@@ -49,19 +47,30 @@ class WateringAlarmReceiver : BroadcastReceiver() {
                 ?: "")
             .setContentIntent(notificationPendingIntent)
             .setAutoCancel(true)
-            .setVisibility(VISIBILITY_PUBLIC)
-            .setGroup(WATERING_GROUP)
+            .setOnlyAlertOnce(true)
+            .setGroup(WATERING_GROUP_KEY)
 
         with(NotificationManagerCompat.from(context)) {
-            notify(alarmCode, builder.build())
+            notify(plantId, builder.build())
+            notify(SUMMARY_NOTI_CODE, getSummaryNoti(context).build())
         }
+    }
+
+    private fun getSummaryNoti(context: Context): NotificationCompat.Builder {
+        return NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_leaf)
+            .setAutoCancel(true)
+            .setGroup(WATERING_GROUP_KEY)
+            .setOnlyAlertOnce(true)
+            .setGroupSummary(true)
     }
 
     companion object {
         private const val CHANNEL_ID = "wateringNotification"
         const val PLANT_NAME_KEY = "plantName"
-        const val ALARM_CODE_KEY = "alarmCode"
-        private const val DEFAULT_ALARM_CODE = 1
-        private const val WATERING_GROUP = "com.mskwak.gardendailylog.watering"
+        const val PLANT_ID_KEY = "plantId"
+        private const val DEFAULT_PLANT_ID = 100000
+        private const val SUMMARY_NOTI_CODE = 1000
+        private const val WATERING_GROUP_KEY = "wateringNotificationGroup"
     }
 }

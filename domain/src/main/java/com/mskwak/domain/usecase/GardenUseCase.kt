@@ -58,8 +58,8 @@ class GardenUseCase(
     }
 
     suspend fun addPlant(plant: Plant) = withContext(ioDispatcher) {
-        plantRepository.addPlant(plant)
-        setWateringAlarm(plant, isActive = plant.wateringAlarm.onOff)
+        val id = plantRepository.addPlant(plant)
+        setWateringAlarm(getPlant(id), isActive = plant.wateringAlarm.onOff)
     }
 
     suspend fun updatePlant(plant: Plant) = withContext(ioDispatcher) {
@@ -222,7 +222,7 @@ class GardenUseCase(
             if (isActive) {
                 wateringAlarmManager.setWateringAlarm(plant)
             } else {
-                wateringAlarmManager.cancelWateringAlarm(plant.wateringAlarm)
+                wateringAlarmManager.cancelWateringAlarm(plant)
             }
         }
 }

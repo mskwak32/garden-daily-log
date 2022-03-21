@@ -8,7 +8,7 @@ import java.time.LocalDate
 
 interface PlantRepository {
 
-    suspend fun addPlant(plant: Plant)
+    suspend fun addPlant(plant: Plant): Int
     suspend fun updatePlant(plant: Plant)
     suspend fun deletePlant(plant: Plant)
     suspend fun getPlant(plantId: Int): Plant

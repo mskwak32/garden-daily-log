@@ -18,9 +18,10 @@ class PlantRepositoryImpl @Inject constructor(
     private val fileDataSource: FileDataSource
 ) : PlantRepository {
 
-    override suspend fun addPlant(plant: Plant) {
-        plantDao.insertPlant(PlantData(plant))
-        Logger.d("add new plant")
+    override suspend fun addPlant(plant: Plant): Int {
+        val id = plantDao.insertPlant(PlantData(plant)).toInt()
+        Logger.d("add new plant id= $id")
+        return id
     }
 
     override suspend fun updatePlant(plant: Plant) {
