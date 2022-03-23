@@ -1,7 +1,8 @@
 package com.mskwak.presentation.ui.plant_dialog.plant_detail
 
 import androidx.lifecycle.*
-import com.mskwak.domain.usecase.GardenUseCase
+import com.mskwak.domain.usecase.DiaryUseCase
+import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.presentation.model.DiaryImpl
 import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.assisted.Assisted
@@ -12,11 +13,12 @@ import kotlinx.coroutines.launch
 
 class PlantDetailViewModel @AssistedInject constructor(
     @Assisted private val plantId: Int,
-    private val useCase: GardenUseCase
+    private val plantUseCase: PlantUseCase,
+    diaryUseCase: DiaryUseCase
 ) : ViewModel() {
 
-    var plant = useCase.getPlantLiveData(plantId)
-    var diaries = useCase.getDiariesByPlantId(plantId).map { list ->
+    var plant = plantUseCase.getPlantLiveData(plantId)
+    var diaries = diaryUseCase.getDiariesByPlantId(plantId).map { list ->
         list.map { DiaryImpl(it) }
     }
     val isEmptyList: LiveData<Boolean> = diaries.map {
@@ -28,13 +30,13 @@ class PlantDetailViewModel @AssistedInject constructor(
     fun wateringAlarmToggle() {
         plant.value?.wateringAlarm?.let { alarm ->
             val isActive = !alarm.onOff
-            useCase.updateWateringAlarmOnOff(isActive, plant.value!!)
+            plantUseCase.updateWateringAlarmOnOff(isActive, plant.value!!)
         }
     }
 
     fun watering() {
         viewModelScope.launch {
-            useCase.wateringNow(plantId)
+            plantUseCase.wateringNow(plantId)
             delay(200)
             _wateringCompleted.call()
         }
@@ -44,11 +46,11 @@ class PlantDetailViewModel @AssistedInject constructor(
      * return Pair(d-day, isDateOver)
      */
     fun getDdays(): Pair<String, Boolean> {
-        return plant.value?.let { useCase.getDdayText(it) } ?: Pair("", false)
+        return plant.value?.let { plantUseCase.getDdayText(it) } ?: Pair("", false)
     }
 
     fun deletePlant() {
-        if (plant.value != null) useCase.deletePlant(plant.value!!)
+        if (plant.value != null) plantUseCase.deletePlant(plant.value!!)
     }
 
     @AssistedFactory

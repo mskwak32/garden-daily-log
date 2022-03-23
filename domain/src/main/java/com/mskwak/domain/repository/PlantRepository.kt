@@ -20,4 +20,5 @@ interface PlantRepository {
     suspend fun updateWateringAlarmOnOff(isActive: Boolean, plantId: Int)
     suspend fun getPlantName(plantId: Int): String
     suspend fun getPlantNames(): Map<Int, String>
+    suspend fun getPlantIdWithAlarmList(): Map<Int, Boolean>
 }

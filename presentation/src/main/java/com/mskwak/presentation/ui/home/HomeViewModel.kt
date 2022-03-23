@@ -2,8 +2,8 @@ package com.mskwak.presentation.ui.home
 
 import androidx.lifecycle.*
 import com.mskwak.domain.model.Plant
-import com.mskwak.domain.usecase.GardenUseCase
 import com.mskwak.domain.usecase.PlantListSortOrder
+import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.presentation.model.PlantImpl
 import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val useCase: GardenUseCase
+    private val useCase: PlantUseCase
 ) : ViewModel() {
 
     private val _isEmptyList = MutableLiveData(false)

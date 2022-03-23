@@ -1,20 +1,22 @@
 package com.mskwak.presentation.ui.diary_dialog.diary_detail
 
 import androidx.lifecycle.*
-import com.mskwak.domain.usecase.GardenUseCase
+import com.mskwak.domain.usecase.DiaryUseCase
+import com.mskwak.domain.usecase.PlantUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
 class DiaryDetailViewModel @AssistedInject constructor(
     @Assisted private val diaryId: Int,
-    private val useCase: GardenUseCase
+    private val plantUseCase: PlantUseCase,
+    private val diaryUseCase: DiaryUseCase
 ) : ViewModel() {
-    val diary = useCase.getDiaryLiveData(diaryId)
+    val diary = diaryUseCase.getDiaryLiveData(diaryId)
 
     val plantName: LiveData<String> = diary.switchMap {
         liveData(context = viewModelScope.coroutineContext) {
-            emit(useCase.getPlantName(it.plantId))
+            emit(plantUseCase.getPlantName(it.plantId))
         }
     }
 
@@ -24,7 +26,7 @@ class DiaryDetailViewModel @AssistedInject constructor(
 
 
     fun deleteDiary() {
-        diary.value?.let { useCase.deleteDiary(it) }
+        diary.value?.let { diaryUseCase.deleteDiary(it) }
     }
 
     @AssistedFactory

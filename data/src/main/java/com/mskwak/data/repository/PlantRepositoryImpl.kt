@@ -71,4 +71,8 @@ class PlantRepositoryImpl @Inject constructor(
         return plantDao.getPlantNames()
     }
 
+    override suspend fun getPlantIdWithAlarmList(): Map<Int, Boolean> {
+        return plantDao.getPlantIdWithAlarmList()
+    }
+
 }

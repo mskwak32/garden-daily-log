@@ -25,7 +25,7 @@ class WateringAlarmManagerImpl(private val context: Context) : WateringAlarmMana
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        alarmManager.setAndAllowWhileIdle(
+        alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
             nextAlarmDateTime.getTimeMillis(),
             pendingIntent

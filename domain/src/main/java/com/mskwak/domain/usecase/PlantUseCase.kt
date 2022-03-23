@@ -5,9 +5,7 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
-import com.mskwak.domain.AppConstValue
 import com.mskwak.domain.manager.WateringAlarmManager
-import com.mskwak.domain.model.Diary
 import com.mskwak.domain.model.Plant
 import com.mskwak.domain.repository.DiaryRepository
 import com.mskwak.domain.repository.PlantRepository
@@ -18,37 +16,35 @@ import java.time.Period
 import java.time.temporal.ChronoUnit
 import kotlin.math.abs
 
-class GardenUseCase(
+class PlantUseCase(
     private val plantRepository: PlantRepository,
     private val diaryRepository: DiaryRepository,
     private val wateringAlarmManager: WateringAlarmManager,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
     fun getPlantsWithSortOrder(sortOrder: PlantListSortOrder): LiveData<List<Plant>> {
         val plantsLiveData = plantRepository.getPlants()
         return plantsLiveData.switchMap { list ->
-            liveData {
+            liveData(context = ioDispatcher) {
                 emit(list.applySort(sortOrder))
             }
         }
     }
 
-    private suspend fun List<Plant>.applySort(sortOrder: PlantListSortOrder): List<Plant> =
-        withContext(defaultDispatcher) {
-            when (sortOrder) {
-                PlantListSortOrder.CREATED_LATEST -> {
-                    sortedByDescending { plant -> plant.createdDate }
-                }
-                PlantListSortOrder.CREATED_OLDEST -> {
-                    sortedBy { plant -> plant.createdDate }
-                }
-                PlantListSortOrder.WATERING -> {
-                    sortedBy { plant -> getRemainWateringDate(plant) }
-                }
+    private fun List<Plant>.applySort(sortOrder: PlantListSortOrder): List<Plant> {
+        return when (sortOrder) {
+            PlantListSortOrder.CREATED_LATEST -> {
+                sortedByDescending { plant -> plant.createdDate }
+            }
+            PlantListSortOrder.CREATED_OLDEST -> {
+                sortedBy { plant -> plant.createdDate }
+            }
+            PlantListSortOrder.WATERING -> {
+                sortedBy { plant -> getRemainWateringDate(plant) }
             }
         }
+    }
 
     fun getPlantLiveData(plantId: Int): LiveData<Plant> {
         return plantRepository.getPlantLiveData(plantId)
@@ -83,76 +79,6 @@ class GardenUseCase(
     suspend fun getPlantNames(): Map<Int, String> {
         return plantRepository.getPlantNames()
     }
-
-    fun getNextAlarmDateTime(plant: Plant): LocalDateTime? {
-        if (plant.waterPeriod == 0) return null
-
-        val nextDate = plant.lastWateringDate.plusDays(plant.waterPeriod.toLong())
-        var nextDateTime = LocalDateTime.of(nextDate, plant.wateringAlarm.time)
-
-        //check if the nextDateTime is in past
-        val currentTime = LocalDateTime.now()
-        while (nextDateTime < currentTime) {
-            nextDateTime = nextDateTime.plusDays(plant.waterPeriod.toLong())
-        }
-
-        return nextDateTime
-    }
-
-    fun getDiariesByPlantId(plantId: Int): LiveData<List<Diary>> {
-        return diaryRepository.getDiariesByPlantId(
-            plantId,
-            AppConstValue.MAX_DIARY_SIZE_ON_PLANT_DETAIL
-        )
-    }
-
-    suspend fun addDiary(diary: Diary) = withContext(ioDispatcher) {
-        diaryRepository.addDiary(diary)
-    }
-
-    suspend fun updateDiary(diary: Diary) = withContext(ioDispatcher) {
-        diaryRepository.updateDiary(diary)
-    }
-
-    fun deleteDiary(diary: Diary) {
-        CoroutineScope(ioDispatcher).launch {
-            diaryRepository.deleteDiary(diary)
-        }
-    }
-
-    suspend fun getDiary(diaryId: Int): Diary {
-        return diaryRepository.getDiary(diaryId)
-    }
-
-    fun getDiaryLiveData(diaryId: Int): LiveData<Diary> {
-        return diaryRepository.getDiaryLiveData(diaryId)
-    }
-
-    fun getDiaries(
-        year: Int,
-        month: Int,
-        sortOrder: DiaryListSortOrder,
-        plantId: Int? = null
-    ): LiveData<List<Diary>> {
-        val diariesLiveData = diaryRepository.getDiaries(year, month, plantId)
-        return diariesLiveData.switchMap { list ->
-            liveData {
-                emit(list.applySort(sortOrder))
-            }
-        }
-    }
-
-    private suspend fun List<Diary>.applySort(sortOrder: DiaryListSortOrder): List<Diary> =
-        withContext(defaultDispatcher) {
-            when (sortOrder) {
-                DiaryListSortOrder.CREATED_LATEST -> {
-                    sortedByDescending { diary -> diary.createdDate }
-                }
-                DiaryListSortOrder.CREATED_OLDEST -> {
-                    sortedBy { diary -> diary.createdDate }
-                }
-            }
-        }
 
     /**
      * 물주기 주기설정이 없는 경우 마지막 물준날짜로부터 D+00
@@ -233,15 +159,33 @@ class GardenUseCase(
         }
     }
 
-    private suspend fun setWateringAlarm(plant: Plant, isActive: Boolean) =
-        withContext(defaultDispatcher) {
-            if (isActive) {
-                //다음 알람이 없는 경우는 등록하지 않음
-                getNextAlarmDateTime(plant)?.let { nextDateTime ->
-                    wateringAlarmManager.setWateringAlarm(plant.id, nextDateTime)
-                }
-            } else {
-                wateringAlarmManager.cancelWateringAlarm(plant.id)
+    fun setWateringAlarm(plant: Plant, isActive: Boolean) {
+        if (isActive) {
+            //다음 알람이 없는 경우는 등록하지 않음
+            getNextAlarmDateTime(plant)?.let { nextDateTime ->
+                wateringAlarmManager.setWateringAlarm(plant.id, nextDateTime)
             }
+        } else {
+            wateringAlarmManager.cancelWateringAlarm(plant.id)
         }
+    }
+
+    fun getNextAlarmDateTime(plant: Plant): LocalDateTime? {
+        if (plant.waterPeriod == 0) return null
+
+        val nextDate = plant.lastWateringDate.plusDays(plant.waterPeriod.toLong())
+        var nextDateTime = LocalDateTime.of(nextDate, plant.wateringAlarm.time)
+
+        //check if the nextDateTime is in past
+        val currentTime = LocalDateTime.now()
+        while (nextDateTime < currentTime) {
+            nextDateTime = nextDateTime.plusDays(plant.waterPeriod.toLong())
+        }
+
+        return nextDateTime
+    }
+
+    suspend fun getPlantAlarmList(): Map<Int, Boolean> = withContext(ioDispatcher) {
+        plantRepository.getPlantIdWithAlarmList()
+    }
 }

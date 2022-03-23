@@ -37,4 +37,8 @@ interface PlantDao {
     @MapInfo(keyColumn = "plantId", valueColumn = "plantName")
     @Query("SELECT id AS plantId, name AS plantName FROM plant")
     suspend fun getPlantNames(): Map<Int, String>
+
+    @MapInfo(keyColumn = "plantId", valueColumn = "AlarmOnOff")
+    @Query("SELECT id AS plantId, onOff AS AlarmOnOff FROM plant")
+    suspend fun getPlantIdWithAlarmList(): Map<Int, Boolean>
 }

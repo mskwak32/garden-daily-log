@@ -1,9 +1,10 @@
 package com.mskwak.domain
 
+import com.mskwak.domain.manager.WateringAlarmManager
 import com.mskwak.domain.model.Plant
 import com.mskwak.domain.repository.DiaryRepository
 import com.mskwak.domain.repository.PlantRepository
-import com.mskwak.domain.usecase.GardenUseCase
+import com.mskwak.domain.usecase.PlantUseCase
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,12 +22,15 @@ class UseCaseTest {
     lateinit var diaryRepository: DiaryRepository
 
     @Mock
+    lateinit var wateringAlarmManager: WateringAlarmManager
+
+    @Mock
     lateinit var plant: Plant
-    private lateinit var useCase: GardenUseCase
+    private lateinit var useCase: PlantUseCase
 
     @Before
     fun init() {
-        useCase = GardenUseCase(plantRepository, diaryRepository)
+        useCase = PlantUseCase(plantRepository, diaryRepository, wateringAlarmManager)
     }
 
     @Test

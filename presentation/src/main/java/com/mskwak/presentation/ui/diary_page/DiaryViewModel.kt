@@ -3,7 +3,8 @@ package com.mskwak.presentation.ui.diary_page
 import androidx.lifecycle.*
 import com.mskwak.domain.model.Diary
 import com.mskwak.domain.usecase.DiaryListSortOrder
-import com.mskwak.domain.usecase.GardenUseCase
+import com.mskwak.domain.usecase.DiaryUseCase
+import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.presentation.model.DiaryImpl
 import com.mskwak.presentation.util.SingleLiveEvent
 import com.mskwak.presentation.util.SingleMediatorLiveData
@@ -17,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DiaryViewModel @Inject constructor(
-    private val useCase: GardenUseCase
+    private val plantUseCase: PlantUseCase,
+    private val diaryUseCase: DiaryUseCase
 ) : ViewModel() {
     private val _month = MutableLiveData(LocalDate.now().withDayOfMonth(1))
     val month: LiveData<LocalDate> = _month
@@ -54,7 +56,7 @@ class DiaryViewModel @Inject constructor(
     }
 
     fun loadPlantNames() = viewModelScope.launch {
-        _plantNameMap.value = useCase.getPlantNames()
+        _plantNameMap.value = plantUseCase.getPlantNames()
     }
 
     fun setPlantFilter(plantId: Int) {
@@ -77,7 +79,7 @@ class DiaryViewModel @Inject constructor(
                 loadPlantNames().join()
             }
 
-            val newSource = useCase.getDiaries(
+            val newSource = diaryUseCase.getDiaries(
                 month.value!!.year,
                 month.value!!.monthValue,
                 sortOrder,

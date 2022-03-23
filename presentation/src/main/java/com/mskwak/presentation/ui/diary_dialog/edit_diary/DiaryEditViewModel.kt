@@ -4,7 +4,8 @@ import android.graphics.Bitmap
 import android.net.Uri
 import androidx.lifecycle.*
 import com.mskwak.domain.AppConstValue
-import com.mskwak.domain.usecase.GardenUseCase
+import com.mskwak.domain.usecase.DiaryUseCase
+import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.presentation.R
 import com.mskwak.presentation.model.DiaryImpl
 import com.mskwak.presentation.util.SingleLiveEvent
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DiaryEditViewModel @Inject constructor(
-    private val useCase: GardenUseCase
+    private val plantUseCase: PlantUseCase,
+    private val diaryUseCase: DiaryUseCase
 ) : ViewModel() {
     private var plantId: Int? = null
     private val _plantName = MutableLiveData<String>()
@@ -61,9 +63,9 @@ class DiaryEditViewModel @Inject constructor(
 
             if (isUpdate) {
                 deleteOldPicture()
-                useCase.updateDiary(diary)
+                diaryUseCase.updateDiary(diary)
             } else {
-                useCase.addDiary(diary)
+                diaryUseCase.addDiary(diary)
             }
             //새로 추가한 사진 중 diary로 저장되는 사진을 제외하고 세팅 -> 삭제되도록함
             newPictures =
@@ -75,13 +77,13 @@ class DiaryEditViewModel @Inject constructor(
     private fun deleteOldPicture() {
         //기존에 있던 사진 중 삭제할 사진골라 삭제
         val toDeleteList = originPictures.filter { _pictureList.value?.contains(it) == false }
-        useCase.deletePicture(*toDeleteList.toTypedArray())
+        plantUseCase.deletePicture(*toDeleteList.toTypedArray())
     }
 
     fun deleteTempFiles() {
         //임시로 추가했던 사진 삭제
         if (newPictures.isNotEmpty()) {
-            useCase.deletePicture(*newPictures.toTypedArray())
+            plantUseCase.deletePicture(*newPictures.toTypedArray())
         }
     }
 
@@ -97,7 +99,7 @@ class DiaryEditViewModel @Inject constructor(
     //새로 추가된 사진을 파일로 저장, 임시 리스트에도 저장
     fun saveNewPicture(bitmap: Bitmap) {
         viewModelScope.launch {
-            val uri = useCase.savePicture(bitmap)
+            val uri = plantUseCase.savePicture(bitmap)
             _pictureList.value = _pictureList.value?.apply { add(uri) } ?: mutableListOf(uri)
             newPictures.add(uri)
         }
@@ -110,7 +112,7 @@ class DiaryEditViewModel @Inject constructor(
 
     fun loadDiary(id: Int) {
         viewModelScope.launch {
-            useCase.getDiary(id).let {
+            diaryUseCase.getDiary(id).let {
                 diaryId = it.id
                 plantId = it.plantId
                 diaryDate.value = it.createdDate
@@ -127,7 +129,7 @@ class DiaryEditViewModel @Inject constructor(
     fun loadPlantName(plantId: Int) {
         viewModelScope.launch {
             this@DiaryEditViewModel.plantId = plantId
-            _plantName.value = useCase.getPlantName(plantId)
+            _plantName.value = plantUseCase.getPlantName(plantId)
         }
     }
 

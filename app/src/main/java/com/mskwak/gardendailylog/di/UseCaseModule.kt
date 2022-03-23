@@ -3,7 +3,8 @@ package com.mskwak.gardendailylog.di
 import com.mskwak.domain.manager.WateringAlarmManager
 import com.mskwak.domain.repository.DiaryRepository
 import com.mskwak.domain.repository.PlantRepository
-import com.mskwak.domain.usecase.GardenUseCase
+import com.mskwak.domain.usecase.DiaryUseCase
+import com.mskwak.domain.usecase.PlantUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,11 +17,19 @@ class UseCaseModule {
 
     @Singleton
     @Provides
-    fun provideGardenUseCase(
+    fun providePlantUseCase(
         plantRepository: PlantRepository,
         diaryRepository: DiaryRepository,
         wateringAlarmManager: WateringAlarmManager
-    ): GardenUseCase {
-        return GardenUseCase(plantRepository, diaryRepository, wateringAlarmManager)
+    ): PlantUseCase {
+        return PlantUseCase(plantRepository, diaryRepository, wateringAlarmManager)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDiaryUseCase(
+        diaryRepository: DiaryRepository
+    ): DiaryUseCase {
+        return DiaryUseCase(diaryRepository)
     }
 }

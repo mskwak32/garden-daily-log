@@ -9,7 +9,7 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.mskwak.domain.manager.WateringAlarmManager
-import com.mskwak.domain.usecase.GardenUseCase
+import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.presentation.MainActivity
 import com.mskwak.presentation.R
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +23,7 @@ import javax.inject.Inject
 class WateringAlarmReceiver : BroadcastReceiver() {
 
     @Inject
-    lateinit var useCase: GardenUseCase
+    lateinit var useCase: PlantUseCase
 
     @Inject
     lateinit var wateringAlarmManager: WateringAlarmManager

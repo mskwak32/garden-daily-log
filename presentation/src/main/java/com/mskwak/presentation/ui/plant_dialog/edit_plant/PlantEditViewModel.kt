@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mskwak.domain.usecase.GardenUseCase
+import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.presentation.R
 import com.mskwak.presentation.model.AlarmImpl
 import com.mskwak.presentation.model.PlantImpl
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PlantEditViewModel @Inject constructor(
-    private val useCase: GardenUseCase
+    private val useCase: PlantUseCase
 ) : ViewModel() {
 
     val onSavedEvent = SingleLiveEvent<Unit>()
