@@ -108,29 +108,35 @@ class PlantDetailDialog(private val plantId: Int) :
             plantDate.text = "${getString(R.string.plant_date)}: $plantDateString"
 
             val pair = this@PlantDetailDialog.viewModel.getDdays()
-            binding.wateringDdays.text = pair.first
+            val dateText = pair.first
+            val isDateOver = pair.second
+            val today = LocalDate.now()
+
+            binding.wateringDdays.text = dateText
 
             //물주기 버튼으로 인한 갱신시에는 동작하지 않도록함
             if (!isWateringFlag) {
-                if (pair.second) {
-                    binding.waterIcon.setBackgroundResource(R.drawable.ic_water_drop_red)
-                } else {
-                    binding.waterIcon.setBackgroundResource(R.drawable.ic_water_drop_blue)
-                }
-            }
-
-            //마지막 물준 날짜 세팅
-            val today = LocalDate.now()
-            when (plant.lastWateringDate) {
-                today -> {
-                    lastWateringDate.text = getText(R.string.today)
-
-                    //물주기 버튼으로 인한 갱신시에는 동작하지 않도록함
-                    if (!isWateringFlag) {
+                when {
+                    isDateOver -> {
+                        binding.waterIcon.setBackgroundResource(R.drawable.ic_water_drop_red)
+                        binding.waterAnimation.visibility = View.INVISIBLE
+                    }
+                    plant.lastWateringDate == today -> {
                         binding.waterIcon.setBackgroundResource(R.drawable.ic_water_drop_white)
                         binding.waterAnimation.progress = 1f
                         binding.waterAnimation.visibility = View.VISIBLE
                     }
+                    else -> {
+                        binding.waterIcon.setBackgroundResource(R.drawable.ic_water_drop_blue)
+                        binding.waterAnimation.visibility = View.INVISIBLE
+                    }
+                }
+            }
+
+            //마지막 물준 날짜 세팅
+            when (plant.lastWateringDate) {
+                today -> {
+                    lastWateringDate.text = getText(R.string.today)
                 }
                 today.minusDays(1) -> {
                     lastWateringDate.text = getText(R.string.yesterday)

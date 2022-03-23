@@ -9,9 +9,12 @@ import com.mskwak.domain.model.Plant
 import com.mskwak.presentation.R
 import com.mskwak.presentation.databinding.LayoutItemPlantBinding
 import com.mskwak.presentation.model.PlantImpl
+import java.time.LocalDate
 
 class PlantListAdapter(private val viewModel: HomeViewModel) :
     ListAdapter<Plant, PlantListAdapter.ItemViewHolder>(ItemDiffCallback()) {
+
+    private val currentDate = LocalDate.now()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -26,8 +29,7 @@ class PlantListAdapter(private val viewModel: HomeViewModel) :
         holderItem.bind(item)
     }
 
-
-    class ItemViewHolder(private val binding: LayoutItemPlantBinding) :
+    inner class ItemViewHolder(private val binding: LayoutItemPlantBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(plant: Plant) {
@@ -42,11 +44,19 @@ class PlantListAdapter(private val viewModel: HomeViewModel) :
 
             binding.dDayCount.text = dateText
 
-            if (isDateOver) {
-                binding.waterIcon.setBackgroundResource(R.drawable.ic_water_drop_red)
-            } else {
-                binding.waterIcon.setBackgroundResource(R.drawable.ic_water_drop_blue)
+            val waterIconRes = when {
+                isDateOver -> {
+                    R.drawable.ic_water_drop_red
+                }
+                plant.lastWateringDate == currentDate -> {
+                    R.drawable.ic_water_drop_with_background
+                }
+                else -> {
+                    R.drawable.ic_water_drop_blue
+                }
             }
+
+            binding.waterIcon.setImageResource(waterIconRes)
         }
     }
 

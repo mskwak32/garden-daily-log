@@ -6,14 +6,12 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
-import com.mskwak.domain.model.Plant
 import com.mskwak.domain.usecase.PlantListSortOrder
 import com.mskwak.presentation.R
 import com.mskwak.presentation.databinding.FragmentHomeBinding
 import com.mskwak.presentation.ui.base.BaseFragment
 import com.mskwak.presentation.ui.custom_component.ListItemDecoVertical
 import com.mskwak.presentation.ui.custom_component.SortAdapter
-import com.mskwak.presentation.ui.dialog.DeleteConfirmDialog
 import com.mskwak.presentation.ui.plant_dialog.edit_plant.PlantEditDialog
 import com.mskwak.presentation.ui.plant_dialog.plant_detail.PlantDetailDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +21,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override val layoutRes: Int = R.layout.fragment_home
     private val viewModel by viewModels<HomeViewModel>()
     private val adapter: PlantListAdapter by lazy { PlantListAdapter(viewModel) }
+    private val swipeHelperCallback = SwipeHelperCallback().apply { setClamp(200f) }
 
     override fun initialize() {
         binding.viewModel = viewModel
@@ -36,8 +35,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         viewModel.openPlantEvent.observe(viewLifecycleOwner) {
             openPlantDetail(it)
         }
-        viewModel.deletePlantClickEvent.observe(viewLifecycleOwner) {
-            openDeleteConfirm(it)
+        viewModel.onWateringEvent.observe(viewLifecycleOwner) {
+            swipeHelperCallback.removeCurrentClamp(binding.plantListView)
         }
     }
 
@@ -47,7 +46,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         val dividerHeight =
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics)
                 .toInt()
-        val swipeHelperCallback = SwipeHelperCallback().apply { setClamp(200f) }
+//        val swipeHelperCallback = SwipeHelperCallback().apply { setClamp(200f) }
         val itemTouchHelper = ItemTouchHelper(swipeHelperCallback)
         itemTouchHelper.attachToRecyclerView(binding.plantListView)
         binding.plantListView.apply {
@@ -86,13 +85,5 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     fun onAddPlantClick() {
         PlantEditDialog(null).show(childFragmentManager, null)
-    }
-
-    private fun openDeleteConfirm(plant: Plant) {
-        DeleteConfirmDialog().apply {
-            deleteClickListener = {
-                viewModel.deletePlant(plant)
-            }
-        }.show(childFragmentManager, null)
     }
 }

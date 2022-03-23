@@ -7,6 +7,8 @@ import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.presentation.model.PlantImpl
 import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,8 +22,8 @@ class HomeViewModel @Inject constructor(
 
     private val _openPlantEvent = SingleLiveEvent<Int>()
     val openPlantEvent: LiveData<Int> = _openPlantEvent
-    private val _deletePlantClickEvent = SingleLiveEvent<Plant>()
-    val deletePlantClickEvent: LiveData<Plant> = _deletePlantClickEvent
+    private val _onWateringEvent = SingleLiveEvent<Unit>()
+    val onWateringEvent: LiveData<Unit> = _onWateringEvent
 
     var plants: LiveData<List<Plant>> = _sortOrder.switchMap { sortOrder ->
         useCase.getPlantsWithSortOrder(sortOrder).map {
@@ -41,12 +43,12 @@ class HomeViewModel @Inject constructor(
         _openPlantEvent.value = plant.id
     }
 
-    fun onDeletePlantClick(plant: Plant) {
-        _deletePlantClickEvent.value = plant
-    }
-
-    fun deletePlant(plant: Plant) {
-        useCase.deletePlant(plant)
+    fun onWateringClick(plant: Plant) {
+        viewModelScope.launch {
+            _onWateringEvent.call()
+            delay(250)
+            useCase.wateringNow(plant.id)
+        }
     }
 
     /**

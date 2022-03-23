@@ -128,7 +128,20 @@ class SwipeHelperCallback : ItemTouchHelper.Callback() {
                 start()
             }
             setTag(viewHolder, false)
-            previousItemPosition == null
+            previousItemPosition = null
+        }
+    }
+
+    fun removeCurrentClamp(recyclerView: RecyclerView) {
+        currentItemPosition?.let {
+            val viewHolder = recyclerView.findViewHolderForAdapterPosition(it) ?: return
+            ObjectAnimator.ofFloat(getView(viewHolder), "translationX", 0f).apply {
+                duration = 300
+                start()
+            }
+            setTag(viewHolder, false)
+            previousItemPosition = null
+            currentItemPosition = null
         }
     }
 }
