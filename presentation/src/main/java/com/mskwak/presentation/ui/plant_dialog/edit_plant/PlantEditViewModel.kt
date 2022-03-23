@@ -66,6 +66,11 @@ class PlantEditViewModel @Inject constructor(
                 useCase.savePicture(it)
             } ?: _pictureUri.value
 
+            //물주기 기간이 없음일경우 alarm onOff = false
+            if (wateringPeriod.value == 0) {
+                _wateringAlarmOnOff.value = false
+            }
+
             val alarm = AlarmImpl(wateringAlarmTime.value!!, wateringAlarmOnOff.value!!)
             val plant = PlantImpl(
                 plantName.value!!,

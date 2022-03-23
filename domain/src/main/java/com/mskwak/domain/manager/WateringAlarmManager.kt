@@ -1,8 +1,8 @@
 package com.mskwak.domain.manager
 
-import com.mskwak.domain.model.Plant
+import java.time.LocalDateTime
 
 interface WateringAlarmManager {
-    fun setWateringAlarm(plant: Plant)
-    fun cancelWateringAlarm(plant: Plant)
+    fun setWateringAlarm(plantId: Int, nextAlarmDateTime: LocalDateTime)
+    fun cancelWateringAlarm(plantId: Int)
 }

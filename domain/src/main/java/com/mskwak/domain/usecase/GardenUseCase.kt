@@ -13,6 +13,7 @@ import com.mskwak.domain.repository.DiaryRepository
 import com.mskwak.domain.repository.PlantRepository
 import kotlinx.coroutines.*
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.Period
 import java.time.temporal.ChronoUnit
 import kotlin.math.abs
@@ -75,8 +76,27 @@ class GardenUseCase(
         }
     }
 
-    suspend fun getPlantName(plantId: Int) = withContext(ioDispatcher) {
+    suspend fun getPlantName(plantId: Int): String = withContext(ioDispatcher) {
         plantRepository.getPlantName(plantId)
+    }
+
+    suspend fun getPlantNames(): Map<Int, String> {
+        return plantRepository.getPlantNames()
+    }
+
+    fun getNextAlarmDateTime(plant: Plant): LocalDateTime? {
+        if (plant.waterPeriod == 0) return null
+
+        val nextDate = plant.lastWateringDate.plusDays(plant.waterPeriod.toLong())
+        var nextDateTime = LocalDateTime.of(nextDate, plant.wateringAlarm.time)
+
+        //check if the nextDateTime is in past
+        val currentTime = LocalDateTime.now()
+        while (nextDateTime < currentTime) {
+            nextDateTime = nextDateTime.plusDays(plant.waterPeriod.toLong())
+        }
+
+        return nextDateTime
     }
 
     fun getDiariesByPlantId(plantId: Int): LiveData<List<Diary>> {
@@ -106,10 +126,6 @@ class GardenUseCase(
 
     fun getDiaryLiveData(diaryId: Int): LiveData<Diary> {
         return diaryRepository.getDiaryLiveData(diaryId)
-    }
-
-    suspend fun getPlantNames(): Map<Int, String> {
-        return plantRepository.getPlantNames()
     }
 
     fun getDiaries(
@@ -220,9 +236,12 @@ class GardenUseCase(
     private suspend fun setWateringAlarm(plant: Plant, isActive: Boolean) =
         withContext(defaultDispatcher) {
             if (isActive) {
-                wateringAlarmManager.setWateringAlarm(plant)
+                //다음 알람이 없는 경우는 등록하지 않음
+                getNextAlarmDateTime(plant)?.let { nextDateTime ->
+                    wateringAlarmManager.setWateringAlarm(plant.id, nextDateTime)
+                }
             } else {
-                wateringAlarmManager.cancelWateringAlarm(plant)
+                wateringAlarmManager.cancelWateringAlarm(plant.id)
             }
         }
 }

@@ -8,22 +8,45 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.mskwak.domain.manager.WateringAlarmManager
+import com.mskwak.domain.usecase.GardenUseCase
+import com.mskwak.presentation.MainActivity
 import com.mskwak.presentation.R
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class WateringAlarmReceiver : BroadcastReceiver() {
 
     @Inject
-    lateinit var notificationPendingIntent: PendingIntent
+    lateinit var useCase: GardenUseCase
+
+    @Inject
+    lateinit var wateringAlarmManager: WateringAlarmManager
+
+    private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 
     override fun onReceive(context: Context, intent: Intent) {
         createNotificationChannel(context)
 
-        val plantName = intent.getStringExtra(PLANT_NAME_KEY)
         val plantId = intent.getIntExtra(PLANT_ID_KEY, DEFAULT_PLANT_ID)
-        deliverNotification(context, plantName, plantId)
+
+        CoroutineScope(dispatcher).launch {
+            val plant = useCase.takeIf { plantId != DEFAULT_PLANT_ID }?.getPlant(plantId)
+            deliverNotification(context, plant?.name, plantId)
+
+            //다음번 알람 등록
+            if (plant != null) {
+                useCase.getNextAlarmDateTime(plant)?.let { nextDateTime ->
+                    wateringAlarmManager.setWateringAlarm(plant.id, nextDateTime)
+                }
+            }
+        }
+
     }
 
     private fun createNotificationChannel(context: Context) {
@@ -45,7 +68,7 @@ class WateringAlarmReceiver : BroadcastReceiver() {
             .setContentTitle(context.getString(R.string.noti_watering_title))
             .setContentText(plantName?.let { context.getString(R.string.noti_watering_message, it) }
                 ?: "")
-            .setContentIntent(notificationPendingIntent)
+            .setContentIntent(getPendingIntent(context))
             .setAutoCancel(true)
             .setOnlyAlertOnce(true)
             .setGroup(WATERING_GROUP_KEY)
@@ -65,9 +88,21 @@ class WateringAlarmReceiver : BroadcastReceiver() {
             .setGroupSummary(true)
     }
 
+    private fun getPendingIntent(context: Context): PendingIntent {
+        val contentIntent = Intent(context, MainActivity::class.java).apply {
+            action = Intent.ACTION_MAIN
+            addCategory(Intent.CATEGORY_LAUNCHER)
+        }
+        return PendingIntent.getActivity(
+            context,
+            0,
+            contentIntent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+    }
+
     companion object {
         private const val CHANNEL_ID = "wateringNotification"
-        const val PLANT_NAME_KEY = "plantName"
         const val PLANT_ID_KEY = "plantId"
         private const val DEFAULT_PLANT_ID = 100000
         private const val SUMMARY_NOTI_CODE = 1000
