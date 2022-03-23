@@ -51,6 +51,8 @@ class DiaryViewModel @Inject constructor(
     }
 
     fun setMonth(year: Int, month: Int) {
+        if (_month.value?.year == year && _month.value?.monthValue == month) return
+
         _month.value = LocalDate.of(year, month, 1)
         loadDiaries()
     }

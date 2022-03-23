@@ -317,16 +317,19 @@
                         android:orientation="vertical"
                         android:visibility="@{viewModel.isEmptyList() ? View.VISIBLE : View.GONE}">
 
-                        <ImageView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:background="@drawable/ic_diary" />
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            app:lottie_rawRes="@raw/lottie_notebook"
+                            android:scaleX="1.4"
+                            android:scaleY="1.4"
+                            android:progress="100" />
 
                         <TextView
                             android:id="@+id/emptyDiaryText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="8dp"
                             android:textSize="@dimen/text_medium"
                             tools:text="@string/diary_list_empty_with_plantName" />
 

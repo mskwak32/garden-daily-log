@@ -18,7 +18,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipChildren="false">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbarLayout"
@@ -70,6 +71,16 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="16dp"
+                    android:onClick="@{() -> fragment.onThisMonthClick()}"
+                    android:text="@string/this_month"
+                    android:textColor="@color/teal_700"
+                    android:textSize="@dimen/text_body" />
+
 
             </com.google.android.material.appbar.MaterialToolbar>
 
@@ -101,34 +112,38 @@
             android:id="@+id/diaryList"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:padding="16dp"
             android:clipToPadding="false"
+            android:padding="16dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appbarLayout"
             tools:listitem="@layout/layout_item_diary" />
 
         <LinearLayout
+            android:id="@+id/emptyDiaryLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/appbarLayout"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:gravity="center"
+            android:orientation="vertical"
             android:visibility="@{viewModel.isEmptyList()? View.VISIBLE : View.GONE}"
-            android:id="@+id/emptyDiaryLayout"
-            android:orientation="vertical">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appbarLayout">
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/ic_diary" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleX="1.7"
+                android:scaleY="1.7"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/lottie_notebook" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_medium"
+                android:layout_marginTop="16dp"
                 android:text="@string/diary_list_empty"
-                android:layout_marginTop="16dp" />
+                android:textSize="@dimen/text_medium" />
 
         </LinearLayout>
 

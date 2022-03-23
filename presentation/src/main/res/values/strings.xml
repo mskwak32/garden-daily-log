@@ -48,6 +48,7 @@
     <string name="diary_content_hint">내용을 입력해주세요.</string>
     <string name="diary_content_empty">기록된 내용이 없습니다.</string>
     <string name="date">날짜</string>
+    <string name="this_month">이번달</string>
     <string name="message_no_more_picture">더이상 이미지를 추가할 수 없습니다.</string>
     <string name="message_input_picture_or_content">사진이나 내용을 입력해주세요.</string>
     <string name="today">오늘</string>

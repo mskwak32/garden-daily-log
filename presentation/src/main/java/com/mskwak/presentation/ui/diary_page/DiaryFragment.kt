@@ -18,6 +18,7 @@ import com.mskwak.presentation.ui.custom_component.SortAdapter
 import com.mskwak.presentation.ui.dialog.SelectMonthDialog
 import com.mskwak.presentation.ui.diary_dialog.diary_detail.DiaryDetailDialog
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
 
 @AndroidEntryPoint
 class DiaryFragment : BaseFragment<FragmentDiaryBinding>() {
@@ -77,17 +78,6 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>() {
         }
     }
 
-    fun onMonthClick() {
-        if (viewModel.month.value != null) {
-            SelectMonthDialog.Builder()
-                .setInitialValue(viewModel.month.value!!.year, viewModel.month.value!!.monthValue)
-                .setOnCompleteListener { year, month ->
-                    viewModel.setMonth(year, month)
-                }
-                .show(childFragmentManager)
-        }
-    }
-
     private fun initDiaryList() {
         val dividerHeight =
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, resources.displayMetrics)
@@ -104,6 +94,22 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>() {
                 diaryListAdapter.submitList(it)
             }
         }
+    }
+
+    fun onMonthClick() {
+        if (viewModel.month.value != null) {
+            SelectMonthDialog.Builder()
+                .setInitialValue(viewModel.month.value!!.year, viewModel.month.value!!.monthValue)
+                .setOnCompleteListener { year, month ->
+                    viewModel.setMonth(year, month)
+                }
+                .show(childFragmentManager)
+        }
+    }
+
+    fun onThisMonthClick() {
+        val currentDate = LocalDate.now()
+        viewModel.setMonth(currentDate.year, currentDate.monthValue)
     }
 
     private fun openDiaryDetail(diary: Diary) {
