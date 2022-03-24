@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.mskwak.presentation.ui.diary_dialog.diary_detail.DiaryDetailViewModel" />
+
+        <variable
+            name="dialog"
+            type="com.mskwak.presentation.ui.diary_dialog.diary_detail.DiaryDetailDialog" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="8dp"
+        android:paddingBottom="20dp">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            app:elevation="0dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/slot"
+                android:layout_width="50dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_slot"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/slot">
+
+                <ImageButton
+                    android:id="@+id/menuButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_more_horiz_black"
+                    android:onClick="@{() -> dialog.onMenuClick()}" />
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@{viewModel.plantName}"
+                    android:textColor="@color/dim_black_70"
+                    android:textSize="@dimen/text_medium"
+                    android:textStyle="bold"
+                    tools:text="식물이름" />
+
+                <ImageButton
+                    android:id="@+id/closeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/ic_close_black"
+                    android:onClick="@{() -> dialog.onCloseClick()}" />
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/appbarLayout">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPager"
+                    android:layout_width="300dp"
+                    android:layout_height="200dp"
+                    android:visibility="@{viewModel.isPictureListEmpty()? View.GONE : View.VISIBLE}"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:background="@color/green_300" />
+
+                <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                    android:id="@+id/pageIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:visibility="@{viewModel.isPictureListEmpty()? View.GONE : View.VISIBLE}"
+                    app:dotsColor="@color/white"
+                    app:dotsSize="10dp"
+                    app:layout_constraintBottom_toBottomOf="@id/viewPager"
+                    app:layout_constraintLeft_toLeftOf="@id/viewPager"
+                    app:layout_constraintRight_toRightOf="@id/viewPager" />
+
+                <com.mskwak.presentation.ui.custom_component.TextViewWithIcon
+                    android:id="@+id/dateTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:iconRes="@drawable/ic_event_black"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/viewPager"
+                    app:text="@string/date" />
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:textSize="@dimen/text_body"
+                    app:layout_constraintBottom_toBottomOf="@id/dateTitle"
+                    app:layout_constraintLeft_toRightOf="@id/dateTitle"
+                    app:layout_constraintTop_toTopOf="@id/dateTitle"
+                    tools:text="2022.02.22" />
+
+                <TextView
+                    android:id="@+id/memoText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/rectangle_stroke_box_bg"
+                    android:padding="10dp"
+                    android:textSize="@dimen/text_body"
+                    app:layout_constraintTop_toBottomOf="@id/dateTitle"
+                    tools:text="@string/diary_content_empty" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/transparent"
+                    app:layout_constraintTop_toBottomOf="@id/memoText" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

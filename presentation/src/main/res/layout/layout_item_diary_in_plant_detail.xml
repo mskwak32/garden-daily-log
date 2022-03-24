@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="diary"
+            type="com.mskwak.domain.model.Diary" />
+
+        <variable
+            name="viewModel"
+            type="com.mskwak.presentation.ui.plant_dialog.plant_detail.PlantDetailViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_stroke_box_bg"
+        android:padding="4dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/picture"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="8dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/plant_default"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/roundedCorner" />
+
+        <TextView
+            android:id="@+id/dateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textColor="@color/dim_black_70"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintLeft_toRightOf="@id/picture"
+            app:layout_constraintTop_toTopOf="parent"
+            app:localDate="@{diary.createdDate}"
+            tools:text="2022.02.22" />
+
+        <TextView
+            android:id="@+id/memoText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:lines="2"
+            android:maxLines="2"
+            android:text="@{diary.memo}"
+            android:textSize="@dimen/text_body"
+            app:layout_constraintLeft_toLeftOf="@id/dateText"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dateText"
+            tools:text="memo" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -3,82 +3,36 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
-    id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
-android {
-    compileSdk 32
+apply from: rootProject.file("android.gradle")
 
+android {
     defaultConfig {
         applicationId "com.mskwak.gardendailylog"
-        minSdk 26
-        targetSdk 32
-        versionCode 1
-        versionName "1.0"
         setProperty("archivesBaseName", "$rootProject.name $versionName-$versionCode")
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-
-    testOptions {
-        unitTests {
-            includeAndroidResources = true
-        }
-    }
-
-    dataBinding {
-        enabled = true
     }
 }
 
 dependencies {
+    implementation project(":data")
+    implementation project(":domain")
+    implementation project(":presentation")
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation(Libraries.CORE_KTX)
+    implementation(Libraries.APP_COMPAT)
 
-    def lifecycleVersion = "2.4.0"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
-    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
-    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+    implementation(Di.HILT_ANDROID)
+    kapt(Di.HILT_COMPILER)
 
-    //di
-    implementation "com.google.dagger:hilt-android:$hiltCoreVersion"
-    kapt "com.google.dagger:hilt-android-compiler:$hiltCoreVersion"
+    implementation(Room.ROOM_RUNTIME)
+    kapt(Room.ROOM_COMPILER)
+    implementation(Room.ROOM_KTX)
+    implementation(Libraries.LOGGER)
 
-    //coroutine
-    def coroutinesVersion = "1.5.2"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
-
-    //test
-    def junitVersion = "4.13.2"
-    def androidxTest = "1.4.0"
-    def androidxTestJunitVersion = "1.1.3"
-    def espressoVersion = "3.4.0"
-    def robolectricVersion = "4.5.1"
-    def archVersion = "2.1.0"
-    testImplementation "junit:junit:$junitVersion"
-    testImplementation "androidx.test:core:$androidxTest"
-    testImplementation "androidx.arch.core:core-testing:$archVersion"
-    testImplementation "org.robolectric:robolectric:$robolectricVersion"
-    androidTestImplementation "androidx.test.ext:junit:$androidxTestJunitVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    implementation platform(Firebase.FIREBASE_BOM)
+    implementation(Firebase.FIREBASE_ANALYTICS)
+    implementation(Firebase.FIREBASE_CRASHLYTICS)
 }

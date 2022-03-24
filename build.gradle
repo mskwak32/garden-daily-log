@@ -1,18 +1,16 @@
 buildscript {
-    ext {
-        navigationVersion = "2.4.1"
-        hiltCoreVersion = "2.41"
-    }
     dependencies {
-        classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltCoreVersion"
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
+        classpath(ProjectDependencies.HILT_PLUGIN)
+        classpath(ProjectDependencies.NAVIGATION_SAFE_ARGS)
+        classpath(ProjectDependencies.FIREBASE_SDK)
+        classpath(ProjectDependencies.FIREBASE_CRASHLYTICS_PLUGIN)
     }
 }
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 plugins {
-    id 'com.android.application' version '7.1.1' apply false
-    id 'com.android.library' version '7.1.1' apply false
+    id 'com.android.application' version '7.1.2' apply false
+    id 'com.android.library' version '7.1.2' apply false
     id 'org.jetbrains.kotlin.android' version '1.6.10' apply false
 }
 

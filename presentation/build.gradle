@@ -1,0 +1,44 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+apply from: rootProject.file("android.gradle")
+
+dependencies {
+    implementation project(":domain")
+
+    implementation(Libraries.CORE_KTX)
+    implementation(Libraries.APP_COMPAT)
+    implementation(Ui.MATERIAL)
+    implementation(Ui.CONSTRAINT_LAYOUT)
+
+    implementation(Libraries.LIFECYCLE_VIEWMODEL)
+    implementation(Libraries.LIFECYCLE_LIVEDATA)
+    implementation(Libraries.NAVIGATION_FRAGMENT)
+    implementation(Libraries.NAVIGATION_UI)
+
+    implementation(Di.HILT_ANDROID)
+    kapt(Di.HILT_COMPILER)
+
+    implementation(Coroutines.COROUTINES_CORE)
+    implementation(Coroutines.COROUTINES_ANDROID)
+    testImplementation(Coroutines.COROUTINES_TEST)
+
+    testImplementation("junit:junit:${Versions.JUNIT}")
+    androidTestImplementation("androidx.test.ext:junit:${Versions.ANDROIDX_TEST_JUNIT}")
+    testImplementation("androidx.test:core:${Versions.ANDROIDX_TEST}")
+    testImplementation("androidx.arch.core:core-testing:${Versions.ARCH_TEST}")
+    testImplementation("org.robolectric:robolectric:${Versions.ROBOLECTRIC}")
+    androidTestImplementation("androidx.test.espresso:espresso-core:${Versions.ESPRESSO}")
+
+    implementation(Ui.GLIDE)
+    kapt(Ui.GLIDE_COMPILER)
+    implementation(Ui.VIEW_PAGER)
+    implementation(Ui.DOTS_INDICATOR)
+    implementation(Libraries.LOGGER)
+    implementation(Ui.LOTTIE)
+}

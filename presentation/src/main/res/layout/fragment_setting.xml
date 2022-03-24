@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="fragment"
+            type="com.mskwak.presentation.ui.setting.SettingFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:title="@string/app_name">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/updateButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="16dp"
+                    android:text="@string/setting_version_update"
+                    android:visibility="gone"
+                    app:layout_constraintBaseline_toBaselineOf="@id/versionTitle"
+                    tools:visibility="visible" />
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appbarLayout">
+
+            <TextView
+                android:id="@+id/versionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/setting_version"
+                android:textColor="@color/bgray_600"
+                android:textSize="@dimen/text_medium"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_medium"
+                android:textStyle="bold"
+                app:layout_constraintBaseline_toBaselineOf="@id/versionTitle"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:text="1.0" />
+
+            <Button
+                android:id="@+id/updateBreakdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@color/transparent"
+                android:gravity="left|center_vertical"
+                android:onClick="@{() -> fragment.onUpdateBreakdownClick()}"
+                android:text="@string/setting_update_breakdown"
+                android:textColor="@color/bgray_600"
+                android:textSize="@dimen/text_medium"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/versionTitle" />
+
+            <Button
+                android:id="@+id/estimateButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:gravity="left|center_vertical"
+                android:onClick="@{() -> fragment.onEstimateClick()}"
+                android:text="@string/setting_app_estimation"
+                android:textColor="@color/bgray_600"
+                android:textSize="@dimen/text_medium"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/updateBreakdown" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_made_by"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
