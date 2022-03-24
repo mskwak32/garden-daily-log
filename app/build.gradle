@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 apply from: rootProject.file("android.gradle")
@@ -29,4 +31,8 @@ dependencies {
     kapt(Room.ROOM_COMPILER)
     implementation(Room.ROOM_KTX)
     implementation(Libraries.LOGGER)
+
+    implementation platform(Firebase.FIREBASE_BOM)
+    implementation(Firebase.FIREBASE_ANALYTICS)
+    implementation(Firebase.FIREBASE_CRASHLYTICS)
 }

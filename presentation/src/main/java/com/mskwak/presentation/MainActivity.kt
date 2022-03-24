@@ -49,7 +49,8 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (System.currentTimeMillis() > backKeyPressedTime.plus(2000)) {
             backKeyPressedTime = System.currentTimeMillis()
-            finishToast = Toast.makeText(this, getString(R.string.message_finish_app), Toast.LENGTH_SHORT)
+            finishToast =
+                Toast.makeText(this, getString(R.string.message_finish_app), Toast.LENGTH_SHORT)
             finishToast?.show()
         } else {
             this.finish()

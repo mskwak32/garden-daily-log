@@ -23,6 +23,10 @@ object Versions {
     const val DOTS_INDICATOR = "4.2"
     const val LOGGER = "2.2.0"
     const val LOTTIE = "5.0.3"
+
+    const val GOOGLE_SERVICE = "4.3.10"
+    const val FIREBASE_BOM = "29.2.1"
+    const val FIREBASE_CRASHLYTICS_PLUGIN = "2.8.1"
 }
 
 object Libraries {
@@ -68,5 +72,11 @@ object Room {
     const val ROOM_RUNTIME = "androidx.room:room-runtime:${Versions.ROOM}"
     const val ROOM_COMPILER = "androidx.room:room-compiler:${Versions.ROOM}"
     const val ROOM_KTX = "androidx.room:room-ktx:${Versions.ROOM}"
+}
+
+object Firebase {
+    const val FIREBASE_BOM = "com.google.firebase:firebase-bom:${Versions.FIREBASE_BOM}"
+    const val FIREBASE_ANALYTICS = "com.google.firebase:firebase-analytics-ktx"
+    const val FIREBASE_CRASHLYTICS = "com.google.firebase:firebase-crashlytics-ktx"
 }
 
