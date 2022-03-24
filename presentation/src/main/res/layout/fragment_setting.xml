@@ -86,19 +86,6 @@
                 app:layout_constraintTop_toBottomOf="@id/versionTitle" />
 
             <Button
-                android:id="@+id/suggestButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:gravity="left|center_vertical"
-                android:onClick="@{() -> fragment.onSuggestClick()}"
-                android:text="@string/setting_suggestion"
-                android:textColor="@color/bgray_600"
-                android:textSize="@dimen/text_medium"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/updateBreakdown" />
-
-            <Button
                 android:id="@+id/estimateButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -109,7 +96,7 @@
                 android:textColor="@color/bgray_600"
                 android:textSize="@dimen/text_medium"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/suggestButton" />
+                app:layout_constraintTop_toBottomOf="@id/updateBreakdown" />
 
 
             <TextView

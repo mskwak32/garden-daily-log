@@ -25,10 +25,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
         showNotReadyDialog()
     }
 
-    fun onSuggestClick() {
-        showNotReadyDialog()
-    }
-
     fun onEstimateClick() {
         showNotReadyDialog()
     }

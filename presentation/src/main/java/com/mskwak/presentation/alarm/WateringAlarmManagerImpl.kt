@@ -25,10 +25,11 @@ class WateringAlarmManagerImpl(private val context: Context) : WateringAlarmMana
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            nextAlarmDateTime.getTimeMillis(),
-            pendingIntent
+        alarmManager.setAlarmClock(
+            AlarmManager.AlarmClockInfo(
+                nextAlarmDateTime.getTimeMillis(),
+                pendingIntent
+            ), pendingIntent
         )
 
         Logger.d("set watering alarm: plantId= $plantId trigger= $nextAlarmDateTime")
