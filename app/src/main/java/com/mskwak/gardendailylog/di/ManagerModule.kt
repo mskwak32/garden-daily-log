@@ -15,7 +15,7 @@ class ManagerModule {
 
     @Provides
     @Singleton
-    fun providesAlarmManager(application: Application): WateringAlarmManager {
+    fun provideAlarmManager(application: Application): WateringAlarmManager {
         return WateringAlarmManagerImpl(application)
     }
 }

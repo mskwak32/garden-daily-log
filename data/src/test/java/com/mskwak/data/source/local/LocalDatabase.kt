@@ -1,4 +1,4 @@
-package com.mskwak.data.source
+package com.mskwak.data.source.local
 
 import android.content.Context
 import androidx.room.Room

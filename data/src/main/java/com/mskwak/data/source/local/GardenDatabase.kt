@@ -1,4 +1,4 @@
-package com.mskwak.data.source
+package com.mskwak.data.source.local
 
 import androidx.room.*
 import androidx.room.migration.AutoMigrationSpec
@@ -20,7 +20,6 @@ abstract class GardenDatabase : RoomDatabase() {
     abstract fun plantDao(): PlantDao
     abstract fun diaryDao(): DiaryDao
 
-    @Suppress("ClassName")
     @DeleteColumn(tableName = "plant", columnName = "alarmCode")
     class Migration_1_2 : AutoMigrationSpec
 

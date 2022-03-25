@@ -5,8 +5,8 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.mskwak.data.model.PlantData
-import com.mskwak.data.source.FileDataSource
-import com.mskwak.data.source.PlantDao
+import com.mskwak.data.source.local.FileDataSource
+import com.mskwak.data.source.local.PlantDao
 import com.mskwak.domain.model.Plant
 import com.mskwak.domain.repository.PlantRepository
 import com.orhanobut.logger.Logger

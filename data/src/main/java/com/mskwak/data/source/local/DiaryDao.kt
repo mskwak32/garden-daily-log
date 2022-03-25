@@ -1,4 +1,4 @@
-package com.mskwak.data.source
+package com.mskwak.data.source.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

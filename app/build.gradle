@@ -40,4 +40,9 @@ dependencies {
     implementation platform(Firebase.FIREBASE_BOM)
     implementation(Firebase.FIREBASE_ANALYTICS)
     implementation(Firebase.FIREBASE_CRASHLYTICS)
+
+    implementation(Retrofit.RETROFIT2)
+    implementation(Retrofit.RETROFIT_CONVERTER_SCALARS)
+    implementation(Retrofit.OKHTTP)
+    implementation(Retrofit.OKHTTP_LOGGING_INTERCEPTOR)
 }

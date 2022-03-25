@@ -34,9 +34,12 @@ dependencies {
     kapt(Room.ROOM_COMPILER)
     implementation(Room.ROOM_KTX)
     implementation(Libraries.LOGGER)
+    implementation(Retrofit.RETROFIT2)
+
 
     testImplementation("junit:junit:${Versions.JUNIT}")
     testImplementation("androidx.test:core:${Versions.ANDROIDX_TEST}")
     testImplementation("androidx.arch.core:core-testing:${Versions.ARCH_TEST}")
     testImplementation("org.robolectric:robolectric:${Versions.ROBOLECTRIC}")
+    testImplementation(Retrofit.RETROFIT_CONVERTER_SCALARS)
 }

@@ -72,14 +72,14 @@
                 tools:text="1.0" />
 
             <Button
-                android:id="@+id/updateBreakdown"
+                android:id="@+id/updateContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@color/transparent"
                 android:gravity="left|center_vertical"
-                android:onClick="@{() -> fragment.onUpdateBreakdownClick()}"
-                android:text="@string/setting_update_breakdown"
+                android:onClick="@{() -> fragment.onUpdateContentClick()}"
+                android:text="@string/setting_update_content"
                 android:textColor="@color/bgray_600"
                 android:textSize="@dimen/text_medium"
                 android:textStyle="bold"
@@ -96,7 +96,7 @@
                 android:textColor="@color/bgray_600"
                 android:textSize="@dimen/text_medium"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/updateBreakdown" />
+                app:layout_constraintTop_toBottomOf="@id/updateContent" />
 
 
             <TextView

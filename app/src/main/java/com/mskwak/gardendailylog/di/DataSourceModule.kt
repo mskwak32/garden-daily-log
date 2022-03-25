@@ -2,10 +2,10 @@ package com.mskwak.gardendailylog.di
 
 import android.app.Application
 import androidx.room.Room
-import com.mskwak.data.source.DiaryDao
-import com.mskwak.data.source.FileDataSource
-import com.mskwak.data.source.GardenDatabase
-import com.mskwak.data.source.PlantDao
+import com.mskwak.data.source.local.DiaryDao
+import com.mskwak.data.source.local.FileDataSource
+import com.mskwak.data.source.local.GardenDatabase
+import com.mskwak.data.source.local.PlantDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,7 +17,7 @@ import javax.inject.Singleton
 class DataSourceModule {
     @Provides
     @Singleton
-    fun providesGardenDatabase(application: Application): GardenDatabase {
+    fun provideGardenDatabase(application: Application): GardenDatabase {
         return Room.databaseBuilder(application, GardenDatabase::class.java, GardenDatabase.DB_NAME)
             .addMigrations(GardenDatabase.MIGRATION_2_3)
             .build()
@@ -25,13 +25,13 @@ class DataSourceModule {
 
     @Provides
     @Singleton
-    fun providesPlantDao(db: GardenDatabase): PlantDao {
+    fun providePlantDao(db: GardenDatabase): PlantDao {
         return db.plantDao()
     }
 
     @Provides
     @Singleton
-    fun providesRecordDao(db: GardenDatabase): DiaryDao {
+    fun provideRecordDao(db: GardenDatabase): DiaryDao {
         return db.diaryDao()
     }
 
