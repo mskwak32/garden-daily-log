@@ -6,6 +6,11 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.mskwak.domain.AppConstValue
 import com.mskwak.domain.usecase.PlantListSortOrder
 import com.mskwak.presentation.R
 import com.mskwak.presentation.databinding.FragmentHomeBinding
@@ -29,6 +34,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
         initRecyclerView()
         initSortSpinner()
+        loadAd()
+
         viewModel.plants.observe(viewLifecycleOwner) { plants ->
             adapter.submitList(plants)
         }
@@ -85,5 +92,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     fun onAddPlantClick() {
         PlantEditDialog(null).show(childFragmentManager, null)
+    }
+
+    private fun loadAd() {
+        val adLoader = AdLoader.Builder(requireContext(), AppConstValue.AD_TEST_ID)
+            .forNativeAd { nativeAd ->
+                //show the ad
+                binding.noInternet.visibility = View.GONE
+                val template = binding.adTemplateView
+                template.setNativeAd(nativeAd)
+            }
+            .withAdListener(object : AdListener() {
+                override fun onAdFailedToLoad(p0: LoadAdError) {
+                    binding.noInternet.visibility = View.VISIBLE
+                }
+            })
+            .build()
+
+        adLoader.loadAd(AdRequest.Builder().build())
     }
 }

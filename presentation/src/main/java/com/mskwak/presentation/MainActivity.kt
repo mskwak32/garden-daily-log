@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.ads.MobileAds
 import com.mskwak.presentation.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initNavigation()
+        initAds()
     }
 
     private fun initNavigation() {
@@ -56,5 +58,9 @@ class MainActivity : AppCompatActivity() {
             this.finish()
             finishToast?.cancel()
         }
+    }
+
+    private fun initAds() {
+        MobileAds.initialize(this)
     }
 }

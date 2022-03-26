@@ -35,7 +35,6 @@ dependencies {
     implementation(Room.ROOM_RUNTIME)
     kapt(Room.ROOM_COMPILER)
     implementation(Room.ROOM_KTX)
-    implementation(Libraries.LOGGER)
 
     implementation platform(Firebase.FIREBASE_BOM)
     implementation(Firebase.FIREBASE_ANALYTICS)
@@ -45,4 +44,6 @@ dependencies {
     implementation(Retrofit.RETROFIT_CONVERTER_SCALARS)
     implementation(Retrofit.OKHTTP)
     implementation(Retrofit.OKHTTP_LOGGING_INTERCEPTOR)
+
+    implementation(Libraries.LOGGER)
 }
