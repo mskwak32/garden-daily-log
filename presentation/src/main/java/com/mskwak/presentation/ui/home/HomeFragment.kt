@@ -95,7 +95,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun loadAd() {
-        val adLoader = AdLoader.Builder(requireContext(), AppConstValue.AD_TEST_ID)
+        val adLoader = AdLoader.Builder(requireContext(), AppConstValue.AD_ID)
             .forNativeAd { nativeAd ->
                 //show the ad
                 binding.noInternet.visibility = View.GONE
