@@ -28,6 +28,8 @@
 - mockito
 - alarm manager
 - glide
+- retrofit2
+- firebase realtime database
 
 ## Screenshot
 - 홈화면

@@ -23,8 +23,11 @@ object Versions {
     const val DOTS_INDICATOR = "4.2"
     const val LOGGER = "2.2.0"
     const val LOTTIE = "5.0.3"
+    const val RETROFIT2 = "2.9.0"
+    const val OKHTTP = "4.3.1"
 
     const val GOOGLE_SERVICE = "4.3.10"
+    const val GOOGLE_SERVICE_ADS = "20.6.0"
     const val FIREBASE_BOM = "29.2.1"
     const val FIREBASE_CRASHLYTICS_PLUGIN = "2.8.1"
 }
@@ -41,6 +44,8 @@ object Libraries {
     const val NAVIGATION_UI = "androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATION_KTX}"
     const val GSON = "com.google.code.gson:gson:${Versions.GSON}"
     const val LOGGER = "com.orhanobut:logger:${Versions.LOGGER}"
+    const val GOOGLE_SERVICE_ADS =
+        "com.google.android.gms:play-services-ads:${Versions.GOOGLE_SERVICE_ADS}"
 }
 
 object Ui {
@@ -78,5 +83,14 @@ object Firebase {
     const val FIREBASE_BOM = "com.google.firebase:firebase-bom:${Versions.FIREBASE_BOM}"
     const val FIREBASE_ANALYTICS = "com.google.firebase:firebase-analytics-ktx"
     const val FIREBASE_CRASHLYTICS = "com.google.firebase:firebase-crashlytics-ktx"
+}
+
+object Retrofit {
+    const val RETROFIT2 = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT2}"
+    const val RETROFIT_CONVERTER_SCALARS =
+        "com.squareup.retrofit2:converter-scalars:${Versions.RETROFIT2}"
+    const val OKHTTP = "com.squareup.okhttp3:okhttp:${Versions.OKHTTP}"
+    const val OKHTTP_LOGGING_INTERCEPTOR =
+        "com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP}"
 }
 

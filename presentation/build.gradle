@@ -10,6 +10,7 @@ apply from: rootProject.file("android.gradle")
 
 dependencies {
     implementation project(":domain")
+    implementation project(":adnativetemplates")
 
     implementation(Libraries.CORE_KTX)
     implementation(Libraries.APP_COMPAT)
@@ -41,4 +42,5 @@ dependencies {
     implementation(Ui.DOTS_INDICATOR)
     implementation(Libraries.LOGGER)
     implementation(Ui.LOTTIE)
+    implementation(Libraries.GOOGLE_SERVICE_ADS)
 }

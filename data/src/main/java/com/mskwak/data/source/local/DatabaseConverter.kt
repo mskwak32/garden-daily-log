@@ -1,4 +1,4 @@
-package com.mskwak.data.source
+package com.mskwak.data.source.local
 
 import android.net.Uri
 import androidx.room.TypeConverter

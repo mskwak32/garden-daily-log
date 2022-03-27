@@ -3,8 +3,8 @@ package com.mskwak.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.mskwak.data.model.DiaryData
-import com.mskwak.data.source.DiaryDao
-import com.mskwak.data.source.FileDataSource
+import com.mskwak.data.source.local.DiaryDao
+import com.mskwak.data.source.local.FileDataSource
 import com.mskwak.domain.model.Diary
 import com.mskwak.domain.repository.DiaryRepository
 import com.orhanobut.logger.Logger

@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 2,
-    "identityHash": "6b3cf9bbc01e50ee061846d178fb1c87",
+    "version": 3,
+    "identityHash": "43487594c323caff391e10b2c423e2e5",
     "entities": [
       {
         "tableName": "plant",
@@ -69,7 +69,18 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_plant_id_name",
+            "unique": false,
+            "columnNames": [
+              "id",
+              "name"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_plant_id_name` ON `${TABLE_NAME}` (`id`, `name`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
@@ -130,7 +141,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6b3cf9bbc01e50ee061846d178fb1c87')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '43487594c323caff391e10b2c423e2e5')"
     ]
   }
 }

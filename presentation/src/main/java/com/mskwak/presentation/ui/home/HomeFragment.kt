@@ -7,6 +7,7 @@ import android.widget.AdapterView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.mskwak.domain.usecase.PlantListSortOrder
+import com.mskwak.presentation.MainActivity
 import com.mskwak.presentation.R
 import com.mskwak.presentation.databinding.FragmentHomeBinding
 import com.mskwak.presentation.ui.base.BaseFragment
@@ -29,6 +30,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
         initRecyclerView()
         initSortSpinner()
+        loadAd()
+
         viewModel.plants.observe(viewLifecycleOwner) { plants ->
             adapter.submitList(plants)
         }
@@ -85,5 +88,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     fun onAddPlantClick() {
         PlantEditDialog(null).show(childFragmentManager, null)
+    }
+
+    private fun loadAd() {
+        (activity as? MainActivity)?.nativeAd?.observe(viewLifecycleOwner) { nativeAd ->
+            if (nativeAd == null) {
+                binding.noInternet.visibility = View.VISIBLE
+            } else {
+                binding.noInternet.visibility = View.GONE
+                binding.adTemplateView.setNativeAd(nativeAd)
+            }
+        }
     }
 }

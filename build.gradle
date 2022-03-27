@@ -2,7 +2,7 @@ buildscript {
     dependencies {
         classpath(ProjectDependencies.HILT_PLUGIN)
         classpath(ProjectDependencies.NAVIGATION_SAFE_ARGS)
-        classpath(ProjectDependencies.FIREBASE_SDK)
+        classpath(ProjectDependencies.GOOGLE_SERVICE)
         classpath(ProjectDependencies.FIREBASE_CRASHLYTICS_PLUGIN)
     }
 }
