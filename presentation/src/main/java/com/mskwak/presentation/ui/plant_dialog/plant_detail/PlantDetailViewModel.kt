@@ -35,10 +35,12 @@ class PlantDetailViewModel @AssistedInject constructor(
     }
 
     fun watering() {
-        viewModelScope.launch {
-            plantUseCase.wateringNow(plantId)
-            delay(200)
-            _wateringCompleted.call()
+        plant.value?.let {
+            viewModelScope.launch {
+                plantUseCase.wateringNow(it)
+                delay(200)
+                _wateringCompleted.call()
+            }
         }
     }
 

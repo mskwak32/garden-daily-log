@@ -146,9 +146,14 @@ class PlantUseCase(
         }
     }
 
-    suspend fun wateringNow(plantId: Int) = withContext(ioDispatcher) {
+    suspend fun wateringNow(plant: Plant) = withContext(ioDispatcher) {
         val date = LocalDate.now()
-        plantRepository.updateLastWateringDate(date, plantId)
+        plantRepository.updateLastWateringDate(date, plant.id)
+
+        //알람이 설정되어있으면 다음 물주기시간으로 알람 재세팅
+        if (plant.wateringAlarm.onOff) {
+            setWateringAlarm(plant, plant.wateringAlarm.onOff)
+        }
     }
 
     fun updateWateringAlarmOnOff(isActive: Boolean, plant: Plant) {

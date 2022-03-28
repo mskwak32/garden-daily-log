@@ -47,7 +47,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             _onWateringEvent.call()
             delay(250)
-            useCase.wateringNow(plant.id)
+            useCase.wateringNow(plant)
         }
     }
 
