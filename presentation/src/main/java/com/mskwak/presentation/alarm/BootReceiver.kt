@@ -31,8 +31,7 @@ class BootReceiver : BroadcastReceiver() {
         CoroutineScope(dispatcher).launch {
             useCase.getPlantAlarmList().forEach { (plantId, onOff) ->
                 if (onOff) {
-                    val plant = useCase.getPlant(plantId)
-                    useCase.setWateringAlarm(plant, onOff)
+                    useCase.setWateringAlarm(plantId, onOff)
                 }
             }
         }
