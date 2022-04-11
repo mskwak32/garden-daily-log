@@ -180,18 +180,25 @@ class PlantUseCase(
             val plant = getPlant(plantId)
             if (plant.waterPeriod == 0) return@withContext null
 
-            var nextDate = plant.lastWateringDate.plusDays(plant.waterPeriod.toLong())
+            val nextDate = plant.lastWateringDate.plusDays(plant.waterPeriod.toLong())
+            var nextDateTime = LocalDateTime.of(nextDate, plant.wateringAlarm.time)
 
             //check if the nextDateTime is in past
-            val currentDate = LocalDate.now()
-            while (nextDate.isBefore(currentDate)) {
-                nextDate = nextDate.plusDays(plant.waterPeriod.toLong())
+            val currentTime = LocalDateTime.now()
+            while (nextDateTime < currentTime) {
+                nextDateTime = nextDateTime.plusDays(plant.waterPeriod.toLong())
             }
 
-            LocalDateTime.of(nextDate, plant.wateringAlarm.time)
+            nextDateTime
         }
 
-    suspend fun getPlantAlarmList(): Map<Int, Boolean> = withContext(ioDispatcher) {
-        plantRepository.getPlantIdWithAlarmList()
+    fun resetWateringAlarm() {
+        CoroutineScope(ioDispatcher).launch {
+            plantRepository.getPlantIdWithAlarmList().forEach { (plantId, onOff) ->
+                if (onOff) {
+                    setWateringAlarm(plantId, onOff)
+                }
+            }
+        }
     }
 }
