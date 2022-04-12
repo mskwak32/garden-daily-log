@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.mskwak.domain.manager.WateringAlarmManager
 import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.presentation.MainActivity
 import com.mskwak.presentation.R
@@ -25,9 +24,6 @@ class WateringAlarmReceiver : BroadcastReceiver() {
     @Inject
     lateinit var useCase: PlantUseCase
 
-    @Inject
-    lateinit var wateringAlarmManager: WateringAlarmManager
-
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -41,12 +37,9 @@ class WateringAlarmReceiver : BroadcastReceiver() {
 
             //다음번 알람 등록
             if (plant != null) {
-                useCase.getNextAlarmDateTime(plant)?.let { nextDateTime ->
-                    wateringAlarmManager.setWateringAlarm(plant.id, nextDateTime)
-                }
+                useCase.setWateringAlarm(plant.id, true)
             }
         }
-
     }
 
     private fun createNotificationChannel(context: Context) {

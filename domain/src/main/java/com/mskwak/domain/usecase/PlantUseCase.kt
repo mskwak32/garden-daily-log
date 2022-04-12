@@ -56,19 +56,19 @@ class PlantUseCase(
 
     suspend fun addPlant(plant: Plant) = withContext(ioDispatcher) {
         val id = plantRepository.addPlant(plant)
-        setWateringAlarm(getPlant(id), isActive = plant.wateringAlarm.onOff)
+        setWateringAlarm(id, isActive = plant.wateringAlarm.onOff)
     }
 
     suspend fun updatePlant(plant: Plant) = withContext(ioDispatcher) {
         plantRepository.updatePlant(plant)
-        setWateringAlarm(plant, isActive = plant.wateringAlarm.onOff)
+        setWateringAlarm(plant.id, isActive = plant.wateringAlarm.onOff)
     }
 
     fun deletePlant(plant: Plant) {
         CoroutineScope(ioDispatcher).launch {
             diaryRepository.deleteDiariesByPlantId(plant.id)
             plantRepository.deletePlant(plant)
-            setWateringAlarm(plant, isActive = false)
+            setWateringAlarm(plant.id, isActive = false)
         }
     }
 
@@ -152,45 +152,53 @@ class PlantUseCase(
 
         //알람이 설정되어있으면 다음 물주기시간으로 알람 재세팅
         if (plant.wateringAlarm.onOff) {
-            setWateringAlarm(plant, plant.wateringAlarm.onOff)
+            setWateringAlarm(plant.id, plant.wateringAlarm.onOff)
         }
     }
 
-    fun updateWateringAlarmOnOff(isActive: Boolean, plant: Plant) {
+    fun updateWateringAlarmOnOff(plantId: Int, isActive: Boolean) {
         CoroutineScope(ioDispatcher).launch {
-            plantRepository.updateWateringAlarmOnOff(isActive, plant.id)
+            plantRepository.updateWateringAlarmOnOff(isActive, plantId)
 
-            setWateringAlarm(plant, isActive)
+            setWateringAlarm(plantId, isActive)
         }
     }
 
-    fun setWateringAlarm(plant: Plant, isActive: Boolean) {
+    suspend fun setWateringAlarm(plantId: Int, isActive: Boolean) {
         if (isActive) {
             //다음 알람이 없는 경우는 등록하지 않음
-            getNextAlarmDateTime(plant)?.let { nextDateTime ->
-                wateringAlarmManager.setWateringAlarm(plant.id, nextDateTime)
+            getNextAlarmDateTime(plantId)?.let { nextDateTime ->
+                wateringAlarmManager.setWateringAlarm(plantId, nextDateTime)
             }
         } else {
-            wateringAlarmManager.cancelWateringAlarm(plant.id)
+            wateringAlarmManager.cancelWateringAlarm(plantId)
         }
     }
 
-    fun getNextAlarmDateTime(plant: Plant): LocalDateTime? {
-        if (plant.waterPeriod == 0) return null
+    private suspend fun getNextAlarmDateTime(plantId: Int): LocalDateTime? =
+        withContext(ioDispatcher) {
+            val plant = getPlant(plantId)
+            if (plant.waterPeriod == 0) return@withContext null
 
-        val nextDate = plant.lastWateringDate.plusDays(plant.waterPeriod.toLong())
-        var nextDateTime = LocalDateTime.of(nextDate, plant.wateringAlarm.time)
+            val nextDate = plant.lastWateringDate.plusDays(plant.waterPeriod.toLong())
+            var nextDateTime = LocalDateTime.of(nextDate, plant.wateringAlarm.time)
 
-        //check if the nextDateTime is in past
-        val currentTime = LocalDateTime.now()
-        while (nextDateTime < currentTime) {
-            nextDateTime = nextDateTime.plusDays(plant.waterPeriod.toLong())
+            //check if the nextDateTime is in past
+            val currentTime = LocalDateTime.now()
+            while (nextDateTime < currentTime) {
+                nextDateTime = nextDateTime.plusDays(plant.waterPeriod.toLong())
+            }
+
+            nextDateTime
         }
 
-        return nextDateTime
-    }
-
-    suspend fun getPlantAlarmList(): Map<Int, Boolean> = withContext(ioDispatcher) {
-        plantRepository.getPlantIdWithAlarmList()
+    fun resetWateringAlarm() {
+        CoroutineScope(ioDispatcher).launch {
+            plantRepository.getPlantIdWithAlarmList().forEach { (plantId, onOff) ->
+                if (onOff) {
+                    setWateringAlarm(plantId, onOff)
+                }
+            }
+        }
     }
 }

@@ -34,6 +34,7 @@
                     android:layout_marginRight="16dp"
                     android:text="@string/setting_version_update"
                     android:visibility="gone"
+                    android:onClick="@{() -> fragment.showMarket()}"
                     app:layout_constraintBaseline_toBaselineOf="@id/versionTitle"
                     tools:visibility="visible" />
 
@@ -91,20 +92,12 @@
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 android:gravity="left|center_vertical"
-                android:onClick="@{() -> fragment.onEstimateClick()}"
+                android:onClick="@{() -> fragment.showMarket()}"
                 android:text="@string/setting_app_estimation"
                 android:textColor="@color/bgray_600"
                 android:textSize="@dimen/text_medium"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@id/updateContent" />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/setting_made_by"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

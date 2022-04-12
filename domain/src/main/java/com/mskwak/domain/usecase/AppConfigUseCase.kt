@@ -18,7 +18,7 @@ class AppConfigUseCase(private val appConfigRepository: AppConfigRepository) {
 
         return if (result.isSuccess) {
             result.getOrNull()?.run {
-                replace("\\n", "\n\n").replace("\"","")
+                replace("\\\n", "\n\n").replace("\"", "")
             }
         } else {
             null

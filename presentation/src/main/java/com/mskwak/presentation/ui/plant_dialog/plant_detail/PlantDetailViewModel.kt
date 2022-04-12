@@ -30,7 +30,7 @@ class PlantDetailViewModel @AssistedInject constructor(
     fun wateringAlarmToggle() {
         plant.value?.wateringAlarm?.let { alarm ->
             val isActive = !alarm.onOff
-            plantUseCase.updateWateringAlarmOnOff(isActive, plant.value!!)
+            plantUseCase.updateWateringAlarmOnOff(plant.value!!.id, isActive)
         }
     }
 
