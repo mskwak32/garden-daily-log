@@ -1,5 +1,6 @@
 package com.mskwak.data.repository
 
+import com.mskwak.data.BuildConfig
 import com.mskwak.data.source.remote.AppConfigService
 import com.mskwak.domain.repository.AppConfigRepository
 import com.orhanobut.logger.Logger
@@ -12,7 +13,12 @@ class AppConfigRepositoryImpl @Inject constructor(
 
     override suspend fun getLatestAppVersion(): Result<Int> {
         return try {
-            val response = appConfigService.getLatestAppVersion()
+            val response = if (BuildConfig.DEBUG) {
+                appConfigService.getDebugLatestAppVersion()
+            } else {
+                appConfigService.getLatestAppVersion()
+            }
+
             val result = if (response.isSuccessful && response.body() != null) {
                 Result.success(response.body()!!)
             } else {

@@ -1,5 +1,7 @@
 package com.mskwak.presentation.ui.setting
 
+import android.content.Intent
+import android.net.Uri
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -21,7 +23,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
         viewModel.loadUpdateContent(requireContext())
 
         viewModel.hasAppUpdate.observe(viewLifecycleOwner) {
-            binding.updateButton.visibility = if(it) View.VISIBLE else View.GONE
+            binding.updateButton.visibility = if (it) View.VISIBLE else View.GONE
         }
     }
 
@@ -30,15 +32,11 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
     }
 
     fun onUpdateContentClick() {
-        if(viewModel.updateContent.isNullOrEmpty()) {
+        if (viewModel.updateContent.isNullOrEmpty()) {
             showNotReadyDialog()
         } else {
             showUpdateContentDialog()
         }
-    }
-
-    fun onEstimateClick() {
-        showNotReadyDialog()
     }
 
     private fun showNotReadyDialog() {
@@ -53,5 +51,12 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
             .setPositiveButton(getString(R.string.close)) { dialog, _ ->
                 dialog.dismiss()
             }.show()
+    }
+
+    fun showMarket() {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data =
+            Uri.parse("https://play.google.com/store/apps/details?id=${requireContext().packageName}")
+        startActivity(intent)
     }
 }
