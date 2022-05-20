@@ -3,7 +3,7 @@ package com.mskwak.data.repository
 import com.mskwak.data.BuildConfig
 import com.mskwak.data.source.remote.AppConfigService
 import com.mskwak.domain.repository.AppConfigRepository
-import com.orhanobut.logger.Logger
+import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
@@ -22,7 +22,7 @@ class AppConfigRepositoryImpl @Inject constructor(
             val result = if (response.isSuccessful && response.body() != null) {
                 Result.success(response.body()!!)
             } else {
-                Logger.e(response.message())
+                Timber.e(response.message())
                 Result.failure(IOException(response.message()))
             }
             result
@@ -42,7 +42,7 @@ class AppConfigRepositoryImpl @Inject constructor(
                     Result.success(body)
                 }
             } else {
-                Logger.e(response.message())
+                Timber.e(response.message())
                 Result.failure(IOException(response.message()))
             }
             result

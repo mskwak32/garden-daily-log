@@ -4,7 +4,7 @@ import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
-import com.orhanobut.logger.Logger
+import timber.log.Timber
 import java.util.concurrent.atomic.AtomicBoolean
 
 class SingleMediatorLiveData<T> : MediatorLiveData<T>() {
@@ -13,7 +13,7 @@ class SingleMediatorLiveData<T> : MediatorLiveData<T>() {
     @MainThread
     override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
         if (hasActiveObservers()) {
-            Logger.w("Multiple observers registered but only one will be notified of changes.")
+            Timber.w("Multiple observers registered but only one will be notified of changes.")
         }
 
         super.observe(owner) { t ->

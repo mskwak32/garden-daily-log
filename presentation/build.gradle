@@ -39,7 +39,7 @@ dependencies {
     kapt(Ui.GLIDE_COMPILER)
     implementation(Ui.VIEW_PAGER)
     implementation(Ui.DOTS_INDICATOR)
-    implementation(Libraries.LOGGER)
+    implementation(Libraries.TIMBER)
     implementation(Ui.LOTTIE)
     implementation(Libraries.GOOGLE_SERVICE_ADS)
 }

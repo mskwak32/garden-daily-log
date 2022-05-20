@@ -5,7 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import com.mskwak.domain.manager.WateringAlarmManager
-import com.orhanobut.logger.Logger
+import timber.log.Timber
 import java.time.LocalDateTime
 import java.util.*
 
@@ -32,7 +32,7 @@ class WateringAlarmManagerImpl(private val context: Context) : WateringAlarmMana
             ), pendingIntent
         )
 
-        Logger.d("set watering alarm: plantId= $plantId trigger= $nextAlarmDateTime")
+        Timber.d("set watering alarm: plantId= $plantId trigger= $nextAlarmDateTime")
     }
 
     override fun cancelWateringAlarm(plantId: Int) {
@@ -46,7 +46,7 @@ class WateringAlarmManagerImpl(private val context: Context) : WateringAlarmMana
 
         if (pendingIntent != null) {
             alarmManager.cancel(pendingIntent)
-            Logger.d("cancel watering alarm: plantId= $plantId")
+            Timber.d("cancel watering alarm: plantId= $plantId")
         }
     }
 

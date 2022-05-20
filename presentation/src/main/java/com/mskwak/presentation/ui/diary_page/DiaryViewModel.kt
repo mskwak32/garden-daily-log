@@ -8,11 +8,11 @@ import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.presentation.model.DiaryImpl
 import com.mskwak.presentation.util.SingleLiveEvent
 import com.mskwak.presentation.util.SingleMediatorLiveData
-import com.orhanobut.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.yield
+import timber.log.Timber
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -40,13 +40,13 @@ class DiaryViewModel @Inject constructor(
 
     fun previousMonth() {
         _month.value = month.value?.minusMonths(1)
-        Logger.d("previous month click")
+        Timber.d("previous month click")
         loadDiaries()
     }
 
     fun nextMonth() {
         _month.value = month.value?.plusMonths(1)
-        Logger.d("next month click")
+        Timber.d("next month click")
         loadDiaries()
     }
 
@@ -63,13 +63,13 @@ class DiaryViewModel @Inject constructor(
 
     fun setPlantFilter(plantId: Int) {
         selectedPlantId = plantId
-        Logger.d("set plant filter")
+        Timber.d("set plant filter")
         loadDiaries()
     }
 
     fun setSortOrder(sortOrder: DiaryListSortOrder) {
         this.sortOrder = sortOrder
-        Logger.d("set sort order")
+        Timber.d("set sort order")
         loadDiaries()
     }
 
@@ -94,14 +94,14 @@ class DiaryViewModel @Inject constructor(
 
             if (diarySource != null) {
                 _diaries.removeSource(diarySource!!)
-                Logger.d("remove diary source")
+                Timber.d("remove diary source")
             }
 
             diarySource = newSource
 
             _diaries.addSource(newSource) {
                 _diaries.setValue(it)
-                Logger.d("add diary source")
+                Timber.d("add diary source")
             }
         }
     }

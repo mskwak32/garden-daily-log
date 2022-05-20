@@ -21,10 +21,10 @@ object Versions {
     const val GSON = "2.9.0"
     const val VIEW_PAGER = "1.0.0"
     const val DOTS_INDICATOR = "4.2"
-    const val LOGGER = "2.2.0"
     const val LOTTIE = "5.0.3"
     const val RETROFIT2 = "2.9.0"
     const val OKHTTP = "4.3.1"
+    const val TIMBER = "5.0.1"
 
     const val GOOGLE_SERVICE = "4.3.10"
     const val GOOGLE_SERVICE_ADS = "20.6.0"
@@ -43,9 +43,9 @@ object Libraries {
         "androidx.navigation:navigation-fragment-ktx:${Versions.NAVIGATION_KTX}"
     const val NAVIGATION_UI = "androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATION_KTX}"
     const val GSON = "com.google.code.gson:gson:${Versions.GSON}"
-    const val LOGGER = "com.orhanobut:logger:${Versions.LOGGER}"
     const val GOOGLE_SERVICE_ADS =
         "com.google.android.gms:play-services-ads:${Versions.GOOGLE_SERVICE_ADS}"
+    const val TIMBER = "com.jakewharton.timber:timber:${Versions.TIMBER}"
 }
 
 object Ui {

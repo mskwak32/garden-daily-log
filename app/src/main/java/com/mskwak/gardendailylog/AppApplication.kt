@@ -1,10 +1,8 @@
 package com.mskwak.gardendailylog
 
 import android.app.Application
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.Logger
-import com.orhanobut.logger.PrettyFormatStrategy
 import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
 
 @HiltAndroidApp
 class AppApplication : Application() {
@@ -12,17 +10,10 @@ class AppApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        initLogger()
+        initTimber()
     }
 
-    private fun initLogger() {
-        val formatStrategy = PrettyFormatStrategy.newBuilder()
-            .methodCount(1)
-            .build()
-        Logger.addLogAdapter(object : AndroidLogAdapter(formatStrategy) {
-            override fun isLoggable(priority: Int, tag: String?): Boolean {
-                return BuildConfig.DEBUG
-            }
-        })
+    private fun initTimber() {
+        Timber.plant(Timber.DebugTree())
     }
 }

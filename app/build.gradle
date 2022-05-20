@@ -45,5 +45,5 @@ dependencies {
     implementation(Retrofit.OKHTTP)
     implementation(Retrofit.OKHTTP_LOGGING_INTERCEPTOR)
 
-    implementation(Libraries.LOGGER)
+    implementation(Libraries.TIMBER)
 }

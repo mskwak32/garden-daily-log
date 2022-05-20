@@ -9,7 +9,7 @@ import com.mskwak.data.source.local.FileDataSource
 import com.mskwak.data.source.local.PlantDao
 import com.mskwak.domain.model.Plant
 import com.mskwak.domain.repository.PlantRepository
-import com.orhanobut.logger.Logger
+import timber.log.Timber
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -20,19 +20,19 @@ class PlantRepositoryImpl @Inject constructor(
 
     override suspend fun addPlant(plant: Plant): Int {
         val id = plantDao.insertPlant(PlantData(plant)).toInt()
-        Logger.d("add new plant id= $id")
+        Timber.d("add new plant id= $id")
         return id
     }
 
     override suspend fun updatePlant(plant: Plant) {
         plantDao.updatePlant(PlantData(plant))
-        Logger.d("update plant id= ${plant.id}")
+        Timber.d("update plant id= ${plant.id}")
     }
 
     override suspend fun deletePlant(plant: Plant) {
         plantDao.deletePlant(PlantData(plant))
         plant.pictureUri?.let { deletePlantPicture(it) }
-        Logger.d("delete plant id= ${plant.id}")
+        Timber.d("delete plant id= ${plant.id}")
     }
 
     override suspend fun getPlant(plantId: Int): Plant {
