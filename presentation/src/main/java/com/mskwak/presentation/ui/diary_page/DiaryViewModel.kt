@@ -1,11 +1,10 @@
 package com.mskwak.presentation.ui.diary_page
 
 import androidx.lifecycle.*
-import com.mskwak.domain.model.Diary
 import com.mskwak.domain.usecase.DiaryListSortOrder
 import com.mskwak.domain.usecase.DiaryUseCase
 import com.mskwak.domain.usecase.PlantUseCase
-import com.mskwak.presentation.model.DiaryImpl
+import com.mskwak.presentation.model.DiaryUiData
 import com.mskwak.presentation.util.SingleLiveEvent
 import com.mskwak.presentation.util.SingleMediatorLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,9 +26,9 @@ class DiaryViewModel @Inject constructor(
     private val _plantNameMap = SingleLiveEvent<Map<Int, String>>()
     val plantNameMap: LiveData<Map<Int, String>> = _plantNameMap
 
-    private var diarySource: LiveData<List<DiaryImpl>>? = null
-    private val _diaries = SingleMediatorLiveData<List<Diary>>()
-    val diaries: LiveData<List<Diary>> = _diaries
+    private var diarySource: LiveData<List<DiaryUiData>>? = null
+    private val _diaries = SingleMediatorLiveData<List<DiaryUiData>>()
+    val diaries: LiveData<List<DiaryUiData>> = _diaries
 
     var selectedPlantId = SELECT_ALL_KEY
     private var sortOrder = DiaryListSortOrder.CREATED_LATEST
@@ -87,7 +86,7 @@ class DiaryViewModel @Inject constructor(
                 sortOrder,
                 if (selectedPlantId != SELECT_ALL_KEY) selectedPlantId else null
             ).map { list ->
-                list.map { diary -> DiaryImpl(diary) }
+                list.map { diary -> DiaryUiData(diary) }
             }
 
             yield()

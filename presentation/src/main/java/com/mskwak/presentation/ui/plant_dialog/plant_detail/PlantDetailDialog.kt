@@ -33,7 +33,11 @@ class PlantDetailDialog(private val plantId: Int) :
     BaseFullScreenDialog<DialogPlantDetailBinding>() {
 
     override val layoutRes: Int = R.layout.dialog_plant_detail
-    private val diaryAdapter by lazy { DiarySummaryAdapter(viewModel) }
+    private val diaryAdapter by lazy {
+        DiarySummaryAdapter {
+            openDiaryDetail(it.id)
+        }
+    }
     private var isWateringFlag = false
 
     @Inject
@@ -90,9 +94,6 @@ class PlantDetailDialog(private val plantId: Int) :
         binding.diaryList.apply {
             adapter = diaryAdapter
             addItemDecoration(ListItemDecoVertical(dividerHeight))
-        }
-        diaryAdapter.onItemClickListener = {
-            openDiaryDetail(it.id)
         }
     }
 

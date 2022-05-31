@@ -6,12 +6,8 @@
     <data>
 
         <variable
-            name="viewModel"
-            type="com.mskwak.presentation.ui.home.HomeViewModel" />
-
-        <variable
             name="plant"
-            type="com.mskwak.domain.model.Plant" />
+            type="com.mskwak.presentation.model.PlantUiData" />
     </data>
 
     <FrameLayout
@@ -25,11 +21,10 @@
             android:gravity="right|center_vertical">
 
             <TextView
-                android:id="@+id/delete"
+                android:id="@+id/wateringButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
-                android:onClick="@{() -> viewModel.onWateringClick(plant)}"
                 android:text="@string/watering"
                 android:textColor="@color/bgray_10"
                 android:textSize="@dimen/text_medium"
@@ -42,7 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/card_gray_bg"
-            android:onClick="@{() -> viewModel.openPlant(plant)}"
             android:padding="8dp"
             tools:ignore="SpUsage">
 

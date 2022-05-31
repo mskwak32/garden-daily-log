@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.presentation.R
-import com.mskwak.presentation.model.AlarmImpl
-import com.mskwak.presentation.model.PlantImpl
+import com.mskwak.presentation.model.AlarmUiData
+import com.mskwak.presentation.model.PlantUiData
 import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -71,8 +71,8 @@ class PlantEditViewModel @Inject constructor(
                 _wateringAlarmOnOff.value = false
             }
 
-            val alarm = AlarmImpl(wateringAlarmTime.value!!, wateringAlarmOnOff.value!!)
-            val plant = PlantImpl(
+            val alarm = AlarmUiData(wateringAlarmTime.value!!, wateringAlarmOnOff.value!!)
+            val plant = PlantUiData(
                 plantName.value!!,
                 plantDate.value!!,
                 wateringPeriod.value!!,

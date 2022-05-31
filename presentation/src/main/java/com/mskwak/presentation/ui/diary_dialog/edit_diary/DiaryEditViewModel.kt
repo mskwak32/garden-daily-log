@@ -7,7 +7,7 @@ import com.mskwak.domain.AppConstValue
 import com.mskwak.domain.usecase.DiaryUseCase
 import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.presentation.R
-import com.mskwak.presentation.model.DiaryImpl
+import com.mskwak.presentation.model.DiaryUiData
 import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -53,7 +53,7 @@ class DiaryEditViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            val diary = DiaryImpl(
+            val diary = DiaryUiData(
                 plantId!!,
                 contentText.value ?: "",
                 _pictureList.value?.toList() ?: emptyList(),

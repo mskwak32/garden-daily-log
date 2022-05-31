@@ -3,7 +3,7 @@ package com.mskwak.presentation.ui.plant_dialog.plant_detail
 import androidx.lifecycle.*
 import com.mskwak.domain.usecase.DiaryUseCase
 import com.mskwak.domain.usecase.PlantUseCase
-import com.mskwak.presentation.model.DiaryImpl
+import com.mskwak.presentation.model.DiaryUiData
 import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -19,10 +19,10 @@ class PlantDetailViewModel @AssistedInject constructor(
 
     var plant = plantUseCase.getPlantLiveData(plantId)
     var diaries = diaryUseCase.getDiariesByPlantId(plantId).map { list ->
-        list.map { DiaryImpl(it) }
+        list.map { DiaryUiData(it) }
     }
     val isEmptyList: LiveData<Boolean> = diaries.map {
-        it.isNullOrEmpty()
+        it.isEmpty()
     }
     private val _wateringCompleted = SingleLiveEvent<Unit>()
     val wateringCompleted: LiveData<Unit> = _wateringCompleted

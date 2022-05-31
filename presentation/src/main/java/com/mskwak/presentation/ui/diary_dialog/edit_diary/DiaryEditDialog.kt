@@ -21,7 +21,11 @@ class DiaryEditDialog(private val plantId: Int, private val diaryId: Int?) :
 
     override val layoutRes: Int = R.layout.dialog_diary_edit
     private val viewModel by viewModels<DiaryEditViewModel>()
-    private val pictureAdapter by lazy { PictureListAdapter(viewModel) }
+    private val pictureAdapter by lazy {
+        PictureListAdapter {
+            viewModel.deletePicture(it)
+        }
+    }
 
     override fun initialize() {
         binding.viewModel = viewModel

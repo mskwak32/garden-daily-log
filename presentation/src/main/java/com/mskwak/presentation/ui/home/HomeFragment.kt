@@ -20,7 +20,17 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override val layoutRes: Int = R.layout.fragment_home
     private val viewModel by viewModels<HomeViewModel>()
-    private val adapter: PlantListAdapter by lazy { PlantListAdapter(viewModel) }
+    private val adapter: PlantListAdapter by lazy {
+        PlantListAdapter(
+            onWateringClick = {
+                viewModel.onWateringClick(it)
+            }, onItemClick = {
+                openPlantDetail(it.id)
+            }, getDdays = {
+                viewModel.getDdays(it)
+            }
+        )
+    }
     private val swipeHelperCallback = SwipeHelperCallback().apply { setClamp(200f) }
 
     override fun initialize() {
@@ -33,9 +43,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         viewModel.plants.observe(viewLifecycleOwner) { plants ->
             adapter.submitList(plants)
         }
-        viewModel.openPlantEvent.observe(viewLifecycleOwner) {
-            openPlantDetail(it)
-        }
         viewModel.onWateringEvent.observe(viewLifecycleOwner) {
             swipeHelperCallback.removeCurrentClamp(binding.plantListView)
         }
@@ -47,7 +54,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         val dividerHeight =
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics)
                 .toInt()
-//        val swipeHelperCallback = SwipeHelperCallback().apply { setClamp(200f) }
+
         val itemTouchHelper = ItemTouchHelper(swipeHelperCallback)
         itemTouchHelper.attachToRecyclerView(binding.plantListView)
         binding.plantListView.apply {

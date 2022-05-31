@@ -7,11 +7,7 @@
 
         <variable
             name="diary"
-            type="com.mskwak.domain.model.Diary" />
-
-        <variable
-            name="viewModel"
-            type="com.mskwak.presentation.ui.plant_dialog.plant_detail.PlantDetailViewModel" />
+            type="com.mskwak.presentation.model.DiaryUiData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

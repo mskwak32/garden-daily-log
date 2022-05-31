@@ -6,22 +6,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.mskwak.domain.model.Diary
 import com.mskwak.presentation.R
 import com.mskwak.presentation.databinding.LayoutItemDiaryInPlantDetailBinding
-import com.mskwak.presentation.model.DiaryImpl
+import com.mskwak.presentation.model.DiaryUiData
 import com.mskwak.presentation.ui.binding.setUri
 
-class DiarySummaryAdapter(private val viewModel: PlantDetailViewModel) :
-    ListAdapter<Diary, DiarySummaryAdapter.ItemViewHolder>(ItemDiffCallback()) {
-
-    var onItemClickListener: ((diary: Diary) -> Unit)? = null
+class DiarySummaryAdapter(private val onItemClick: (diary: DiaryUiData) -> Unit) :
+    ListAdapter<DiaryUiData, DiarySummaryAdapter.ItemViewHolder>(ItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = LayoutItemDiaryInPlantDetailBinding.inflate(inflater, parent, false).apply {
-            viewModel = this@DiarySummaryAdapter.viewModel
-        }
+        val binding = LayoutItemDiaryInPlantDetailBinding.inflate(inflater, parent, false)
         return ItemViewHolder(binding)
     }
 
@@ -35,33 +30,31 @@ class DiarySummaryAdapter(private val viewModel: PlantDetailViewModel) :
 
         init {
             itemView.setOnClickListener {
-                onItemClickListener?.invoke(getItem(adapterPosition))
+                onItemClick.invoke(getItem(adapterPosition))
             }
         }
 
-        fun bind(diary: Diary) {
+        fun bind(diary: DiaryUiData) {
             binding.diary = diary
             setPicture(diary)
         }
 
-        private fun setPicture(diary: Diary) {
+        private fun setPicture(diary: DiaryUiData) {
             if (diary.pictureList?.isNotEmpty() == true) {
-                binding.picture.setUri(diary.pictureList!!.first(), true)
+                binding.picture.setUri(diary.pictureList.first(), true)
             } else {
                 binding.picture.setBackgroundResource(R.drawable.plant_default)
             }
         }
     }
 
-    class ItemDiffCallback : DiffUtil.ItemCallback<Diary>() {
-        override fun areItemsTheSame(oldItem: Diary, newItem: Diary): Boolean {
+    class ItemDiffCallback : DiffUtil.ItemCallback<DiaryUiData>() {
+        override fun areItemsTheSame(oldItem: DiaryUiData, newItem: DiaryUiData): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Diary, newItem: Diary): Boolean {
-            return if (oldItem is DiaryImpl && newItem is DiaryImpl) {
-                oldItem == newItem
-            } else false
+        override fun areContentsTheSame(oldItem: DiaryUiData, newItem: DiaryUiData): Boolean {
+            return oldItem == newItem
         }
     }
 }

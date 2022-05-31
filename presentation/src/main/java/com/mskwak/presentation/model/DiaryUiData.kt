@@ -4,7 +4,7 @@ import android.net.Uri
 import com.mskwak.domain.model.Diary
 import java.time.LocalDate
 
-data class DiaryImpl(
+data class DiaryUiData(
     override val plantId: Int,
     override val memo: String,
     override val pictureList: List<Uri>?,

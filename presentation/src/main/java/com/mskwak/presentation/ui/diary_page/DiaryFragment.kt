@@ -25,7 +25,16 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>() {
     override val layoutRes: Int = R.layout.fragment_diary
     private val viewModel by viewModels<DiaryViewModel>()
     private val filterAdapter by lazy { FilterAdapter(viewModel) }
-    private val diaryListAdapter by lazy { DiaryListAdapter(viewModel) }
+    private val diaryListAdapter by lazy {
+        DiaryListAdapter(
+            onItemClick = { diary ->
+                openDiaryDetail(diary)
+            },
+            getPlantName = { plantId ->
+                viewModel.plantNameMap.value?.get(plantId)
+            }
+        )
+    }
     private val args by navArgs<DiaryFragmentArgs>()
 
     override fun initialize() {
@@ -83,14 +92,13 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>() {
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, resources.displayMetrics)
                 .toInt()
 
-        diaryListAdapter.onClickListener = { diary -> openDiaryDetail(diary) }
         binding.diaryList.apply {
             adapter = diaryListAdapter
             addItemDecoration(ListItemDecoVertical(dividerHeight))
         }
 
         viewModel.diaries.observe(viewLifecycleOwner) {
-            lifecycle.coroutineScope.launchWhenResumed {
+            lifecycle.coroutineScope.launchWhenStarted {
                 diaryListAdapter.submitList(it)
             }
         }
