@@ -1,6 +1,5 @@
 # 텃밭일기
 개인 프로젝트
-- email address : kwaksu32@gmail.com
 
 ## Introduction
 텃밭에 심은 식물 물주기 관리 및 일기 관리 앱입니다.
