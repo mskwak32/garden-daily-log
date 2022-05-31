@@ -33,20 +33,4 @@
         android:name="com.mskwak.presentation.ui.setting.SettingFragment"
         tools:layout="@layout/fragment_setting" />
 
-    <action
-        android:id="@+id/action_global_diaryFragmentDest"
-        app:destination="@id/diaryFragmentDest"
-        app:launchSingleTop="true" />
-
-    <action
-        android:id="@+id/action_global_homeFragmentDest"
-        app:destination="@id/homeFragmentDest"
-        app:popUpTo="@id/nav_graph" />
-
-    <action
-        android:id="@+id/action_global_settingFragmentDest"
-        app:destination="@id/settingFragmentDest"
-        app:popUpTo="@id/nav_graph" />
-
-
 </navigation>
