@@ -33,6 +33,23 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
         val navController = navHost.navController
         binding.bottomNav.setupWithNavController(navController)
+        binding.bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.homeFragmentDest -> {
+                    navController.navigate(R.id.actionGlobalHomeFragmentDest)
+                    true
+                }
+                R.id.diaryFragmentDest -> {
+                    navController.navigate(R.id.actionGlobalDiaryFragmentDest)
+                    true
+                }
+                R.id.settingFragmentDest -> {
+                    navController.navigate(R.id.actionGlobalSettingFragmentDest)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     override fun onBackPressed() {

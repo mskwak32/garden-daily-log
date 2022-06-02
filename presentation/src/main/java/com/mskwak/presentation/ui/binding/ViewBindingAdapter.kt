@@ -4,7 +4,7 @@ import android.net.Uri
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.mskwak.presentation.GlideApp
+import com.bumptech.glide.Glide
 import com.mskwak.presentation.R
 import com.mskwak.presentation.ui.custom_component.TextViewWithIcon
 import java.io.File
@@ -55,12 +55,12 @@ fun TextView.setWateringPeriod(period: Int) {
 fun ImageView.setUri(uri: Uri?, asThumbnail: Boolean = false) {
     if (uri != null) {
         if (asThumbnail) {
-            GlideApp.with(this)
+            Glide.with(this)
                 .load(File(uri.path!!))
                 .override(100)
                 .into(this)
         } else {
-            GlideApp.with(this)
+            Glide.with(this)
                 .load(File(uri.path!!))
                 .into(this)
         }
