@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.PopupMenu
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.appbar.AppBarLayout
 import com.mskwak.domain.model.Plant
 import com.mskwak.presentation.R
@@ -17,10 +18,6 @@ import com.mskwak.presentation.ui.binding.localTimeToText
 import com.mskwak.presentation.ui.binding.setUri
 import com.mskwak.presentation.ui.custom_component.ListItemDecoVertical
 import com.mskwak.presentation.ui.dialog.DeleteConfirmDialog
-import com.mskwak.presentation.ui.diary_dialog.diary_detail.DiaryDetailDialog
-import com.mskwak.presentation.ui.diary_dialog.edit_diary.DiaryEditDialog
-import com.mskwak.presentation.ui.home.HomeFragmentDirections
-import com.mskwak.presentation.ui.plant_dialog.edit_plant.PlantEditDialog
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -29,8 +26,9 @@ import javax.inject.Inject
 import kotlin.math.abs
 
 @AndroidEntryPoint
-class PlantDetailDialog(private val plantId: Int) :
-    BaseFullScreenDialog<DialogPlantDetailBinding>() {
+class PlantDetailDialog : BaseFullScreenDialog<DialogPlantDetailBinding>() {
+    private val args by navArgs<PlantDetailDialogArgs>()
+    private val plantId by lazy { args.plantId }
 
     override val layoutRes: Int = R.layout.dialog_plant_detail
     private val diaryAdapter by lazy {
@@ -163,11 +161,12 @@ class PlantDetailDialog(private val plantId: Int) :
     }
 
     fun newDiaryClick() {
-        DiaryEditDialog(plantId, null).show(childFragmentManager, null)
+        val action = PlantDetailDialogDirections.plantDetailToDiaryEdit(plantId, null)
+        findNavController().navigate(action)
     }
 
     fun moreDiaryClick() {
-        val action = HomeFragmentDirections.homeToDiary(plantId.toString())
+        val action = PlantDetailDialogDirections.plantDetailToDiaryFragment(plantId.toString())
         findNavController().navigate(action)
     }
 
@@ -205,7 +204,8 @@ class PlantDetailDialog(private val plantId: Int) :
     }
 
     private fun openDiaryDetail(diaryId: Int) {
-        DiaryDetailDialog(diaryId).show(childFragmentManager, null)
+        val action = PlantDetailDialogDirections.plantDetailToDiaryDetail(diaryId)
+        findNavController().navigate(action)
     }
 
     private fun showDeleteConfirm() {
@@ -218,6 +218,8 @@ class PlantDetailDialog(private val plantId: Int) :
     }
 
     private fun openEditPlant() {
-        PlantEditDialog(viewModel.plant.value?.id).show(childFragmentManager, null)
+        val plantId = viewModel.plant.value?.id
+        val action = PlantDetailDialogDirections.plantDetailToPlantEdit(plantId.toString())
+        findNavController().navigate(action)
     }
 }

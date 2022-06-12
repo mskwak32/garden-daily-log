@@ -5,6 +5,7 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.mskwak.domain.usecase.PlantListSortOrder
 import com.mskwak.presentation.R
@@ -12,8 +13,6 @@ import com.mskwak.presentation.databinding.FragmentHomeBinding
 import com.mskwak.presentation.ui.base.BaseFragment
 import com.mskwak.presentation.ui.custom_component.ListItemDecoVertical
 import com.mskwak.presentation.ui.custom_component.SortAdapter
-import com.mskwak.presentation.ui.plant_dialog.edit_plant.PlantEditDialog
-import com.mskwak.presentation.ui.plant_dialog.plant_detail.PlantDetailDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -88,10 +87,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun openPlantDetail(plantId: Int) {
-        PlantDetailDialog(plantId).show(childFragmentManager, null)
+        val action = HomeFragmentDirections.homeToPlantDetail(plantId)
+        findNavController().navigate(action)
     }
 
     fun onAddPlantClick() {
-        PlantEditDialog(null).show(childFragmentManager, null)
+        val action = HomeFragmentDirections.homeToPlantEdit(null)
+        findNavController().navigate(action)
     }
 }

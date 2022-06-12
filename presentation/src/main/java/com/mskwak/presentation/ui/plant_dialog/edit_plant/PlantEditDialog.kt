@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.mskwak.presentation.R
 import com.mskwak.presentation.databinding.DialogPlantEditBinding
@@ -18,16 +19,17 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 @AndroidEntryPoint
-class PlantEditDialog(private val plantId: Int?) : BaseFullScreenDialog<DialogPlantEditBinding>() {
+class PlantEditDialog : BaseFullScreenDialog<DialogPlantEditBinding>() {
     override val layoutRes: Int = R.layout.dialog_plant_edit
     private val viewModel by viewModels<PlantEditViewModel>()
+    private val args by navArgs<PlantEditDialogArgs>()
 
     @SuppressLint("ClickableViewAccessibility")
     override fun initialize() {
         binding.viewModel = viewModel
         binding.dialog = this
 
-        plantId?.let {
+        args.plantId?.toInt()?.let {
             viewModel.loadPlant(it)
         }
         viewModel.wateringAlarmOnOff.observe(viewLifecycleOwner) {

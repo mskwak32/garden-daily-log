@@ -3,21 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragmentDest">
+    app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/homeFragmentDest"
+        android:id="@+id/homeFragment"
         android:name="com.mskwak.presentation.ui.home.HomeFragment"
         tools:layout="@layout/fragment_home">
 
         <action
-            android:id="@+id/home_to_diary"
-            app:destination="@id/diaryFragmentDest" />
+            android:id="@+id/home_to_plant_detail"
+            app:destination="@id/plantDetailDialog" />
+
+        <action
+            android:id="@+id/home_to_plant_edit"
+            app:destination="@id/plantEditDialog" />
 
     </fragment>
 
     <fragment
-        android:id="@+id/diaryFragmentDest"
+        android:id="@+id/diaryFragment"
         android:name="com.mskwak.presentation.ui.diary_page.DiaryFragment"
         tools:layout="@layout/fragment_diary">
 
@@ -26,26 +30,103 @@
             android:defaultValue="@null"
             app:argType="string"
             app:nullable="true" />
+
+        <action
+            android:id="@+id/diary_fragment_to_diary_detail"
+            app:destination="@id/diaryDetailDialog" />
+
     </fragment>
 
     <fragment
-        android:id="@+id/settingFragmentDest"
+        android:id="@+id/settingFragment"
         android:name="com.mskwak.presentation.ui.setting.SettingFragment"
         tools:layout="@layout/fragment_setting" />
 
+    <dialog
+        android:id="@+id/plantDetailDialog"
+        android:name="com.mskwak.presentation.ui.plant_dialog.plant_detail.PlantDetailDialog"
+        tools:layout="@layout/dialog_plant_detail">
+
+        <argument
+            android:name="plantId"
+            app:argType="integer" />
+
+        <action
+            android:id="@+id/plant_detail_to_diary_fragment"
+            app:destination="@id/diaryFragment" />
+
+        <action
+            android:id="@+id/plant_detail_to_plant_edit"
+            app:destination="@id/plantEditDialog" />
+
+        <action
+            android:id="@+id/plant_detail_to_diary_edit"
+            app:destination="@id/diaryEditDialog" />
+
+        <action
+            android:id="@+id/plant_detail_to_diary_detail"
+            app:destination="@id/diaryDetailDialog" />
+
+    </dialog>
+
+    <dialog
+        android:id="@+id/plantEditDialog"
+        android:name="com.mskwak.presentation.ui.plant_dialog.edit_plant.PlantEditDialog"
+        tools:layout="@layout/dialog_plant_edit">
+
+        <argument
+            android:name="plantId"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+
+    </dialog>
+
+    <dialog
+        android:id="@+id/diaryDetailDialog"
+        android:name="com.mskwak.presentation.ui.diary_dialog.diary_detail.DiaryDetailDialog"
+        tools:layout="@layout/dialog_diary_detail">
+
+        <argument
+            android:name="diaryId"
+            app:argType="integer" />
+
+        <action
+            android:id="@+id/diary_detail_to_diary_edit"
+            app:destination="@id/diaryEditDialog" />
+
+    </dialog>
+
+    <dialog
+        android:id="@+id/diaryEditDialog"
+        android:name="com.mskwak.presentation.ui.diary_dialog.edit_diary.DiaryEditDialog"
+        tools:layout="@layout/dialog_diary_edit">
+
+        <argument
+            android:name="plantId"
+            app:argType="integer" />
+
+        <argument
+            android:name="diaryId"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+
+    </dialog>
+
     <action
-        android:id="@+id/actionGlobalDiaryFragmentDest"
-        app:destination="@id/diaryFragmentDest"
+        android:id="@+id/actionGlobalDiaryFragment"
+        app:destination="@id/diaryFragment"
         app:launchSingleTop="true" />
 
     <action
-        android:id="@+id/actionGlobalHomeFragmentDest"
-        app:destination="@id/homeFragmentDest"
+        android:id="@+id/actionGlobalHomeFragment"
+        app:destination="@id/homeFragment"
         app:popUpTo="@id/nav_graph" />
 
     <action
-        android:id="@+id/actionGlobalSettingFragmentDest"
-        app:destination="@id/settingFragmentDest"
+        android:id="@+id/actionGlobalSettingFragment"
+        app:destination="@id/settingFragment"
         app:popUpTo="@id/nav_graph" />
 
 </navigation>

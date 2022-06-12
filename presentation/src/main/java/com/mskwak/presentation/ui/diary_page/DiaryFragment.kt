@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mskwak.domain.model.Diary
 import com.mskwak.domain.usecase.DiaryListSortOrder
@@ -16,7 +17,6 @@ import com.mskwak.presentation.ui.custom_component.ListItemDecoHorizontal
 import com.mskwak.presentation.ui.custom_component.ListItemDecoVertical
 import com.mskwak.presentation.ui.custom_component.SortAdapter
 import com.mskwak.presentation.ui.dialog.SelectMonthDialog
-import com.mskwak.presentation.ui.diary_dialog.diary_detail.DiaryDetailDialog
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 
@@ -121,6 +121,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>() {
     }
 
     private fun openDiaryDetail(diary: Diary) {
-        DiaryDetailDialog(diary.id).show(childFragmentManager, null)
+        val action = DiaryFragmentDirections.diaryFragmentToDiaryDetail(diary.id)
+        findNavController().navigate(action)
     }
 }

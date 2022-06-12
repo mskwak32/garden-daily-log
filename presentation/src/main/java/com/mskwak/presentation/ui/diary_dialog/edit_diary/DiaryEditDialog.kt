@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.content.DialogInterface
 import android.util.TypedValue
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.mskwak.presentation.R
 import com.mskwak.presentation.databinding.DialogDiaryEditBinding
@@ -16,9 +17,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 
 @AndroidEntryPoint
-class DiaryEditDialog(private val plantId: Int, private val diaryId: Int?) :
-    BaseFullScreenDialog<DialogDiaryEditBinding>() {
+class DiaryEditDialog : BaseFullScreenDialog<DialogDiaryEditBinding>() {
 
+    private val args by navArgs<DiaryEditDialogArgs>()
     override val layoutRes: Int = R.layout.dialog_diary_edit
     private val viewModel by viewModels<DiaryEditViewModel>()
     private val pictureAdapter by lazy {
@@ -35,8 +36,8 @@ class DiaryEditDialog(private val plantId: Int, private val diaryId: Int?) :
         initRecyclerView()
         initObserver()
 
-        viewModel.loadPlantName(plantId)
-        diaryId?.let {
+        viewModel.loadPlantName(args.plantId)
+        args.diaryId?.toInt()?.let {
             viewModel.loadDiary(it)
         }
     }

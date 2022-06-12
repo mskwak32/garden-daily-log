@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@id/diaryFragmentDest"
+        android:id="@id/diaryFragment"
         android:icon="@drawable/ic_book_black"
         android:title="@string/bottom_nav_diary" />
     <item
-        android:id="@id/homeFragmentDest"
+        android:id="@id/homeFragment"
         android:icon="@drawable/ic_home_black"
         android:title="@string/bottom_nav_home" />
     <item
-        android:id="@id/settingFragmentDest"
+        android:id="@id/settingFragment"
         android:icon="@drawable/ic_settings_black"
         android:title="@string/bottom_nav_setting" />
 </menu>

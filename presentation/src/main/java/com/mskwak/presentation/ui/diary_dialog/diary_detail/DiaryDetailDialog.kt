@@ -8,25 +8,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mskwak.presentation.R
 import com.mskwak.presentation.databinding.DialogDiaryDetailBinding
 import com.mskwak.presentation.ui.binding.localDateToText
 import com.mskwak.presentation.ui.custom_component.ZoomOutPageTransformer
 import com.mskwak.presentation.ui.dialog.DeleteConfirmDialog
-import com.mskwak.presentation.ui.diary_dialog.edit_diary.DiaryEditDialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DiaryDetailDialog(private val diaryId: Int) : BottomSheetDialogFragment() {
+class DiaryDetailDialog : BottomSheetDialogFragment() {
     private lateinit var binding: DialogDiaryDetailBinding
+    private val args by navArgs<DiaryDetailDialogArgs>()
     private val pictureAdapter by lazy { PictureViewPagerAdapter() }
 
     @Inject
     lateinit var viewModelFactory: DiaryDetailViewModel.DiaryDetailViewModelFactory
     private val viewModel by viewModels<DiaryDetailViewModel> {
-        DiaryDetailViewModel.provideFactory(viewModelFactory, diaryId)
+        DiaryDetailViewModel.provideFactory(viewModelFactory, args.diaryId)
     }
 
     override fun onCreateView(
@@ -104,7 +106,9 @@ class DiaryDetailDialog(private val diaryId: Int) : BottomSheetDialogFragment() 
     }
 
     private fun showEditDiary() {
-        DiaryEditDialog(viewModel.diary.value!!.plantId, viewModel.diary.value!!.id)
-            .show(childFragmentManager, null)
+        val plantId = viewModel.diary.value!!.plantId
+        val diaryId = viewModel.diary.value!!.id.toString()
+        val action = DiaryDetailDialogDirections.diaryDetailToDiaryEdit(plantId, diaryId)
+        findNavController().navigate(action)
     }
 }

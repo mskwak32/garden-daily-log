@@ -3,11 +3,8 @@ package com.mskwak.presentation
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.gms.ads.nativead.NativeAd
 import com.mskwak.presentation.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,9 +13,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var backKeyPressedTime: Long = 0
     private var finishToast: Toast? = null
-
-    private val _nativeAd = MutableLiveData<NativeAd?>()
-    val nativeAd: LiveData<NativeAd?> = _nativeAd
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,16 +29,16 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNav.setupWithNavController(navController)
         binding.bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.homeFragmentDest -> {
-                    navController.navigate(R.id.actionGlobalHomeFragmentDest)
+                R.id.homeFragment -> {
+                    navController.navigate(R.id.actionGlobalHomeFragment)
                     true
                 }
-                R.id.diaryFragmentDest -> {
-                    navController.navigate(R.id.actionGlobalDiaryFragmentDest)
+                R.id.diaryFragment -> {
+                    navController.navigate(R.id.actionGlobalDiaryFragment)
                     true
                 }
-                R.id.settingFragmentDest -> {
-                    navController.navigate(R.id.actionGlobalSettingFragmentDest)
+                R.id.settingFragment -> {
+                    navController.navigate(R.id.actionGlobalSettingFragment)
                     true
                 }
                 else -> false
