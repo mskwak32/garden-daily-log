@@ -21,10 +21,6 @@
         tools:replace="android:supportsRtl"
         android:theme="@style/Theme.GardenDailyLog">
 
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-1165359084932303~2999761337" />
-
     </application>
 
 </manifest>

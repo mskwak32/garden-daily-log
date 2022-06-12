@@ -58,7 +58,7 @@ class DaoTest : LocalDatabase() {
         }
 
         val minDate = dateNow.withDayOfMonth(1)
-        val maxDate = dateNow.withDayOfMonth(31)
+        val maxDate = dateNow.withDayOfMonth(dateNow.lengthOfMonth())
 
         var thisMonthDiaries = diaryDao.getDiariesByPlantId(0, minDate, maxDate).getOrAwaitValue()
         assert(thisMonthDiaries.size == 1)

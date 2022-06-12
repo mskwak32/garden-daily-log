@@ -51,7 +51,7 @@ class DiaryListAdapter(
         private fun isHeader(position: Int): Boolean {
             if (position == 0) return true
 
-            val previousDate = getItem(position).createdDate.dayOfMonth
+            val previousDate = getItem(position - 1).createdDate.dayOfMonth
             val currentDate = getItem(position).createdDate.dayOfMonth
             return previousDate != currentDate
         }
