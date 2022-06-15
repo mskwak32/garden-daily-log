@@ -15,7 +15,7 @@ import com.mskwak.presentation.databinding.DialogPlantDetailBinding
 import com.mskwak.presentation.ui.base.BaseFullScreenDialog
 import com.mskwak.presentation.ui.binding.localDateToText
 import com.mskwak.presentation.ui.binding.localTimeToText
-import com.mskwak.presentation.ui.binding.setUri
+import com.mskwak.presentation.ui.binding.setImageUri
 import com.mskwak.presentation.ui.custom_component.ListItemDecoVertical
 import com.mskwak.presentation.ui.dialog.DeleteConfirmDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -98,7 +98,7 @@ class PlantDetailDialog : BaseFullScreenDialog<DialogPlantDetailBinding>() {
     @SuppressLint("SetTextI18n")
     private fun setupPlant(plant: Plant) {
         binding.apply {
-            picture.setUri(plant.pictureUri)
+            picture.setImageUri(plant.pictureUri)
             plantName.text = plant.name
             collapsingToolbar.title = plant.name
 

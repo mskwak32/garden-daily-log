@@ -6,10 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.mskwak.presentation.R
 import com.mskwak.presentation.databinding.LayoutItemDiaryInPlantDetailBinding
 import com.mskwak.presentation.model.DiaryUiData
-import com.mskwak.presentation.ui.binding.setUri
+import com.mskwak.presentation.ui.binding.setThumbnail
 
 class DiarySummaryAdapter(private val onItemClick: (diary: DiaryUiData) -> Unit) :
     ListAdapter<DiaryUiData, DiarySummaryAdapter.ItemViewHolder>(ItemDiffCallback()) {
@@ -40,11 +39,9 @@ class DiarySummaryAdapter(private val onItemClick: (diary: DiaryUiData) -> Unit)
         }
 
         private fun setPicture(diary: DiaryUiData) {
-            if (diary.pictureList?.isNotEmpty() == true) {
-                binding.picture.setUri(diary.pictureList.first(), true)
-            } else {
-                binding.picture.setBackgroundResource(R.drawable.plant_default)
-            }
+            val pictureUri =
+                if (diary.pictureList?.isNotEmpty() == true) diary.pictureList.first() else null
+            binding.picture.setThumbnail(pictureUri)
         }
     }
 
