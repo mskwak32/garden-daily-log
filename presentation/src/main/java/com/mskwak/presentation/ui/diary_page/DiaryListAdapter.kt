@@ -42,18 +42,7 @@ class DiaryListAdapter(
                 binding.picture.setUri(diary.pictureList.first(), true)
             }
             binding.plantName.text = getPlantName(diary.plantId) ?: ""
-
-            binding.dateText.text = if (isHeader(adapterPosition)) {
-                getDateText(diary.createdDate)
-            } else " "
-        }
-
-        private fun isHeader(position: Int): Boolean {
-            if (position == 0) return true
-
-            val previousDate = getItem(position - 1).createdDate.dayOfMonth
-            val currentDate = getItem(position).createdDate.dayOfMonth
-            return previousDate != currentDate
+            binding.dateText.text = getDateText(diary.createdDate)
         }
 
         private fun getDateText(date: LocalDate): String {

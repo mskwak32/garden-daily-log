@@ -27,7 +27,6 @@ object Versions {
     const val TIMBER = "5.0.1"
 
     const val GOOGLE_SERVICE = "4.3.10"
-    const val GOOGLE_SERVICE_ADS = "20.6.0"
     const val FIREBASE_BOM = "29.2.1"
     const val FIREBASE_CRASHLYTICS_PLUGIN = "2.8.1"
 }
@@ -43,8 +42,6 @@ object Libraries {
         "androidx.navigation:navigation-fragment-ktx:${Versions.NAVIGATION_KTX}"
     const val NAVIGATION_UI = "androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATION_KTX}"
     const val GSON = "com.google.code.gson:gson:${Versions.GSON}"
-    const val GOOGLE_SERVICE_ADS =
-        "com.google.android.gms:play-services-ads:${Versions.GOOGLE_SERVICE_ADS}"
     const val TIMBER = "com.jakewharton.timber:timber:${Versions.TIMBER}"
 }
 
