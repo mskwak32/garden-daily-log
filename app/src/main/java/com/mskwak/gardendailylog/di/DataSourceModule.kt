@@ -19,7 +19,10 @@ class DataSourceModule {
     @Singleton
     fun provideGardenDatabase(application: Application): GardenDatabase {
         return Room.databaseBuilder(application, GardenDatabase::class.java, GardenDatabase.DB_NAME)
-            .addMigrations(GardenDatabase.MIGRATION_2_3)
+            .addMigrations(
+                GardenDatabase.Migration_1_2,
+                GardenDatabase.MIGRATION_2_3
+            )
             .build()
     }
 

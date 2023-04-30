@@ -1,0 +1,32 @@
+object Versions {
+    const val CORE_KTX = "1.10.0"
+    const val APP_COMPAT = "1.6.1"
+    const val LIFECYCLE_KTX = "2.6.1"
+    const val NAVIGATION_KTX = "2.5.3"
+    const val MATERIAL = "1.8.0"
+    const val CONSTRAINT_LAYOUT = "2.1.4"
+    const val COROUTINES = "1.6.4"
+
+    const val JUNIT = "4.13.2"
+    const val ANDROIDX_TEST = "1.5.0"
+    const val ANDROIDX_TEST_JUNIT = "1.1.5"
+    const val ESPRESSO = "3.5.1"
+    const val ROBOLECTRIC = "4.10"
+    const val ARCH_TEST = "2.2.0"
+    const val MOCKITO = "5.3.1"
+
+    const val ROOM = "2.5.1"
+    const val GLIDE = "4.15.1"
+    const val HILT_CORE = "2.44"
+    const val GSON = "2.10.1"
+    const val VIEW_PAGER = "1.0.0"
+    const val DOTS_INDICATOR = "4.3"
+    const val LOTTIE = "6.0.0"
+    const val RETROFIT2 = "2.9.0"
+    const val OKHTTP = "4.11.0"
+    const val TIMBER = "5.0.1"
+
+    const val GOOGLE_SERVICE = "4.3.15"
+    const val FIREBASE_BOM = "31.5.0"
+    const val FIREBASE_CRASHLYTICS_PLUGIN = "2.8.1"
+}

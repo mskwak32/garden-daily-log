@@ -5,6 +5,10 @@ plugins {
 
 apply from: rootProject.file("android.gradle")
 
+android {
+    namespace 'com.mskwak.domain'
+}
+
 dependencies {
 
     implementation(Coroutines.COROUTINES_CORE)

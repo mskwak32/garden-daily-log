@@ -2,19 +2,13 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
+    id 'com.google.dagger.hilt.android'
 }
 
 apply from: rootProject.file("android.gradle")
 
 android {
-    defaultConfig {
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
-            }
-        }
-    }
+    namespace 'com.mskwak.data'
 }
 
 dependencies {
@@ -31,11 +25,11 @@ dependencies {
     kapt(Di.HILT_COMPILER)
 
     implementation(Room.ROOM_RUNTIME)
+    annotationProcessor(Room.ROOM_COMPILER)
     kapt(Room.ROOM_COMPILER)
     implementation(Room.ROOM_KTX)
     implementation(Libraries.TIMBER)
     implementation(Retrofit.RETROFIT2)
-
 
     testImplementation("junit:junit:${Versions.JUNIT}")
     testImplementation("androidx.test:core:${Versions.ANDROIDX_TEST}")

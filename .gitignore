@@ -23,6 +23,8 @@ output.json
 # IntelliJ
 *.iml
 .idea/
+.DS_Store
+/captures
 
 # Keystore files
 *.jks

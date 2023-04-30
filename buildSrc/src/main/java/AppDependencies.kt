@@ -1,36 +1,3 @@
-object Versions {
-    const val CORE_KTX = "1.7.0"
-    const val APP_COMPAT = "1.4.1"
-    const val LIFECYCLE_KTX = "2.4.1"
-    const val NAVIGATION_KTX = "2.4.1"
-    const val MATERIAL = "1.5.0"
-    const val CONSTRAINT_LAYOUT = "2.1.3"
-    const val COROUTINES = "1.5.2"
-
-    const val JUNIT = "4.13.2"
-    const val ANDROIDX_TEST = "1.4.0"
-    const val ANDROIDX_TEST_JUNIT = "1.1.3"
-    const val ESPRESSO = "3.4.0"
-    const val ROBOLECTRIC = "4.5.1"
-    const val ARCH_TEST = "2.1.0"
-    const val MOCKITO = "4.3.1"
-
-    const val ROOM = "2.4.1"
-    const val GLIDE = "4.13.0"
-    const val HILT_CORE = "2.41"
-    const val GSON = "2.9.0"
-    const val VIEW_PAGER = "1.0.0"
-    const val DOTS_INDICATOR = "4.2"
-    const val LOTTIE = "5.0.3"
-    const val RETROFIT2 = "2.9.0"
-    const val OKHTTP = "4.3.1"
-    const val TIMBER = "5.0.1"
-
-    const val GOOGLE_SERVICE = "4.3.10"
-    const val FIREBASE_BOM = "29.2.1"
-    const val FIREBASE_CRASHLYTICS_PLUGIN = "2.8.1"
-}
-
 object Libraries {
     const val CORE_KTX = "androidx.core:core-ktx:${Versions.CORE_KTX}"
     const val APP_COMPAT = "androidx.appcompat:appcompat:${Versions.APP_COMPAT}"
@@ -58,7 +25,7 @@ object Ui {
 
 object Di {
     const val HILT_ANDROID = "com.google.dagger:hilt-android:${Versions.HILT_CORE}"
-    const val HILT_COMPILER = "com.google.dagger:hilt-android-compiler:${Versions.HILT_CORE}"
+    const val HILT_COMPILER = "com.google.dagger:hilt-compiler:${Versions.HILT_CORE}"
 }
 
 object Coroutines {

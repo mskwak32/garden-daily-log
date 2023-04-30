@@ -1,12 +1,16 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 apply from: rootProject.file("android.gradle")
+
+android {
+    namespace 'com.mskwak.presentation'
+}
 
 dependencies {
     implementation project(":domain")
