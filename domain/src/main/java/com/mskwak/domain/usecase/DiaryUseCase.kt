@@ -3,6 +3,7 @@ package com.mskwak.domain.usecase
 import com.mskwak.domain.AppConstValue
 import com.mskwak.domain.model.Diary
 import com.mskwak.domain.repository.DiaryRepository
+import com.mskwak.domain.type.DiaryListSortOrder
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

@@ -15,6 +15,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class DataSourceModule {
+
     @Provides
     @Singleton
     fun provideGardenDatabase(application: Application): GardenDatabase {

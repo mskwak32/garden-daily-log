@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import com.mskwak.domain.usecase.PlantListSortOrder
+import com.mskwak.domain.type.PlantListSortOrder
 import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.presentation.model.PlantUiData
 import com.mskwak.presentation.util.SingleLiveEvent

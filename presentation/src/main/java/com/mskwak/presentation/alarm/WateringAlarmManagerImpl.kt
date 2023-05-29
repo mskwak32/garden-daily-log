@@ -5,11 +5,13 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import com.mskwak.domain.manager.WateringAlarmManager
+import dagger.hilt.android.qualifiers.ApplicationContext
 import timber.log.Timber
 import java.time.LocalDateTime
-import java.util.*
+import java.util.Calendar
 
-class WateringAlarmManagerImpl(private val context: Context) : WateringAlarmManager {
+class WateringAlarmManagerImpl(@ApplicationContext private val context: Context) :
+    WateringAlarmManager {
 
     private val alarmManager: AlarmManager =
         context.getSystemService(Context.ALARM_SERVICE) as AlarmManager

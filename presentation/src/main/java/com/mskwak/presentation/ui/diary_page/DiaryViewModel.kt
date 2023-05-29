@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
-import com.mskwak.domain.usecase.DiaryListSortOrder
+import com.mskwak.domain.type.DiaryListSortOrder
 import com.mskwak.domain.usecase.DiaryUseCase
 import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.presentation.model.DiaryUiData

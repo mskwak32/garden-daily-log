@@ -6,6 +6,7 @@ import com.mskwak.domain.manager.WateringAlarmManager
 import com.mskwak.domain.model.Plant
 import com.mskwak.domain.repository.DiaryRepository
 import com.mskwak.domain.repository.PlantRepository
+import com.mskwak.domain.type.PlantListSortOrder
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

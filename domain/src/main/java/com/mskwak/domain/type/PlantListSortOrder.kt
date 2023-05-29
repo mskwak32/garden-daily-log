@@ -1,4 +1,4 @@
-package com.mskwak.domain.usecase
+package com.mskwak.domain.type
 
 enum class PlantListSortOrder {
     CREATED_LATEST,

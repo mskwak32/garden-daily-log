@@ -9,7 +9,7 @@ import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mskwak.domain.model.Diary
-import com.mskwak.domain.usecase.DiaryListSortOrder
+import com.mskwak.domain.type.DiaryListSortOrder
 import com.mskwak.presentation.R
 import com.mskwak.presentation.databinding.FragmentDiaryBinding
 import com.mskwak.presentation.ui.base.BaseFragment

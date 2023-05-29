@@ -7,7 +7,7 @@ import android.widget.AdapterView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
-import com.mskwak.domain.usecase.PlantListSortOrder
+import com.mskwak.domain.type.PlantListSortOrder
 import com.mskwak.presentation.R
 import com.mskwak.presentation.databinding.FragmentHomeBinding
 import com.mskwak.presentation.ui.base.BaseFragment

@@ -49,7 +49,7 @@ class DiaryDetailDialog : BottomSheetDialogFragment() {
         binding.viewPager.apply {
             adapter = pictureAdapter
             setPageTransformer(ZoomOutPageTransformer())
-            attachTo(viewPager)
+            binding.pageIndicator.attachTo(this)
         }
     }
 
