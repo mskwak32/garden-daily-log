@@ -22,33 +22,34 @@ class PlantEditViewModel @Inject constructor(
     private val useCase: PlantUseCase
 ) : ViewModel() {
 
-    val onSavedEvent = SingleLiveEvent<Unit>()
+    val plantName = MutableLiveData<String>()
+    val memo = MutableLiveData<String>()
 
     private val _pictureUri = MutableLiveData<Uri>()
-    val pictureUri: LiveData<Uri> = _pictureUri
-
-    private var newPictureBitmap: Bitmap? = null
-    val plantName = MutableLiveData<String>()
-
     private val _plantNameEmpty = MutableLiveData(false)
-    val plantNameEmpty: LiveData<Boolean> = _plantNameEmpty
-
-    val plantDate = MutableLiveData(LocalDate.now())
-    val memo = MutableLiveData<String>()
-    val lastWateringDate = MutableLiveData(LocalDate.now())
-    val wateringPeriod = MutableLiveData(1)
-
+    private val _plantDate = MutableLiveData(LocalDate.now())
+    private val _lastWateringDate = MutableLiveData(LocalDate.now())
+    private val _wateringPeriod = MutableLiveData(1)
     private val _wateringAlarmOnOff = MutableLiveData(false)
-    val wateringAlarmOnOff: LiveData<Boolean> = _wateringAlarmOnOff
+    private val _wateringAlarmTime = MutableLiveData(LocalTime.of(9, 0))
 
-    val wateringAlarmTime = MutableLiveData(LocalTime.of(9, 0))
-
+    private val _onSavedEvent = SingleLiveEvent<Unit>()
     private val _snackbarMessage = SingleLiveEvent<Int>()
+
+    val pictureUri: LiveData<Uri> = _pictureUri
+    val plantNameEmpty: LiveData<Boolean> = _plantNameEmpty
+    val plantDate: LiveData<LocalDate> = _plantDate
+    val lastWateringDate: LiveData<LocalDate> = _lastWateringDate
+    val wateringPeriod: LiveData<Int> = _wateringPeriod
+    val wateringAlarmOnOff: LiveData<Boolean> = _wateringAlarmOnOff
+    val wateringAlarmTime: LiveData<LocalTime> = _wateringAlarmTime
+
+    val onSavedEvent: LiveData<Unit> = _onSavedEvent
     val snackbarMessage: LiveData<Int> = _snackbarMessage
 
     private var isUpdatePlant = false
     private var plantId = 0
-
+    private var newPictureBitmap: Bitmap? = null
     fun onWateringAlarmOnOffClick() {
         _wateringAlarmOnOff.value = !wateringAlarmOnOff.value!!
     }
@@ -67,16 +68,16 @@ class PlantEditViewModel @Inject constructor(
             } ?: _pictureUri.value
 
             //물주기 기간이 없음일경우 alarm onOff = false
-            if (wateringPeriod.value == 0) {
+            if (_wateringPeriod.value == 0) {
                 _wateringAlarmOnOff.value = false
             }
 
-            val alarm = AlarmUiData(wateringAlarmTime.value!!, wateringAlarmOnOff.value!!)
+            val alarm = AlarmUiData(_wateringAlarmTime.value!!, wateringAlarmOnOff.value!!)
             val plant = PlantUiData(
                 plantName.value!!,
-                plantDate.value!!,
-                wateringPeriod.value!!,
-                lastWateringDate.value!!,
+                _plantDate.value!!,
+                _wateringPeriod.value!!,
+                _lastWateringDate.value!!,
                 alarm,
                 pictureUri,
                 memo.value,
@@ -91,7 +92,7 @@ class PlantEditViewModel @Inject constructor(
             } else {
                 useCase.addPlant(plant)
             }
-            onSavedEvent.call()
+            _onSavedEvent.call()
         }
     }
 
@@ -101,12 +102,12 @@ class PlantEditViewModel @Inject constructor(
                 this@PlantEditViewModel.plantId = plant.id
                 _pictureUri.value = plant.pictureUri
                 plantName.value = plant.name
-                plantDate.value = plant.createdDate
+                _plantDate.value = plant.createdDate
                 memo.value = plant.memo
-                lastWateringDate.value = plant.lastWateringDate
-                wateringPeriod.value = plant.waterPeriod
+                _lastWateringDate.value = plant.lastWateringDate
+                _wateringPeriod.value = plant.waterPeriod
                 _wateringAlarmOnOff.value = plant.wateringAlarm.onOff
-                wateringAlarmTime.value = plant.wateringAlarm.time
+                _wateringAlarmTime.value = plant.wateringAlarm.time
                 isUpdatePlant = true
             }
         }
@@ -116,4 +117,19 @@ class PlantEditViewModel @Inject constructor(
         newPictureBitmap = bitmap
     }
 
+    fun setPlantDate(date: LocalDate) {
+        _plantDate.value = date
+    }
+
+    fun setLastWateringDate(date: LocalDate) {
+        _lastWateringDate.value = date
+    }
+
+    fun setWateringPeriod(days: Int) {
+        _wateringPeriod.value = days
+    }
+
+    fun setWateringAlarmTime(time: LocalTime) {
+        _wateringAlarmTime.value = time
+    }
 }

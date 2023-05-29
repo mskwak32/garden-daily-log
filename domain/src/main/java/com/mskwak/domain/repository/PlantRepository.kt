@@ -2,8 +2,8 @@ package com.mskwak.domain.repository
 
 import android.graphics.Bitmap
 import android.net.Uri
-import androidx.lifecycle.LiveData
 import com.mskwak.domain.model.Plant
+import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
 interface PlantRepository {
@@ -12,8 +12,8 @@ interface PlantRepository {
     suspend fun updatePlant(plant: Plant)
     suspend fun deletePlant(plant: Plant)
     suspend fun getPlant(plantId: Int): Plant
-    fun getPlants(): LiveData<List<Plant>>
-    fun getPlantLiveData(plantId: Int): LiveData<Plant>
+    fun getPlants(): Flow<List<Plant>>
+    fun getPlantFlow(plantId: Int): Flow<Plant>
     suspend fun savePlantPicture(bitmap: Bitmap): Uri
     suspend fun deletePlantPicture(uri: Uri)
     suspend fun updateLastWateringDate(date: LocalDate, plantId: Int)

@@ -14,7 +14,7 @@ class BootReceiver : BroadcastReceiver() {
     lateinit var useCase: PlantUseCase
 
     /**
-     * 부팅후 또는 앱 업데이트후 알람 재등록
+     * 부팅후 또는 앱 업데이트 후 알람 재등록
      */
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action.equals(Intent.ACTION_BOOT_COMPLETED) ||

@@ -1,8 +1,8 @@
 package com.mskwak.data.source.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.mskwak.data.model.PlantData
+import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
 @Dao
@@ -20,10 +20,10 @@ interface PlantDao {
     suspend fun getPlant(plantId: Int): PlantData
 
     @Query("SELECT * FROM plant")
-    fun getPlants(): LiveData<List<PlantData>>
+    fun getPlants(): Flow<List<PlantData>>
 
     @Query("SELECT * FROM plant WHERE id = :plantId")
-    fun getPlantLiveData(plantId: Int): LiveData<PlantData>
+    fun getPlantFlow(plantId: Int): Flow<PlantData>
 
     @Query("UPDATE plant SET lastWateringDate = :date WHERE id = :plantId")
     suspend fun updateLastWatering(date: LocalDate, plantId: Int)

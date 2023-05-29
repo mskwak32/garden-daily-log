@@ -2,7 +2,11 @@ package com.mskwak.presentation.ui.diary_dialog.edit_diary
 
 import android.graphics.Bitmap
 import android.net.Uri
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
 import com.mskwak.domain.AppConstValue
 import com.mskwak.domain.usecase.DiaryUseCase
 import com.mskwak.domain.usecase.PlantUseCase
@@ -20,26 +24,24 @@ class DiaryEditViewModel @Inject constructor(
     private val plantUseCase: PlantUseCase,
     private val diaryUseCase: DiaryUseCase
 ) : ViewModel() {
-    private var plantId: Int? = null
-    private val _plantName = MutableLiveData<String>()
-    val plantName: LiveData<String> = _plantName
 
+    private val _plantName = MutableLiveData<String>()
     val diaryDate = MutableLiveData(LocalDate.now())
     val contentText = MutableLiveData<String>()
-
+    private val _pictureList = MutableLiveData<MutableList<Uri>>()
     private val _onSavedEvent = SingleLiveEvent<Unit>()
-    val onSavedEvent: LiveData<Unit> = _onSavedEvent
     private val _snackbarMessage = SingleLiveEvent<Int>()
+
+    val plantName: LiveData<String> = _plantName
+    val onSavedEvent: LiveData<Unit> = _onSavedEvent
     val snackbarMessage: LiveData<Int> = _snackbarMessage
+    val pictureList: LiveData<List<Uri>> = _pictureList.map { it.toList() }
 
     private var originPictures: List<Uri> = emptyList()     //기존 일지 불러왔을 때 사진목록
     private var newPictures = mutableListOf<Uri>()          //새로 추가된 사진 목록
-    private val _pictureList = MutableLiveData<MutableList<Uri>>()
-    val pictureList: LiveData<List<Uri>> = _pictureList.map { it.toList() }
-
     private var isUpdate = false
     private var diaryId = 0
-
+    private var plantId: Int? = null
 
     fun saveDiary() {
         if (_pictureList.value.isNullOrEmpty() && contentText.value.isNullOrBlank()) {

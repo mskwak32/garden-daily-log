@@ -60,7 +60,7 @@ class PlantEditDialog : BaseFullScreenDialog<DialogPlantEditBinding>() {
     fun onPlantDateClick() {
         val listener = DatePickerDialog.OnDateSetListener { _, y, m, d ->
             val date = LocalDate.of(y, m.plus(1), d)
-            viewModel.plantDate.value = date
+            viewModel.setPlantDate(date)
         }
         openDatePicker(viewModel.plantDate.value!!, listener)
         hideSoftKeyboard()
@@ -69,7 +69,7 @@ class PlantEditDialog : BaseFullScreenDialog<DialogPlantEditBinding>() {
     fun onLastWateringDateClick() {
         val listener = DatePickerDialog.OnDateSetListener { _, y, m, d ->
             val date = LocalDate.of(y, m.plus(1), d)
-            viewModel.lastWateringDate.value = date
+            viewModel.setLastWateringDate(date)
         }
         openDatePicker(viewModel.lastWateringDate.value!!, listener)
     }
@@ -78,7 +78,7 @@ class PlantEditDialog : BaseFullScreenDialog<DialogPlantEditBinding>() {
         WateringPeriodDialog.Builder()
             .setInitialDays(viewModel.wateringPeriod.value!!)
             .setOnCompleteListener { days ->
-                viewModel.wateringPeriod.value = days
+                viewModel.setWateringPeriod(days)
                 if (days == 0) {
                     wateringAlarmEnable(false)
                 } else {
@@ -101,7 +101,7 @@ class PlantEditDialog : BaseFullScreenDialog<DialogPlantEditBinding>() {
     fun onWateringAlarmClick() {
         val listener = TimePickerDialog.OnTimeSetListener { _, h, m ->
             val time = LocalTime.of(h, m)
-            viewModel.wateringAlarmTime.value = time
+            viewModel.setWateringAlarmTime(time)
         }
         val currentTime = viewModel.wateringAlarmTime.value!!
         val hour = currentTime.hour

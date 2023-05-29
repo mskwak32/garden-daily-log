@@ -1,12 +1,12 @@
 package com.mskwak.data.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import com.mskwak.data.model.DiaryData
 import com.mskwak.data.source.local.DiaryDao
 import com.mskwak.data.source.local.FileDataSource
 import com.mskwak.domain.model.Diary
 import com.mskwak.domain.repository.DiaryRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import java.time.LocalDate
 import javax.inject.Inject
@@ -37,7 +37,7 @@ class DiaryRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getDiariesByPlantId(plantId: Int, limit: Int): LiveData<List<Diary>> {
+    override fun getDiariesByPlantId(plantId: Int, limit: Int): Flow<List<Diary>> {
         return diaryDao.getDiariesByPlantId(plantId, limit).map { it }
     }
 
@@ -45,8 +45,8 @@ class DiaryRepositoryImpl @Inject constructor(
         return diaryDao.getDiary(id)
     }
 
-    override fun getDiaryLiveData(id: Int): LiveData<Diary> {
-        return diaryDao.getDiaryLiveData(id).map { it }
+    override fun getDiaryFlow(id: Int): Flow<Diary> {
+        return diaryDao.getDiaryFlow(id).map { it }
     }
 
     private fun deleteDiaryPictures(diary: Diary) {
@@ -55,7 +55,7 @@ class DiaryRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getDiaries(year: Int, month: Int, plantId: Int?): LiveData<List<Diary>> {
+    override fun getDiaries(year: Int, month: Int, plantId: Int?): Flow<List<Diary>> {
         val startDate = LocalDate.of(year, month, 1)
         val endDate = LocalDate.of(year, month, startDate.lengthOfMonth())
         return if (plantId == null) {

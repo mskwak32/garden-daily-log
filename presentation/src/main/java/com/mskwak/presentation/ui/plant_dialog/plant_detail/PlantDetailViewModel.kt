@@ -1,31 +1,58 @@
 package com.mskwak.presentation.ui.plant_dialog.plant_detail
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
+import com.mskwak.domain.model.Plant
 import com.mskwak.domain.usecase.DiaryUseCase
 import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.presentation.model.DiaryUiData
 import com.mskwak.presentation.util.SingleLiveEvent
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PlantDetailViewModel @AssistedInject constructor(
-    @Assisted private val plantId: Int,
+@HiltViewModel
+class PlantDetailViewModel @Inject constructor(
     private val plantUseCase: PlantUseCase,
-    diaryUseCase: DiaryUseCase
+    private val diaryUseCase: DiaryUseCase
 ) : ViewModel() {
 
-    var plant = plantUseCase.getPlantLiveData(plantId)
-    var diaries = diaryUseCase.getDiariesByPlantId(plantId).map { list ->
-        list.map { DiaryUiData(it) }
-    }
-    val isEmptyList: LiveData<Boolean> = diaries.map {
-        it.isEmpty()
-    }
+    private val _plant = MutableLiveData<Plant>()
+    private val _diaries = MutableLiveData<List<DiaryUiData>>()
     private val _wateringCompleted = SingleLiveEvent<Unit>()
+
+    var plant: LiveData<Plant> = _plant
+    var diaries: LiveData<List<DiaryUiData>> = _diaries
+    val isEmptyList: LiveData<Boolean> = _diaries.map { diaries ->
+        diaries.isEmpty()
+    }
     val wateringCompleted: LiveData<Unit> = _wateringCompleted
+
+    private var plantId: Int? = null
+
+    fun loadData(plantId: Int) {
+        this.plantId = plantId
+        with(viewModelScope) {
+            launch {
+                plantUseCase.getPlantFlow(plantId).collectLatest {
+                    _plant.value = it
+                }
+            }
+            launch {
+                diaryUseCase.getDiariesByPlantId(plantId).map { list ->
+                    list.map { DiaryUiData(it) }
+                }.collectLatest {
+                    _diaries.value = it
+                }
+            }
+        }
+    }
 
     fun wateringAlarmToggle() {
         plant.value?.wateringAlarm?.let { alarm ->
@@ -53,22 +80,5 @@ class PlantDetailViewModel @AssistedInject constructor(
 
     fun deletePlant() {
         if (plant.value != null) plantUseCase.deletePlant(plant.value!!)
-    }
-
-    @AssistedFactory
-    interface PlantDetailViewModelAssistedFactory {
-        fun create(plantId: Int): PlantDetailViewModel
-    }
-
-    companion object {
-        @Suppress("UNCHECKED_CAST")
-        fun provideFactory(
-            assistedFactory: PlantDetailViewModelAssistedFactory,
-            plantId: Int
-        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return assistedFactory.create(plantId) as T
-            }
-        }
     }
 }

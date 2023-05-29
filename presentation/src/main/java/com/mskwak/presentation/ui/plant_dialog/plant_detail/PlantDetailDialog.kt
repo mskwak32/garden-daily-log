@@ -22,7 +22,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
-import javax.inject.Inject
 import kotlin.math.abs
 
 @AndroidEntryPoint
@@ -37,12 +36,7 @@ class PlantDetailDialog : BaseFullScreenDialog<DialogPlantDetailBinding>() {
         }
     }
     private var isWateringFlag = false
-
-    @Inject
-    lateinit var viewModelAssistedFactory: PlantDetailViewModel.PlantDetailViewModelAssistedFactory
-    private val viewModel by viewModels<PlantDetailViewModel> {
-        PlantDetailViewModel.provideFactory(viewModelAssistedFactory, plantId)
-    }
+    private val viewModel by viewModels<PlantDetailViewModel>()
 
     override fun initialize() {
         binding.dialog = this
@@ -51,6 +45,7 @@ class PlantDetailDialog : BaseFullScreenDialog<DialogPlantDetailBinding>() {
         initToolbar()
         initObserver()
         initRecyclerView()
+        viewModel.loadData(args.plantId)
     }
 
     private fun initToolbar() {
@@ -120,11 +115,13 @@ class PlantDetailDialog : BaseFullScreenDialog<DialogPlantDetailBinding>() {
                         binding.waterIcon.setBackgroundResource(R.drawable.ic_water_drop_red)
                         binding.waterAnimation.visibility = View.INVISIBLE
                     }
+
                     plant.lastWateringDate == today -> {
                         binding.waterIcon.setBackgroundResource(R.drawable.ic_water_drop_white)
                         binding.waterAnimation.progress = 1f
                         binding.waterAnimation.visibility = View.VISIBLE
                     }
+
                     else -> {
                         binding.waterIcon.setBackgroundResource(R.drawable.ic_water_drop_blue)
                         binding.waterAnimation.visibility = View.INVISIBLE
@@ -137,9 +134,11 @@ class PlantDetailDialog : BaseFullScreenDialog<DialogPlantDetailBinding>() {
                 today -> {
                     lastWateringDate.text = getText(R.string.today)
                 }
+
                 today.minusDays(1) -> {
                     lastWateringDate.text = getText(R.string.yesterday)
                 }
+
                 else -> {
                     lastWateringDate.localDateToText(plant.lastWateringDate)
                 }
@@ -188,6 +187,7 @@ class PlantDetailDialog : BaseFullScreenDialog<DialogPlantDetailBinding>() {
                     R.id.menu_edit -> {
                         openEditPlant()
                     }
+
                     R.id.menu_delete -> {
                         showDeleteConfirm()
                     }

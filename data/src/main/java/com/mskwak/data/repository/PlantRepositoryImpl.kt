@@ -2,13 +2,13 @@ package com.mskwak.data.repository
 
 import android.graphics.Bitmap
 import android.net.Uri
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import com.mskwak.data.model.PlantData
 import com.mskwak.data.source.local.FileDataSource
 import com.mskwak.data.source.local.PlantDao
 import com.mskwak.domain.model.Plant
 import com.mskwak.domain.repository.PlantRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import java.time.LocalDate
 import javax.inject.Inject
@@ -39,12 +39,12 @@ class PlantRepositoryImpl @Inject constructor(
         return plantDao.getPlant(plantId)
     }
 
-    override fun getPlants(): LiveData<List<Plant>> {
+    override fun getPlants(): Flow<List<Plant>> {
         return plantDao.getPlants().map { it }
     }
 
-    override fun getPlantLiveData(plantId: Int): LiveData<Plant> {
-        return plantDao.getPlantLiveData(plantId).map { it }
+    override fun getPlantFlow(plantId: Int): Flow<Plant> {
+        return plantDao.getPlantFlow(plantId).map { it }
     }
 
     override suspend fun savePlantPicture(bitmap: Bitmap): Uri {

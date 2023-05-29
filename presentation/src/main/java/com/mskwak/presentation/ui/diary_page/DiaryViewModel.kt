@@ -1,6 +1,11 @@
 package com.mskwak.presentation.ui.diary_page
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
 import com.mskwak.domain.usecase.DiaryListSortOrder
 import com.mskwak.domain.usecase.DiaryUseCase
 import com.mskwak.domain.usecase.PlantUseCase
@@ -9,6 +14,7 @@ import com.mskwak.presentation.util.SingleLiveEvent
 import com.mskwak.presentation.util.SingleMediatorLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.yield
 import timber.log.Timber
@@ -20,22 +26,21 @@ class DiaryViewModel @Inject constructor(
     private val plantUseCase: PlantUseCase,
     private val diaryUseCase: DiaryUseCase
 ) : ViewModel() {
-    private val _month = MutableLiveData(LocalDate.now().withDayOfMonth(1))
-    val month: LiveData<LocalDate> = _month
 
+    private val _month = MutableLiveData(LocalDate.now().withDayOfMonth(1))
     private val _plantNameMap = SingleLiveEvent<Map<Int, String>>()
+    private val _diaries = SingleMediatorLiveData<List<DiaryUiData>>()
+
+    val month: LiveData<LocalDate> = _month
     val plantNameMap: LiveData<Map<Int, String>> = _plantNameMap
+    val diaries: LiveData<List<DiaryUiData>> = _diaries
 
     private var diarySource: LiveData<List<DiaryUiData>>? = null
-    private val _diaries = SingleMediatorLiveData<List<DiaryUiData>>()
-    val diaries: LiveData<List<DiaryUiData>> = _diaries
+    val isEmptyList: LiveData<Boolean> = diaries.map { it.isEmpty() }
 
     var selectedPlantId = SELECT_ALL_KEY
     private var sortOrder = DiaryListSortOrder.CREATED_LATEST
     private var loadJob: Job? = null
-
-    val isEmptyList: LiveData<Boolean> = diaries.map { it.isNullOrEmpty() }
-
 
     fun previousMonth() {
         _month.value = month.value?.minusMonths(1)
@@ -87,7 +92,7 @@ class DiaryViewModel @Inject constructor(
                 if (selectedPlantId != SELECT_ALL_KEY) selectedPlantId else null
             ).map { list ->
                 list.map { diary -> DiaryUiData(diary) }
-            }
+            }.asLiveData()
 
             yield()
 

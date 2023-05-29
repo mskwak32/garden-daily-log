@@ -17,19 +17,13 @@ import com.mskwak.presentation.ui.binding.localDateToText
 import com.mskwak.presentation.ui.custom_component.ZoomOutPageTransformer
 import com.mskwak.presentation.ui.dialog.DeleteConfirmDialog
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class DiaryDetailDialog : BottomSheetDialogFragment() {
     private lateinit var binding: DialogDiaryDetailBinding
     private val args by navArgs<DiaryDetailDialogArgs>()
     private val pictureAdapter by lazy { PictureViewPagerAdapter() }
-
-    @Inject
-    lateinit var viewModelFactory: DiaryDetailViewModel.DiaryDetailViewModelFactory
-    private val viewModel by viewModels<DiaryDetailViewModel> {
-        DiaryDetailViewModel.provideFactory(viewModelFactory, args.diaryId)
-    }
+    private val viewModel by viewModels<DiaryDetailViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,13 +42,14 @@ class DiaryDetailDialog : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         initViewPager()
         initObserver()
+        viewModel.loadDiary(args.diaryId)
     }
 
     private fun initViewPager() {
         binding.viewPager.apply {
             adapter = pictureAdapter
             setPageTransformer(ZoomOutPageTransformer())
-            binding.pageIndicator.setViewPager2(this)
+            attachTo(viewPager)
         }
     }
 
@@ -86,6 +81,7 @@ class DiaryDetailDialog : BottomSheetDialogFragment() {
                     R.id.menu_edit -> {
                         showEditDiary()
                     }
+
                     R.id.menu_delete -> {
                         showDeleteConfirm()
                     }
