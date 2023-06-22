@@ -17,7 +17,7 @@ object Versions {
 
     const val ROOM = "2.5.1"
     const val GLIDE = "4.15.1"
-    const val HILT_CORE = "2.44"
+    const val HILT = "2.44"
     const val GSON = "2.10.1"
     const val VIEW_PAGER = "1.0.0"
     const val DOTS_INDICATOR = "4.3"

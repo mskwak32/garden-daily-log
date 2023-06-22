@@ -24,8 +24,8 @@ object Ui {
 }
 
 object Di {
-    const val HILT_ANDROID = "com.google.dagger:hilt-android:${Versions.HILT_CORE}"
-    const val HILT_COMPILER = "com.google.dagger:hilt-compiler:${Versions.HILT_CORE}"
+    const val HILT_ANDROID = "com.google.dagger:hilt-android:${Versions.HILT}"
+    const val HILT_COMPILER = "com.google.dagger:hilt-compiler:${Versions.HILT}"
 }
 
 object Coroutines {
