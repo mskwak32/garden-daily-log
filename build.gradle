@@ -1,8 +1,12 @@
 buildscript {
+
     dependencies {
         classpath(ProjectDependencies.NAVIGATION_SAFE_ARGS)
         classpath(ProjectDependencies.GOOGLE_SERVICE)
         classpath(ProjectDependencies.FIREBASE_CRASHLYTICS_PLUGIN)
+    }
+    repositories {
+        mavenCentral()
     }
 }
 // Top-level build file where you can add configuration options common to all sub-projects/modules.

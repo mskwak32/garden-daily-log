@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.dagger.hilt.android'
+    id 'kotlin-kapt'
 }
 
 apply from: rootProject.file("android.gradle")
@@ -15,4 +17,7 @@ dependencies {
     testImplementation("junit:junit:${Versions.JUNIT}")
     testImplementation("org.mockito:mockito-core:${Versions.MOCKITO}")
     implementation(Libraries.TIMBER)
+
+    implementation(Di.HILT_ANDROID)
+    kapt(Di.HILT_COMPILER)
 }

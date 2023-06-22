@@ -18,13 +18,13 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    abstract fun bindsPlantRepository(repository: PlantRepositoryImpl): PlantRepository
+    abstract fun bindPlantRepository(repository: PlantRepositoryImpl): PlantRepository
 
     @Singleton
     @Binds
-    abstract fun bindsDiaryRepository(repository: DiaryRepositoryImpl): DiaryRepository
+    abstract fun bindDiaryRepository(repository: DiaryRepositoryImpl): DiaryRepository
 
     @Singleton
     @Binds
-    abstract fun bindsAppConfigRepository(repository: AppConfigRepositoryImpl): AppConfigRepository
+    abstract fun bindAppConfigRepository(repository: AppConfigRepositoryImpl): AppConfigRepository
 }

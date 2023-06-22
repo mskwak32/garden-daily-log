@@ -78,19 +78,23 @@ class DiaryEditViewModel @Inject constructor(
 
     private fun deleteOldPicture() {
         //기존에 있던 사진 중 삭제할 사진골라 삭제
-        val toDeleteList = originPictures.filter { _pictureList.value?.contains(it) == false }
-        plantUseCase.deletePicture(*toDeleteList.toTypedArray())
+        viewModelScope.launch {
+            val toDeleteList = originPictures.filter { _pictureList.value?.contains(it) == false }
+            plantUseCase.deletePicture(*toDeleteList.toTypedArray())
+        }
     }
 
     fun deleteTempFiles() {
         //임시로 추가했던 사진 삭제
-        if (newPictures.isNotEmpty()) {
-            plantUseCase.deletePicture(*newPictures.toTypedArray())
+        viewModelScope.launch {
+            if (newPictures.isNotEmpty()) {
+                plantUseCase.deletePicture(*newPictures.toTypedArray())
+            }
         }
     }
 
     fun isPictureFull(): Boolean {
-        return if (_pictureList.value?.size ?: 0 <= AppConstValue.MAX_PICTURE_PER_DIARY) {
+        return if ((_pictureList.value?.size ?: 0) <= AppConstValue.MAX_PICTURE_PER_DIARY) {
             false
         } else {
             _snackbarMessage.value = R.string.message_no_more_picture

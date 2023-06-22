@@ -56,8 +56,10 @@ class PlantDetailViewModel @Inject constructor(
 
     fun wateringAlarmToggle() {
         plant.value?.wateringAlarm?.let { alarm ->
-            val isActive = !alarm.onOff
-            plantUseCase.updateWateringAlarmOnOff(plant.value!!.id, isActive)
+            viewModelScope.launch {
+                val isActive = !alarm.onOff
+                plantUseCase.updateWateringAlarmOnOff(plant.value!!.id, isActive)
+            }
         }
     }
 
@@ -79,6 +81,8 @@ class PlantDetailViewModel @Inject constructor(
     }
 
     fun deletePlant() {
-        if (plant.value != null) plantUseCase.deletePlant(plant.value!!)
+        viewModelScope.launch {
+            plant.value?.let { plantUseCase.deletePlant(it) }
+        }
     }
 }

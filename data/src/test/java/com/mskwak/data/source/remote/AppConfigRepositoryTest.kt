@@ -3,13 +3,13 @@ package com.mskwak.data.source.remote
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.mskwak.data.repository.AppConfigRepositoryImpl
 import com.mskwak.domain.repository.AppConfigRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.util.concurrent.locks.ReentrantLock
 
 class AppConfigRepositoryTest {
     @get:Rule
@@ -24,7 +24,7 @@ class AppConfigRepositoryTest {
             .addConverterFactory(ScalarsConverterFactory.create())
             .build()
         val appConfigService = retrofit.create(AppConfigService::class.java)
-        repository = AppConfigRepositoryImpl(appConfigService)
+        repository = AppConfigRepositoryImpl(appConfigService, Dispatchers.IO)
     }
 
     @Test

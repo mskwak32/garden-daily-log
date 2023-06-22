@@ -9,9 +9,11 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import timber.log.Timber
 import java.time.LocalDateTime
 import java.util.Calendar
+import javax.inject.Inject
 
-class WateringAlarmManagerImpl(@ApplicationContext private val context: Context) :
-    WateringAlarmManager {
+class WateringAlarmManagerImpl @Inject constructor(
+    @ApplicationContext private val context: Context
+) : WateringAlarmManager {
 
     private val alarmManager: AlarmManager =
         context.getSystemService(Context.ALARM_SERVICE) as AlarmManager

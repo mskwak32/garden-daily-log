@@ -3,35 +3,40 @@ package com.mskwak.data.repository
 import com.mskwak.data.model.DiaryData
 import com.mskwak.data.source.local.DiaryDao
 import com.mskwak.data.source.local.FileDataSource
+import com.mskwak.domain.di.IoDispatcher
 import com.mskwak.domain.model.Diary
 import com.mskwak.domain.repository.DiaryRepository
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.time.LocalDate
 import javax.inject.Inject
 
 class DiaryRepositoryImpl @Inject constructor(
     private val diaryDao: DiaryDao,
-    private val fileDataSource: FileDataSource
+    private val fileDataSource: FileDataSource,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : DiaryRepository {
-    override suspend fun addDiary(diary: Diary) {
+
+    override suspend fun addDiary(diary: Diary) = withContext(ioDispatcher) {
         diaryDao.insertDiary(DiaryData(diary))
         Timber.d("add new diary")
     }
 
-    override suspend fun updateDiary(diary: Diary) {
+    override suspend fun updateDiary(diary: Diary) = withContext(ioDispatcher) {
         diaryDao.updateDiary(DiaryData(diary))
         Timber.d("update diary id= ${diary.id}")
     }
 
-    override suspend fun deleteDiary(diary: Diary) {
+    override suspend fun deleteDiary(diary: Diary) = withContext(ioDispatcher) {
         deleteDiaryPictures(diary)
         diaryDao.deleteDiary(DiaryData(diary))
         Timber.d("delete diary id= ${diary.id}")
     }
 
-    override suspend fun deleteDiariesByPlantId(plantId: Int) {
+    override suspend fun deleteDiariesByPlantId(plantId: Int) = withContext(ioDispatcher) {
         diaryDao.getDiariesByPlantId(plantId).forEach { diary ->
             deleteDiary(diary)
         }
@@ -41,8 +46,8 @@ class DiaryRepositoryImpl @Inject constructor(
         return diaryDao.getDiariesByPlantId(plantId, limit).map { it }
     }
 
-    override suspend fun getDiary(id: Int): Diary {
-        return diaryDao.getDiary(id)
+    override suspend fun getDiary(id: Int): Diary = withContext(ioDispatcher) {
+        diaryDao.getDiary(id)
     }
 
     override fun getDiaryFlow(id: Int): Flow<Diary> {

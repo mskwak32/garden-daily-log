@@ -1,21 +1,21 @@
 package com.mskwak.domain.usecase
 
 import com.mskwak.domain.AppConstValue
+import com.mskwak.domain.di.IoDispatcher
 import com.mskwak.domain.model.Diary
 import com.mskwak.domain.repository.DiaryRepository
 import com.mskwak.domain.type.DiaryListSortOrder
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class DiaryUseCase(
+@Singleton
+class DiaryUseCase @Inject constructor(
     private val diaryRepository: DiaryRepository,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
     fun getDiariesByPlantId(plantId: Int): Flow<List<Diary>> {
         return diaryRepository.getDiariesByPlantId(
@@ -25,21 +25,15 @@ class DiaryUseCase(
     }
 
     suspend fun addDiary(diary: Diary) {
-        withContext(ioDispatcher) {
-            diaryRepository.addDiary(diary)
-        }
+        diaryRepository.addDiary(diary)
     }
 
     suspend fun updateDiary(diary: Diary) {
-        withContext(ioDispatcher) {
-            diaryRepository.updateDiary(diary)
-        }
+        diaryRepository.updateDiary(diary)
     }
 
-    fun deleteDiary(diary: Diary) {
-        CoroutineScope(ioDispatcher).launch {
-            diaryRepository.deleteDiary(diary)
-        }
+    suspend fun deleteDiary(diary: Diary) {
+        diaryRepository.deleteDiary(diary)
     }
 
     suspend fun getDiary(diaryId: Int): Diary {

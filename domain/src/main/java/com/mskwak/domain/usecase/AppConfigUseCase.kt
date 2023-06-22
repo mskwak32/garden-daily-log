@@ -1,8 +1,13 @@
 package com.mskwak.domain.usecase
 
 import com.mskwak.domain.repository.AppConfigRepository
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AppConfigUseCase(private val appConfigRepository: AppConfigRepository) {
+@Singleton
+class AppConfigUseCase @Inject constructor(
+    private val appConfigRepository: AppConfigRepository
+) {
 
     suspend fun getLatestVersion(): Int? {
         val result = appConfigRepository.getLatestAppVersion()

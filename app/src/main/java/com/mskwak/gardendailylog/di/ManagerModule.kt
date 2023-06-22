@@ -1,21 +1,18 @@
 package com.mskwak.gardendailylog.di
 
-import android.app.Application
 import com.mskwak.domain.manager.WateringAlarmManager
 import com.mskwak.presentation.alarm.WateringAlarmManagerImpl
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class ManagerModule {
+abstract class ManagerModule {
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideAlarmManager(application: Application): WateringAlarmManager {
-        return WateringAlarmManagerImpl(application)
-    }
+    abstract fun bindAlarmManager(repository: WateringAlarmManagerImpl): WateringAlarmManager
 }

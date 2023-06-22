@@ -4,4 +4,6 @@ object ProjectDependencies {
     const val GOOGLE_SERVICE = "com.google.gms:google-services:${Versions.GOOGLE_SERVICE}"
     const val FIREBASE_CRASHLYTICS_PLUGIN =
         "com.google.firebase:firebase-crashlytics-gradle:${Versions.FIREBASE_CRASHLYTICS_PLUGIN}"
+    const val KOTLIN_GRADLE_PLUGIN =
+        "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}"
 }

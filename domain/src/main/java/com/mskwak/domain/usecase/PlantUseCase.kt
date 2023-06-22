@@ -2,30 +2,30 @@ package com.mskwak.domain.usecase
 
 import android.graphics.Bitmap
 import android.net.Uri
+import com.mskwak.domain.di.IoDispatcher
 import com.mskwak.domain.manager.WateringAlarmManager
 import com.mskwak.domain.model.Plant
 import com.mskwak.domain.repository.DiaryRepository
 import com.mskwak.domain.repository.PlantRepository
 import com.mskwak.domain.type.PlantListSortOrder
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Period
 import java.time.temporal.ChronoUnit
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.math.abs
 
-class PlantUseCase(
+@Singleton
+class PlantUseCase @Inject constructor(
     private val plantRepository: PlantRepository,
     private val diaryRepository: DiaryRepository,
     private val wateringAlarmManager: WateringAlarmManager,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
 
     fun getPlantsWithSortOrder(sortOrder: PlantListSortOrder): Flow<List<Plant>> {
@@ -54,34 +54,28 @@ class PlantUseCase(
         return plantRepository.getPlantFlow(plantId)
     }
 
-    suspend fun getPlant(plantId: Int): Plant = withContext(ioDispatcher) {
-        plantRepository.getPlant(plantId)
+    suspend fun getPlant(plantId: Int): Plant {
+        return plantRepository.getPlant(plantId)
     }
 
     suspend fun addPlant(plant: Plant) {
-        withContext(ioDispatcher) {
-            val id = plantRepository.addPlant(plant)
-            setWateringAlarm(id, isActive = plant.wateringAlarm.onOff)
-        }
+        val id = plantRepository.addPlant(plant)
+        setWateringAlarm(id, isActive = plant.wateringAlarm.onOff)
     }
 
     suspend fun updatePlant(plant: Plant) {
-        withContext(ioDispatcher) {
-            plantRepository.updatePlant(plant)
-            setWateringAlarm(plant.id, isActive = plant.wateringAlarm.onOff)
-        }
+        plantRepository.updatePlant(plant)
+        setWateringAlarm(plant.id, isActive = plant.wateringAlarm.onOff)
     }
 
-    fun deletePlant(plant: Plant) {
-        CoroutineScope(ioDispatcher).launch {
-            diaryRepository.deleteDiariesByPlantId(plant.id)
-            plantRepository.deletePlant(plant)
-            setWateringAlarm(plant.id, isActive = false)
-        }
+    suspend fun deletePlant(plant: Plant) {
+        diaryRepository.deleteDiariesByPlantId(plant.id)
+        plantRepository.deletePlant(plant)
+        setWateringAlarm(plant.id, isActive = false)
     }
 
-    suspend fun getPlantName(plantId: Int): String = withContext(ioDispatcher) {
-        plantRepository.getPlantName(plantId)
+    suspend fun getPlantName(plantId: Int): String {
+        return plantRepository.getPlantName(plantId)
     }
 
     suspend fun getPlantNames(): Map<Int, String> {
@@ -144,33 +138,27 @@ class PlantUseCase(
         return Period.between(plantDate, today)
     }
 
-    suspend fun savePicture(bitmap: Bitmap): Uri = withContext(ioDispatcher) {
-        plantRepository.savePlantPicture(bitmap)
+    suspend fun savePicture(bitmap: Bitmap): Uri {
+        return plantRepository.savePlantPicture(bitmap)
     }
 
-    fun deletePicture(vararg uri: Uri) {
-        CoroutineScope(ioDispatcher).launch {
-            uri.forEach { plantRepository.deletePlantPicture(it) }
-        }
+    suspend fun deletePicture(vararg uri: Uri) {
+        uri.forEach { plantRepository.deletePlantPicture(it) }
     }
 
     suspend fun wateringNow(plant: Plant) {
-        withContext(ioDispatcher) {
-            val date = LocalDate.now()
-            plantRepository.updateLastWateringDate(date, plant.id)
+        val date = LocalDate.now()
+        plantRepository.updateLastWateringDate(date, plant.id)
 
-            //알람이 설정되어있으면 다음 물주기시간으로 알람 재세팅
-            if (plant.wateringAlarm.onOff) {
-                setWateringAlarm(plant.id, plant.wateringAlarm.onOff)
-            }
+        //알람이 설정되어있으면 다음 물주기시간으로 알람 재세팅
+        if (plant.wateringAlarm.onOff) {
+            setWateringAlarm(plant.id, plant.wateringAlarm.onOff)
         }
     }
 
-    fun updateWateringAlarmOnOff(plantId: Int, isActive: Boolean) {
-        CoroutineScope(ioDispatcher).launch {
-            plantRepository.updateWateringAlarmOnOff(isActive, plantId)
-            setWateringAlarm(plantId, isActive)
-        }
+    suspend fun updateWateringAlarmOnOff(plantId: Int, isActive: Boolean) {
+        plantRepository.updateWateringAlarmOnOff(isActive, plantId)
+        setWateringAlarm(plantId, isActive)
     }
 
     suspend fun setWateringAlarm(plantId: Int, isActive: Boolean) {
@@ -184,29 +172,26 @@ class PlantUseCase(
         }
     }
 
-    private suspend fun getNextAlarmDateTime(plantId: Int): LocalDateTime? =
-        withContext(ioDispatcher) {
-            val plant = getPlant(plantId)
-            if (plant.waterPeriod == 0) return@withContext null
+    private suspend fun getNextAlarmDateTime(plantId: Int): LocalDateTime? {
+        val plant = getPlant(plantId)
+        if (plant.waterPeriod == 0) return null
 
-            val nextDate = plant.lastWateringDate.plusDays(plant.waterPeriod.toLong())
-            var nextDateTime = LocalDateTime.of(nextDate, plant.wateringAlarm.time)
+        val nextDate = plant.lastWateringDate.plusDays(plant.waterPeriod.toLong())
+        var nextDateTime = LocalDateTime.of(nextDate, plant.wateringAlarm.time)
 
-            //check if the nextDateTime is in past
-            val currentTime = LocalDateTime.now()
-            while (nextDateTime < currentTime) {
-                nextDateTime = nextDateTime.plusDays(plant.waterPeriod.toLong())
-            }
-
-            nextDateTime
+        //check if the nextDateTime is in past
+        val currentTime = LocalDateTime.now()
+        while (nextDateTime < currentTime) {
+            nextDateTime = nextDateTime.plusDays(plant.waterPeriod.toLong())
         }
 
-    fun resetWateringAlarm() {
-        CoroutineScope(ioDispatcher).launch {
-            plantRepository.getPlantIdWithAlarmList().forEach { (plantId, onOff) ->
-                if (onOff) {
-                    setWateringAlarm(plantId, onOff)
-                }
+        return nextDateTime
+    }
+
+    suspend fun resetWateringAlarm() {
+        plantRepository.getPlantIdWithAlarmList().forEach { (plantId, onOff) ->
+            if (onOff) {
+                setWateringAlarm(plantId, onOff)
             }
         }
     }

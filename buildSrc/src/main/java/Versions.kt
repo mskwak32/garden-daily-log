@@ -29,4 +29,5 @@ object Versions {
     const val GOOGLE_SERVICE = "4.3.15"
     const val FIREBASE_BOM = "31.5.0"
     const val FIREBASE_CRASHLYTICS_PLUGIN = "2.8.1"
+    const val KOTLIN = "1.8.0"
 }
