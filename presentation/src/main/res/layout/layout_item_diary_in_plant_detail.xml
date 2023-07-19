@@ -17,31 +17,31 @@
         android:padding="4dp">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/picture"
+            android:id="@+id/iv_picture"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:scaleType="centerCrop"
             android:src="@drawable/plant_default"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/roundedCorner" />
 
         <TextView
-            android:id="@+id/dateText"
+            android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:textColor="@color/dim_black_70"
             android:textSize="@dimen/text_medium"
-            app:layout_constraintLeft_toRightOf="@id/picture"
+            app:layout_constraintStart_toEndOf="@id/iv_picture"
             app:layout_constraintTop_toTopOf="parent"
             app:localDate="@{diary.createdDate}"
             tools:text="2022.02.22" />
 
         <TextView
-            android:id="@+id/memoText"
+            android:id="@+id/tv_memo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -50,11 +50,10 @@
             android:maxLines="2"
             android:text="@{diary.memo}"
             android:textSize="@dimen/text_body"
-            app:layout_constraintLeft_toLeftOf="@id/dateText"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dateText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_date"
+            app:layout_constraintTop_toBottomOf="@id/tv_date"
             tools:text="memo" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

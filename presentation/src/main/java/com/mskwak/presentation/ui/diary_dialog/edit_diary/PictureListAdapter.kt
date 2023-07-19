@@ -25,7 +25,7 @@ class PictureListAdapter(private val onDeletePicture: (uri: Uri) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.deleteButton.setOnClickListener {
+            binding.ivDelete.setOnClickListener {
                 onDeletePicture.invoke(getItem(adapterPosition))
             }
         }

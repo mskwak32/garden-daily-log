@@ -9,7 +9,7 @@ import com.mskwak.presentation.R
 import com.mskwak.presentation.databinding.DialogSelectMonthBinding
 import java.time.LocalDate
 
-class SelectMonthDialog private constructor() : DialogFragment() {
+class SelectMonthDialog : DialogFragment() {
     private lateinit var binding: DialogSelectMonthBinding
     private var completeListener: ((year: Int, month: Int) -> Unit)? = null
     private var year = LocalDate.now().year
@@ -32,7 +32,7 @@ class SelectMonthDialog private constructor() : DialogFragment() {
     }
 
     private fun initNumberPicker() {
-        binding.yearPicker.apply {
+        binding.pickerYear.apply {
             minValue = 1900
             maxValue = 2100
             wrapSelectorWheel = false
@@ -41,7 +41,7 @@ class SelectMonthDialog private constructor() : DialogFragment() {
                 year = newVal
             }
         }
-        binding.monthPicker.apply {
+        binding.pickerMonth.apply {
             minValue = 1
             maxValue = 12
             wrapSelectorWheel = true

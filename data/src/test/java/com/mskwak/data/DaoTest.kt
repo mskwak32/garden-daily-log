@@ -1,10 +1,12 @@
-package com.mskwak.data.source.local
+package com.mskwak.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.mskwak.data.MockPlantUtil
-import com.mskwak.data.getOrAwaitValue
 import com.mskwak.data.model.DiaryData
 import com.mskwak.data.model.PlantData
+import com.mskwak.data.source.local.DiaryDao
+import com.mskwak.data.source.local.LocalDatabase
+import com.mskwak.data.source.local.PlantDao
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
@@ -60,11 +62,11 @@ class DaoTest : LocalDatabase() {
         val minDate = dateNow.withDayOfMonth(1)
         val maxDate = dateNow.withDayOfMonth(dateNow.lengthOfMonth())
 
-        var thisMonthDiaries = diaryDao.getDiariesByPlantId(0, minDate, maxDate).getOrAwaitValue()
+        var thisMonthDiaries = diaryDao.getDiariesByPlantId(0, minDate, maxDate).first()
         assert(thisMonthDiaries.size == 1)
         assert(thisMonthDiaries.first().createdDate == dateNow)
 
-        thisMonthDiaries = diaryDao.getDiaries(minDate, maxDate).getOrAwaitValue()
+        thisMonthDiaries = diaryDao.getDiaries(minDate, maxDate).first()
         assert(thisMonthDiaries.size == 2)
     }
 }

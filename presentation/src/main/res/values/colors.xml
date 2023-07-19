@@ -14,19 +14,19 @@
     <color name="teal_200">#80CBC4</color>
     <color name="teal_700">#00796B</color>
 
-    <color name="bgray_1000">#303133</color>
-    <color name="bgray_600">#52575c</color>
-    <color name="bgray_400">#909399</color>
-    <color name="bgray_200">#b0b5bd</color>
-    <color name="bgray_100">#cfd4dd</color>
-    <color name="bgray_50">#dbdfe6</color>
-    <color name="bgray_25">#ebecf0</color>
-    <color name="bgray_10">#f4f5f7</color>
-    <color name="bgray_5">#fbfbfb</color>
+    <color name="gray_1000">#303133</color>
+    <color name="gray_600">#52575c</color>
+    <color name="gray_400">#909399</color>
+    <color name="gray_200">#b0b5bd</color>
+    <color name="gray_100">#cfd4dd</color>
+    <color name="gray_50">#dbdfe6</color>
+    <color name="gray_25">#ebecf0</color>
+    <color name="gray_10">#f4f5f7</color>
+    <color name="gray_5">#fbfbfb</color>
 
     <color name="dim_black_70">#b3000000</color>
     <color name="dim_black_45">#73000000</color>
-    <color name="dim_bgray_10_85">#d9f4f5f7</color>
+    <color name="dim_gray_10_85">#d9f4f5f7</color>
 
     <color name="red_300">#fb7c6b</color>
     <color name="red_400">#f76d64</color>

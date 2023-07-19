@@ -18,22 +18,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/plant_card_second_layer"
-            android:gravity="right|center_vertical">
+            android:gravity="end|center_vertical">
 
             <TextView
-                android:id="@+id/wateringButton"
+                android:id="@+id/tv_watering"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
                 android:text="@string/watering"
-                android:textColor="@color/bgray_10"
+                android:textColor="@color/gray_10"
                 android:textSize="@dimen/text_medium"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container"
+            android:id="@+id/layout_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/card_gray_bg"
@@ -41,67 +41,66 @@
             tools:ignore="SpUsage">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/picture"
+                android:id="@+id/iv_picture"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/plant_default"
-                app:thumbnailUri="@{plant.pictureUri}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/roundedCorner" />
+                app:shapeAppearanceOverlay="@style/roundedCorner"
+                app:thumbnailUri="@{plant.pictureUri}" />
 
             <TextView
-                android:id="@+id/d_dayCount"
+                android:id="@+id/tv_wateringDays"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
                 android:textSize="@dimen/text_large"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="D-00" />
 
             <ImageView
-                android:id="@+id/waterIcon"
+                android:id="@+id/iv_wateringIcon"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="@null"
                 android:src="@drawable/ic_water_drop_blue"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/d_dayCount"
+                app:layout_constraintEnd_toStartOf="@id/tv_wateringDays"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/plantName"
+                android:id="@+id/tv_plantName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginHorizontal="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@{plant.name}"
                 android:textSize="@dimen/text_large"
                 android:textStyle="bold"
-                app:layout_constraintLeft_toRightOf="@id/picture"
-                app:layout_constraintRight_toLeftOf="@id/waterIcon"
+                app:layout_constraintEnd_toStartOf="@id/iv_wateringIcon"
+                app:layout_constraintStart_toEndOf="@id/iv_picture"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="plant name" />
 
             <TextView
-                android:id="@+id/date"
+                android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textSize="@dimen/text_medium"
-                app:layout_constraintLeft_toLeftOf="@id/plantName"
-                app:layout_constraintTop_toBottomOf="@id/plantName"
+                app:layout_constraintStart_toStartOf="@id/tv_plantName"
+                app:layout_constraintTop_toBottomOf="@id/tv_plantName"
                 app:localDate="@{plant.createdDate}"
                 tools:text="2022.02.22" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>

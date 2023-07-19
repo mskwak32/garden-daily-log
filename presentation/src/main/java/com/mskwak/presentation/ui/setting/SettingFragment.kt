@@ -23,12 +23,12 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
         viewModel.loadUpdateContent(requireContext())
 
         viewModel.hasAppUpdate.observe(viewLifecycleOwner) {
-            binding.updateButton.visibility = if (it) View.VISIBLE else View.GONE
+            binding.btnUpdate.visibility = if (it) View.VISIBLE else View.GONE
         }
     }
 
     private fun initVersion() {
-        binding.version.text = viewModel.getAppVersionName(requireContext())
+        binding.tvVersion.text = viewModel.getAppVersionName(requireContext())
     }
 
     fun onUpdateContentClick() {

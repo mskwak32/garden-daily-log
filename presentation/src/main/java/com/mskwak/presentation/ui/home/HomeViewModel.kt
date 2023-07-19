@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
+import com.mskwak.domain.model.WateringDays
 import com.mskwak.domain.type.PlantListSortOrder
 import com.mskwak.domain.usecase.PlantUseCase
+import com.mskwak.domain.usecase.WateringUseCase
 import com.mskwak.presentation.model.PlantUiData
 import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val useCase: PlantUseCase
+    private val plantUseCase: PlantUseCase,
+    private val wateringUseCase: WateringUseCase
 ) : ViewModel() {
 
     private val _isEmptyList = MutableLiveData(false)
@@ -29,7 +32,7 @@ class HomeViewModel @Inject constructor(
     val onWateringEvent: LiveData<Unit> = _onWateringEvent
 
     var plants: LiveData<List<PlantUiData>> = _sortOrder.switchMap { sortOrder ->
-        useCase.getPlantsWithSortOrder(sortOrder).map {
+        plantUseCase.getPlantsWithSortOrder(sortOrder).map {
             _isEmptyList.value = it.isEmpty()
             it.map { plant -> PlantUiData(plant) }
         }.asLiveData()
@@ -43,14 +46,11 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             _onWateringEvent.call()
             delay(250)
-            useCase.wateringNow(plant)
+            wateringUseCase.wateringNow(plant)
         }
     }
 
-    /**
-     * return Pair(d-day, isDateOver)
-     */
-    fun getDdays(plant: PlantUiData): Pair<String, Boolean> {
-        return useCase.getDdayText(plant)
+    fun getWateringDays(plant: PlantUiData): WateringDays {
+        return wateringUseCase.getWateringDays(plant)
     }
 }

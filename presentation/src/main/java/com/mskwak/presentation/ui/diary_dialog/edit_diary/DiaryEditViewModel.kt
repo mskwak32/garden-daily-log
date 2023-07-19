@@ -9,6 +9,7 @@ import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.mskwak.domain.AppConstValue
 import com.mskwak.domain.usecase.DiaryUseCase
+import com.mskwak.domain.usecase.PictureUseCase
 import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.presentation.R
 import com.mskwak.presentation.model.DiaryUiData
@@ -22,6 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DiaryEditViewModel @Inject constructor(
     private val plantUseCase: PlantUseCase,
+    private val pictureUseCase: PictureUseCase,
     private val diaryUseCase: DiaryUseCase
 ) : ViewModel() {
 
@@ -80,7 +82,7 @@ class DiaryEditViewModel @Inject constructor(
         //기존에 있던 사진 중 삭제할 사진골라 삭제
         viewModelScope.launch {
             val toDeleteList = originPictures.filter { _pictureList.value?.contains(it) == false }
-            plantUseCase.deletePicture(*toDeleteList.toTypedArray())
+            pictureUseCase.deletePicture(*toDeleteList.toTypedArray())
         }
     }
 
@@ -88,7 +90,7 @@ class DiaryEditViewModel @Inject constructor(
         //임시로 추가했던 사진 삭제
         viewModelScope.launch {
             if (newPictures.isNotEmpty()) {
-                plantUseCase.deletePicture(*newPictures.toTypedArray())
+                pictureUseCase.deletePicture(*newPictures.toTypedArray())
             }
         }
     }
@@ -105,7 +107,7 @@ class DiaryEditViewModel @Inject constructor(
     //새로 추가된 사진을 파일로 저장, 임시 리스트에도 저장
     fun saveNewPicture(bitmap: Bitmap) {
         viewModelScope.launch {
-            val uri = plantUseCase.savePicture(bitmap)
+            val uri = pictureUseCase.savePicture(bitmap)
             _pictureList.value = _pictureList.value?.apply { add(uri) } ?: mutableListOf(uri)
             newPictures.add(uri)
         }

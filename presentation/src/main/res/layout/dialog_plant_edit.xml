@@ -23,71 +23,69 @@
             android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/contentRoot"
+                android:id="@+id/layout_root"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingTop="40dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="40dp">
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="40dp">
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/picture"
+                    android:id="@+id/iv_picture"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:onClick="@{() -> dialog.onPhotoClick()}"
                     android:scaleType="centerCrop"
                     android:src="@drawable/add_photo"
                     app:imageUri="@{viewModel.pictureUri}"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:shapeAppearanceOverlay="@style/roundedCorner" />
 
                 <com.mskwak.presentation.ui.custom_component.TextViewWithIcon
-                    android:id="@+id/plantNameTitle"
+                    android:id="@+id/tv_plantNameLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     app:fieldEmpty="@{viewModel.plantNameEmpty}"
                     app:iconRes="@drawable/ic_label_black"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/picture"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_picture"
                     app:required="true"
                     app:text="@string/plant_name" />
 
                 <EditText
-                    android:id="@+id/plantNameInput"
+                    android:id="@+id/edit_plantName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:autofillHints="no"
                     android:background="@drawable/rectangle_gray_box_bg"
                     android:hint="@string/plant_name"
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:maxLines="1"
                     android:minHeight="40dp"
-                    android:paddingLeft="16dp"
+                    android:paddingHorizontal="16dp"
                     android:paddingTop="4dp"
-                    android:paddingRight="16dp"
                     android:paddingBottom="4dp"
                     android:text="@={viewModel.plantName}"
                     android:textSize="@dimen/text_medium"
-                    app:layout_constraintTop_toBottomOf="@id/plantNameTitle" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_plantNameLabel" />
 
                 <com.mskwak.presentation.ui.custom_component.TextViewWithIcon
-                    android:id="@+id/plantDateTitle"
+                    android:id="@+id/tv_plantDateLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     app:iconRes="@drawable/ic_event_black"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/plantNameInput"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/edit_plantName"
                     app:required="true"
                     app:text="@string/plant_date" />
 
                 <TextView
-                    android:id="@+id/plantDate"
+                    android:id="@+id/tv_plantDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -95,43 +93,43 @@
                     android:gravity="center_vertical"
                     android:minHeight="40dp"
                     android:onClick="@{() -> dialog.onPlantDateClick()}"
-                    android:paddingLeft="16dp"
-                    android:textSize="@dimen/text_medium"
+                    android:paddingHorizontal="16dp"
                     android:textColor="@color/dim_black_70"
-                    app:layout_constraintTop_toBottomOf="@id/plantDateTitle"
+                    android:textSize="@dimen/text_medium"
+                    app:layout_constraintTop_toBottomOf="@id/tv_plantDateLabel"
                     app:localDate="@{viewModel.plantDate}"
                     tools:text="2022. 2. 22" />
 
                 <com.mskwak.presentation.ui.custom_component.TextViewWithIcon
-                    android:id="@+id/memoTitle"
+                    android:id="@+id/tv_memoLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     app:iconRes="@drawable/ic_event_black"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/plantDate"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_plantDate"
                     app:required="false"
                     app:text="@string/memo" />
 
                 <EditText
-                    android:id="@+id/memoInput"
+                    android:id="@+id/edit_memo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:autofillHints="no"
                     android:background="@drawable/rectangle_gray_box_bg"
+                    android:inputType="textMultiLine"
                     android:minHeight="40dp"
-                    android:paddingLeft="16dp"
-                    android:paddingTop="4dp"
-                    android:paddingRight="16dp"
-                    android:paddingBottom="4dp"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="4dp"
                     android:text="@={viewModel.memo}"
                     android:textColor="@color/dim_black_70"
                     android:textSize="@dimen/text_medium"
-                    app:layout_constraintTop_toBottomOf="@id/memoTitle"
+                    app:layout_constraintTop_toBottomOf="@id/tv_memoLabel"
                     tools:text="memo memo" />
 
                 <TextView
-                    android:id="@+id/wateringTitle"
+                    android:id="@+id/tv_wateringLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="34dp"
@@ -139,22 +137,22 @@
                     android:textColor="@color/dim_black_70"
                     android:textSize="@dimen/text_large"
                     android:textStyle="bold"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/memoInput" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/edit_memo" />
 
                 <com.mskwak.presentation.ui.custom_component.TextViewWithIcon
-                    android:id="@+id/lastWateringTitle"
+                    android:id="@+id/tv_lastWateringLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     app:iconRes="@drawable/ic_event_black"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/wateringTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_wateringLabel"
                     app:required="true"
                     app:text="@string/watering_last_date" />
 
                 <TextView
-                    android:id="@+id/lastWateringDate"
+                    android:id="@+id/tv_lastWateringDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -162,25 +160,25 @@
                     android:gravity="center_vertical"
                     android:minHeight="40dp"
                     android:onClick="@{() -> dialog.onLastWateringDateClick()}"
-                    android:paddingLeft="16dp"
-                    android:textSize="@dimen/text_medium"
+                    android:paddingHorizontal="16dp"
                     android:textColor="@color/dim_black_70"
-                    app:layout_constraintTop_toBottomOf="@id/lastWateringTitle"
+                    android:textSize="@dimen/text_medium"
+                    app:layout_constraintTop_toBottomOf="@id/tv_lastWateringLabel"
                     app:localDate="@{viewModel.lastWateringDate}"
                     tools:text="2022. 2. 22" />
 
                 <com.mskwak.presentation.ui.custom_component.TextViewWithIcon
-                    android:id="@+id/wateringPeriodTitle"
+                    android:id="@+id/tv_wateringPeriodLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     app:iconRes="@drawable/ic_update_black"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/lastWateringDate"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_lastWateringDate"
                     app:text="@string/watering_period" />
 
                 <TextView
-                    android:id="@+id/wateringPeriod"
+                    android:id="@+id/tv_wateringPeriod"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -188,25 +186,25 @@
                     android:gravity="center_vertical"
                     android:minHeight="40dp"
                     android:onClick="@{() -> dialog.onWateringPeriodClick()}"
-                    android:paddingLeft="16dp"
-                    android:textSize="@dimen/text_medium"
+                    android:paddingHorizontal="16dp"
                     android:textColor="@color/dim_black_70"
-                    app:layout_constraintTop_toBottomOf="@id/wateringPeriodTitle"
+                    android:textSize="@dimen/text_medium"
+                    app:layout_constraintTop_toBottomOf="@id/tv_wateringPeriodLabel"
                     app:wateringPeriod="@{viewModel.wateringPeriod}"
                     tools:text="1일마다" />
 
                 <com.mskwak.presentation.ui.custom_component.TextViewWithIcon
-                    android:id="@+id/wateringAlarmTitle"
+                    android:id="@+id/tv_wateringAlarmLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     app:iconRes="@drawable/ic_alarm_black"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/wateringPeriod"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_wateringPeriod"
                     app:text="@string/watering_alarm" />
 
                 <TextView
-                    android:id="@+id/wateringAlarm"
+                    android:id="@+id/tv_wateringAlarm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -215,38 +213,40 @@
                     android:gravity="center_vertical"
                     android:minHeight="45dp"
                     android:onClick="@{() -> dialog.onWateringAlarmClick()}"
-                    android:paddingLeft="16dp"
-                    android:textSize="@dimen/text_medium"
+                    android:paddingHorizontal="16dp"
                     android:textColor="@color/dim_black_70"
+                    android:textSize="@dimen/text_medium"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/wateringAlarmTitle"
+                    app:layout_constraintTop_toBottomOf="@id/tv_wateringAlarmLabel"
                     app:localTime="@{viewModel.wateringAlarmTime}"
                     tools:text="오전 9:00" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/wateringAlarmSwitch"
+                    android:id="@+id/switch_wateringAlarm"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:onClick="@{() -> viewModel.onWateringAlarmOnOffClick()}"
-                    app:layout_constraintBottom_toBottomOf="@id/wateringAlarmTitle"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/wateringAlarmTitle" />
+                    app:layout_constraintBottom_toBottomOf="@id/tv_wateringAlarmLabel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_wateringAlarmLabel" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
-        <ImageButton
+        <ImageView
+            android:id="@+id/iv_close"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginTop="13dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/ic_close_black"
+            android:contentDescription="@null"
             android:onClick="@{() -> dialog.onCloseClick()}"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/saveButton"
+            android:id="@+id/btn_save"
             style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -257,7 +257,7 @@
             android:textStyle="bold"
             app:backgroundTint="@color/green_400"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

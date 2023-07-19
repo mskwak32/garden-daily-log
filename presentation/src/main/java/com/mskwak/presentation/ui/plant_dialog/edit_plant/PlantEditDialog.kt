@@ -33,7 +33,7 @@ class PlantEditDialog : BaseFullScreenDialog<DialogPlantEditBinding>() {
             viewModel.loadPlant(it)
         }
         viewModel.wateringAlarmOnOff.observe(viewLifecycleOwner) {
-            binding.wateringAlarmSwitch.isChecked = it
+            binding.switchWateringAlarm.isChecked = it
         }
         viewModel.onSavedEvent.observe(viewLifecycleOwner) {
             dismiss()
@@ -41,7 +41,7 @@ class PlantEditDialog : BaseFullScreenDialog<DialogPlantEditBinding>() {
         view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarMessage, Snackbar.LENGTH_SHORT)
 
         //빈공간 터치시 키보드 내리기
-        binding.contentRoot.setOnTouchListener { _, _ ->
+        binding.layoutRoot.setOnTouchListener { _, _ ->
             hideSoftKeyboard()
             return@setOnTouchListener false
         }
@@ -50,7 +50,7 @@ class PlantEditDialog : BaseFullScreenDialog<DialogPlantEditBinding>() {
     fun onPhotoClick() {
         SelectPhotoDialog().apply {
             imageBitmapListener = { bitmap ->
-                binding.picture.setImageBitmap(bitmap)
+                binding.ivPicture.setImageBitmap(bitmap)
                 viewModel.setNewPicture(bitmap)
             }
         }.show(childFragmentManager, null)
@@ -88,13 +88,13 @@ class PlantEditDialog : BaseFullScreenDialog<DialogPlantEditBinding>() {
     }
 
     private fun wateringAlarmEnable(enable: Boolean) {
-        binding.wateringAlarmSwitch.visibility = if (enable) View.VISIBLE else View.INVISIBLE
-        binding.wateringAlarm.isClickable = enable
+        binding.switchWateringAlarm.visibility = if (enable) View.VISIBLE else View.INVISIBLE
+        binding.tvWateringAlarm.isClickable = enable
 
         if (enable) {
-            binding.wateringAlarm.localTimeToText(viewModel.wateringAlarmTime.value)
+            binding.tvWateringAlarm.localTimeToText(viewModel.wateringAlarmTime.value)
         } else {
-            binding.wateringAlarm.text = getString(R.string.none)
+            binding.tvWateringAlarm.text = getString(R.string.none)
         }
     }
 

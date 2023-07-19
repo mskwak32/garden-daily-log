@@ -56,7 +56,7 @@ class DiaryEditDialog : BaseFullScreenDialog<DialogDiaryEditBinding>() {
         val dividerWidth =
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, resources.displayMetrics)
                 .toInt()
-        binding.pictureListView.apply {
+        binding.rvPicture.apply {
             adapter = pictureAdapter
             addItemDecoration(ListItemDecoHorizontal(dividerWidth))
         }

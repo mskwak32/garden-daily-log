@@ -5,15 +5,15 @@
         <shape android:shape="oval">
             <solid android:color="@color/white" />
             <stroke
-                android:color="@color/bgray_200"
-                android:width="1dp" />
+                android:width="1dp"
+                android:color="@color/gray_200" />
         </shape>
     </item>
     <item
-        android:drawable="@drawable/ic_close_black"
-        android:top="3dp"
         android:bottom="3dp"
+        android:drawable="@drawable/ic_close_black"
         android:left="3dp"
-        android:right="3dp" />
+        android:right="3dp"
+        android:top="3dp" />
 
 </layer-list>

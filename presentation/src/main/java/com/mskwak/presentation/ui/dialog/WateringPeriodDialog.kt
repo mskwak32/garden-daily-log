@@ -8,7 +8,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mskwak.presentation.R
 import com.mskwak.presentation.databinding.DialogWateringPeriodBinding
 
-class WateringPeriodDialog private constructor() : DialogFragment() {
+class WateringPeriodDialog : DialogFragment() {
     private lateinit var binding: DialogWateringPeriodBinding
     private var completeListener: ((days: Int) -> Unit)? = null
     private var days: Int = 1

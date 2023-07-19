@@ -25,8 +25,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 viewModel.onWateringClick(it)
             }, onItemClick = {
                 openPlantDetail(it.id)
-            }, getDdays = {
-                viewModel.getDdays(it)
+            }, getWateringDays = {
+                viewModel.getWateringDays(it)
             }
         )
     }
@@ -43,20 +43,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             adapter.submitList(plants)
         }
         viewModel.onWateringEvent.observe(viewLifecycleOwner) {
-            swipeHelperCallback.removeCurrentClamp(binding.plantListView)
+            swipeHelperCallback.removeCurrentClamp(binding.rvPlantList)
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initRecyclerView() {
-        binding.plantListView.adapter = adapter
+        binding.rvPlantList.adapter = adapter
         val dividerHeight =
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics)
                 .toInt()
 
         val itemTouchHelper = ItemTouchHelper(swipeHelperCallback)
-        itemTouchHelper.attachToRecyclerView(binding.plantListView)
-        binding.plantListView.apply {
+        itemTouchHelper.attachToRecyclerView(binding.rvPlantList)
+        binding.rvPlantList.apply {
             addItemDecoration(ListItemDecoVertical(dividerHeight))
             setOnTouchListener { _, _ ->
                 swipeHelperCallback.removePreviousClamp(this)
@@ -71,7 +71,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             R.layout.layout_spinner_item,
             resources.getStringArray(R.array.home_sort_array)
         )
-        binding.sortSpinner.apply {
+        binding.spinnerSort.apply {
             adapter = spinnerAdapter
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {

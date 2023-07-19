@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mskwak.domain.usecase.PictureUseCase
 import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.presentation.R
 import com.mskwak.presentation.model.AlarmUiData
@@ -19,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PlantEditViewModel @Inject constructor(
-    private val useCase: PlantUseCase
+    private val plantUseCase: PlantUseCase,
+    private val pictureUseCase: PictureUseCase
 ) : ViewModel() {
 
     val plantName = MutableLiveData<String>()
@@ -64,7 +66,7 @@ class PlantEditViewModel @Inject constructor(
         viewModelScope.launch {
             //사진 저장 후 uri받아오기
             val pictureUri = newPictureBitmap?.let {
-                useCase.savePicture(it)
+                pictureUseCase.savePicture(it)
             } ?: _pictureUri.value
 
             //물주기 기간이 없음일경우 alarm onOff = false
@@ -86,11 +88,11 @@ class PlantEditViewModel @Inject constructor(
             if (isUpdatePlant) {
                 //delete old picture
                 if (newPictureBitmap != null) {
-                    this@PlantEditViewModel.pictureUri.value?.let { useCase.deletePicture(it) }
+                    this@PlantEditViewModel.pictureUri.value?.let { pictureUseCase.deletePicture(it) }
                 }
-                useCase.updatePlant(plant)
+                plantUseCase.updatePlant(plant)
             } else {
-                useCase.addPlant(plant)
+                plantUseCase.addPlant(plant)
             }
             _onSavedEvent.call()
         }
@@ -98,7 +100,7 @@ class PlantEditViewModel @Inject constructor(
 
     fun loadPlant(plantId: Int) {
         viewModelScope.launch {
-            useCase.getPlant(plantId).let { plant ->
+            plantUseCase.getPlant(plantId).let { plant ->
                 this@PlantEditViewModel.plantId = plant.id
                 _pictureUri.value = plant.pictureUri
                 plantName.value = plant.name

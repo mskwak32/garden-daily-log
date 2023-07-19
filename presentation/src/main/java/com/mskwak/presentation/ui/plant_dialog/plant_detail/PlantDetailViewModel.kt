@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.mskwak.domain.model.Plant
+import com.mskwak.domain.model.WateringDays
 import com.mskwak.domain.usecase.DiaryUseCase
 import com.mskwak.domain.usecase.PlantUseCase
+import com.mskwak.domain.usecase.WateringUseCase
 import com.mskwak.presentation.model.DiaryUiData
 import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class PlantDetailViewModel @Inject constructor(
     private val plantUseCase: PlantUseCase,
-    private val diaryUseCase: DiaryUseCase
+    private val diaryUseCase: DiaryUseCase,
+    private val wateringUseCase: WateringUseCase
 ) : ViewModel() {
 
     private val _plant = MutableLiveData<Plant>()
@@ -58,7 +61,7 @@ class PlantDetailViewModel @Inject constructor(
         plant.value?.wateringAlarm?.let { alarm ->
             viewModelScope.launch {
                 val isActive = !alarm.onOff
-                plantUseCase.updateWateringAlarmOnOff(plant.value!!.id, isActive)
+                wateringUseCase.updateWateringAlarmOnOff(plant.value!!.id, isActive)
             }
         }
     }
@@ -66,7 +69,7 @@ class PlantDetailViewModel @Inject constructor(
     fun watering() {
         plant.value?.let {
             viewModelScope.launch {
-                plantUseCase.wateringNow(it)
+                wateringUseCase.wateringNow(it)
                 delay(200)
                 _wateringCompleted.call()
             }
@@ -76,8 +79,8 @@ class PlantDetailViewModel @Inject constructor(
     /**
      * return Pair(d-day, isDateOver)
      */
-    fun getDdays(): Pair<String, Boolean> {
-        return plant.value?.let { plantUseCase.getDdayText(it) } ?: Pair("", false)
+    fun getWateringDays(): WateringDays? {
+        return plant.value?.let { wateringUseCase.getWateringDays(it) }
     }
 
     fun deletePlant() {

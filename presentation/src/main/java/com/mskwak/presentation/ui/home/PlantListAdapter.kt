@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.mskwak.domain.model.WateringDays
 import com.mskwak.presentation.R
 import com.mskwak.presentation.databinding.LayoutItemPlantBinding
 import com.mskwak.presentation.model.PlantUiData
@@ -13,7 +14,7 @@ import java.time.LocalDate
 class PlantListAdapter(
     private val onWateringClick: (plant: PlantUiData) -> Unit,
     private val onItemClick: (plant: PlantUiData) -> Unit,
-    private val getDdays: (plant: PlantUiData) -> Pair<String, Boolean>
+    private val getWateringDays: (plant: PlantUiData) -> WateringDays
 ) :
     ListAdapter<PlantUiData, PlantListAdapter.ItemViewHolder>(ItemDiffCallback()) {
 
@@ -34,25 +35,30 @@ class PlantListAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.wateringButton.setOnClickListener {
+            binding.tvWatering.setOnClickListener {
                 onWateringClick.invoke(getItem(adapterPosition))
             }
-            binding.container.setOnClickListener {
+            binding.layoutContainer.setOnClickListener {
                 onItemClick.invoke(getItem(adapterPosition))
             }
         }
 
         fun bind(plant: PlantUiData) {
             binding.plant = plant
-            setDday(plant)
+            setWateringDays(plant)
         }
 
-        private fun setDday(plant: PlantUiData) {
-            val pair = getDdays(plant)
-            val dateText = pair.first
-            val isDateOver = pair.second
+        private fun setWateringDays(plant: PlantUiData) {
+            val wateringDays = getWateringDays(plant)
+            val days = wateringDays.days
+            val isDateOver = wateringDays.isDateOver
+            val textFormatResId = if (isDateOver) {
+                R.string.watering_d_day_plus_format
+            } else {
+                R.string.watering_d_day_minus_format
+            }
 
-            binding.dDayCount.text = dateText
+            binding.tvWateringDays.text = itemView.context.getString(textFormatResId, days)
 
             val waterIconRes = when {
                 isDateOver -> {
@@ -66,7 +72,7 @@ class PlantListAdapter(
                 }
             }
 
-            binding.waterIcon.setImageResource(waterIconRes)
+            binding.ivWateringIcon.setImageResource(waterIconRes)
         }
     }
 

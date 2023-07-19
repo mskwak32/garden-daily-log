@@ -52,7 +52,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>() {
             R.layout.layout_spinner_item,
             resources.getStringArray(R.array.diary_sort_array)
         )
-        binding.sortSpinner.apply {
+        binding.spinnerSort.apply {
             adapter = spinnerAdapter
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -72,7 +72,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>() {
         val dividerWidth =
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, resources.displayMetrics)
                 .toInt()
-        binding.plantFilter.apply {
+        binding.rvPlantFilter.apply {
             adapter = filterAdapter
             addItemDecoration(ListItemDecoHorizontal(dividerWidth))
         }
@@ -92,7 +92,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>() {
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, resources.displayMetrics)
                 .toInt()
 
-        binding.diaryList.apply {
+        binding.rvDiaryList.apply {
             adapter = diaryListAdapter
             addItemDecoration(ListItemDecoVertical(dividerHeight))
         }

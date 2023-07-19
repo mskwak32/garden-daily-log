@@ -56,8 +56,8 @@ class DiaryDetailDialog : BottomSheetDialogFragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun initObserver() {
         viewModel.diary.observe(viewLifecycleOwner) { diary ->
-            binding.date.localDateToText(diary.createdDate)
-            binding.memoText.text = diary.memo.ifBlank { getString(R.string.diary_content_empty) }
+            binding.tvDate.localDateToText(diary.createdDate)
+            binding.tvMemo.text = diary.memo.ifBlank { getString(R.string.diary_content_empty) }
             pictureAdapter.itemList = diary.pictureList
             pictureAdapter.notifyDataSetChanged()
         }
@@ -70,14 +70,14 @@ class DiaryDetailDialog : BottomSheetDialogFragment() {
     fun onMenuClick() {
         PopupMenu(
             requireContext(),
-            binding.menuButton,
+            binding.ivMenu,
             Gravity.START,
             0,
             R.style.popupMenuStyle
         ).run {
             menuInflater.inflate(R.menu.modify_menu, menu)
             setOnMenuItemClickListener {
-                when (it.itemId) {
+                when(it.itemId) {
                     R.id.menu_edit -> {
                         showEditDiary()
                     }

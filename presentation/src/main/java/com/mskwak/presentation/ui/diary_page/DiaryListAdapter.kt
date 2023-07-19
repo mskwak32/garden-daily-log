@@ -10,7 +10,7 @@ import com.mskwak.presentation.model.DiaryUiData
 import com.mskwak.presentation.ui.binding.setThumbnail
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.*
+import java.util.Locale
 
 class DiaryListAdapter(
     private val onItemClick: (diary: DiaryUiData) -> Unit,
@@ -37,12 +37,12 @@ class DiaryListAdapter(
         }
 
         fun bind(diary: DiaryUiData) {
-            binding.memoText.text = diary.memo
+            binding.tvMemo.text = diary.memo
             val pictureUri =
                 if (diary.pictureList?.isNotEmpty() == true) diary.pictureList.first() else null
-            binding.picture.setThumbnail(pictureUri)
-            binding.plantName.text = getPlantName(diary.plantId) ?: ""
-            binding.dateText.text = getDateText(diary.createdDate)
+            binding.ivPicture.setThumbnail(pictureUri)
+            binding.tvPlantName.text = getPlantName(diary.plantId) ?: ""
+            binding.tvDate.text = getDateText(diary.createdDate)
         }
 
         private fun getDateText(date: LocalDate): String {

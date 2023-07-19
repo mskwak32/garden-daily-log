@@ -9,6 +9,7 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.mskwak.domain.usecase.PlantUseCase
+import com.mskwak.domain.usecase.WateringUseCase
 import com.mskwak.presentation.MainActivity
 import com.mskwak.presentation.R
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +23,10 @@ import javax.inject.Inject
 class WateringAlarmReceiver : BroadcastReceiver() {
 
     @Inject
-    lateinit var useCase: PlantUseCase
+    lateinit var plantUseCase: PlantUseCase
+
+    @Inject
+    lateinit var wateringUseCase: WateringUseCase
 
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 
@@ -32,12 +36,12 @@ class WateringAlarmReceiver : BroadcastReceiver() {
         val plantId = intent.getIntExtra(PLANT_ID_KEY, DEFAULT_PLANT_ID)
 
         CoroutineScope(dispatcher).launch {
-            val plant = useCase.takeIf { plantId != DEFAULT_PLANT_ID }?.getPlant(plantId)
+            val plant = plantUseCase.takeIf { plantId != DEFAULT_PLANT_ID }?.getPlant(plantId)
             deliverNotification(context, plant?.name, plantId)
 
             //다음번 알람 등록
             if (plant != null) {
-                useCase.setWateringAlarm(plant.id, true)
+                wateringUseCase.setWateringAlarm(plant.id, true)
             }
         }
     }

@@ -41,7 +41,7 @@ class DiarySummaryAdapter(private val onItemClick: (diary: DiaryUiData) -> Unit)
         private fun setPicture(diary: DiaryUiData) {
             val pictureUri =
                 if (diary.pictureList?.isNotEmpty() == true) diary.pictureList.first() else null
-            binding.picture.setThumbnail(pictureUri)
+            binding.ivPicture.setThumbnail(pictureUri)
         }
     }
 

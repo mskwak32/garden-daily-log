@@ -16,60 +16,62 @@
         android:padding="40dp">
 
         <LinearLayout
-            android:id="@+id/imageSelect"
+            android:id="@+id/layout_imageSelect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/rectangle_stroke_box_bg"
             android:gravity="center"
             android:onClick="@{() -> dialog.onImageClick()}"
             android:orientation="vertical"
             android:padding="16dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/cameraSelect"
+            app:layout_constraintEnd_toStartOf="@id/layout_cameraSelect"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:contentDescription="@null"
                 android:src="@drawable/ic_image_black" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:textSize="@dimen/text_medium"
                 android:text="@string/photo_image"
-                android:textColor="@color/bgray_600" />
+                android:textColor="@color/gray_600"
+                android:textSize="@dimen/text_medium" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/cameraSelect"
+            android:id="@+id/layout_cameraSelect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:background="@drawable/rectangle_stroke_box_bg"
             android:gravity="center"
             android:onClick="@{() -> dialog.onCameraClick()}"
             android:orientation="vertical"
             android:padding="16dp"
-            app:layout_constraintLeft_toRightOf="@id/imageSelect"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/layout_imageSelect"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:contentDescription="@null"
                 android:src="@drawable/ic_photo_camera_black" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:textSize="@dimen/text_medium"
                 android:text="@string/photo_camera"
-                android:textColor="@color/bgray_600" />
+                android:textColor="@color/gray_600"
+                android:textSize="@dimen/text_medium" />
 
         </LinearLayout>
 

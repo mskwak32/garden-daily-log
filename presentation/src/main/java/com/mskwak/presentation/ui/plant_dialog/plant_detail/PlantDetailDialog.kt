@@ -49,18 +49,18 @@ class PlantDetailDialog : BaseFullScreenDialog<DialogPlantDetailBinding>() {
     }
 
     private fun initToolbar() {
-        binding.appbarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+        binding.layoutAppbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
 
             if (abs(verticalOffset) >= appBarLayout.totalScrollRange) {       //collapsed
                 binding.collapsingToolbar.isTitleEnabled = true
                 binding.toolbar.setBackgroundResource(R.color.white)
-                binding.backButton.setBackgroundResource(R.drawable.ic_arrow_back_black)
-                binding.menuButton.setBackgroundResource(R.drawable.ic_more_horiz_black)
+                binding.ivBack.setBackgroundResource(R.drawable.ic_arrow_back_black)
+                binding.ivMenu.setBackgroundResource(R.drawable.ic_more_horiz_black)
             } else {
                 binding.collapsingToolbar.isTitleEnabled = false
                 binding.toolbar.setBackgroundResource(R.color.transparent)
-                binding.backButton.setBackgroundResource(R.drawable.ic_arrow_back_white)
-                binding.menuButton.setBackgroundResource(R.drawable.ic_more_horiz_white)
+                binding.ivBack.setBackgroundResource(R.drawable.ic_arrow_back_white)
+                binding.ivMenu.setBackgroundResource(R.drawable.ic_more_horiz_white)
             }
         })
     }
@@ -73,9 +73,9 @@ class PlantDetailDialog : BaseFullScreenDialog<DialogPlantDetailBinding>() {
             diaryAdapter.submitList(diaries)
         }
         viewModel.wateringCompleted.observe(viewLifecycleOwner) {
-            binding.waterIcon.setBackgroundResource(R.drawable.ic_water_drop_white)
-            binding.waterAnimation.visibility = View.VISIBLE
-            binding.waterAnimation.playAnimation()
+            binding.ivWaterIcon.setBackgroundResource(R.drawable.ic_water_drop_white)
+            binding.animWater.visibility = View.VISIBLE
+            binding.animWater.playAnimation()
             isWateringFlag = false
         }
     }
@@ -84,7 +84,7 @@ class PlantDetailDialog : BaseFullScreenDialog<DialogPlantDetailBinding>() {
         val dividerHeight =
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4f, resources.displayMetrics)
                 .toInt()
-        binding.diaryList.apply {
+        binding.rvDiaryList.apply {
             adapter = diaryAdapter
             addItemDecoration(ListItemDecoVertical(dividerHeight))
         }
@@ -93,68 +93,75 @@ class PlantDetailDialog : BaseFullScreenDialog<DialogPlantDetailBinding>() {
     @SuppressLint("SetTextI18n")
     private fun setupPlant(plant: Plant) {
         binding.apply {
-            picture.setImageUri(plant.pictureUri)
-            plantName.text = plant.name
+            ivPicture.setImageUri(plant.pictureUri)
+            tvPlantName.text = plant.name
             collapsingToolbar.title = plant.name
 
             val plantDateString =
                 plant.createdDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
-            plantDate.text = "${getString(R.string.plant_date)}: $plantDateString"
+            tvPlantDate.text = "${getString(R.string.plant_date)}: $plantDateString"
 
-            val pair = this@PlantDetailDialog.viewModel.getDdays()
-            val dateText = pair.first
-            val isDateOver = pair.second
+            val wateringDays = this@PlantDetailDialog.viewModel.getWateringDays()
+            val days = wateringDays?.days
+            val isDateOver = wateringDays?.isDateOver ?: false
             val today = LocalDate.now()
 
-            binding.wateringDdays.text = dateText
+            binding.tvWateringDays.text = days?.let {
+                if (isDateOver) {
+                    getString(R.string.watering_d_day_plus_format, days)
+                } else {
+                    getString(R.string.watering_d_day_minus_format, days)
+                }
+            } ?: ""
+
 
             //물주기 버튼으로 인한 갱신시에는 동작하지 않도록함
             if (!isWateringFlag) {
                 when {
                     isDateOver -> {
-                        binding.waterIcon.setBackgroundResource(R.drawable.ic_water_drop_red)
-                        binding.waterAnimation.visibility = View.INVISIBLE
+                        binding.ivWaterIcon.setBackgroundResource(R.drawable.ic_water_drop_red)
+                        binding.animWater.visibility = View.INVISIBLE
                     }
 
                     plant.lastWateringDate == today -> {
-                        binding.waterIcon.setBackgroundResource(R.drawable.ic_water_drop_white)
-                        binding.waterAnimation.progress = 1f
-                        binding.waterAnimation.visibility = View.VISIBLE
+                        binding.ivWaterIcon.setBackgroundResource(R.drawable.ic_water_drop_white)
+                        binding.animWater.progress = 1f
+                        binding.animWater.visibility = View.VISIBLE
                     }
 
                     else -> {
-                        binding.waterIcon.setBackgroundResource(R.drawable.ic_water_drop_blue)
-                        binding.waterAnimation.visibility = View.INVISIBLE
+                        binding.ivWaterIcon.setBackgroundResource(R.drawable.ic_water_drop_blue)
+                        binding.animWater.visibility = View.INVISIBLE
                     }
                 }
             }
 
             //마지막 물준 날짜 세팅
-            when (plant.lastWateringDate) {
+            when(plant.lastWateringDate) {
                 today -> {
-                    lastWateringDate.text = getText(R.string.today)
+                    tvLastWateringDate.text = getText(R.string.today)
                 }
 
                 today.minusDays(1) -> {
-                    lastWateringDate.text = getText(R.string.yesterday)
+                    tvLastWateringDate.text = getText(R.string.yesterday)
                 }
 
                 else -> {
-                    lastWateringDate.localDateToText(plant.lastWateringDate)
+                    tvLastWateringDate.localDateToText(plant.lastWateringDate)
                 }
             }
 
             if (plant.waterPeriod == 0) {        //물주기 간격 설정 없음
-                wateringAlarm.text = getText(R.string.none)
-                wateringAlarmSwitch.visibility = View.GONE
+                tvWateringAlarm.text = getText(R.string.none)
+                switchWateringAlarm.visibility = View.GONE
             } else {
-                wateringAlarm.localTimeToText(plant.wateringAlarm.time)
-                wateringAlarmSwitch.visibility = View.VISIBLE
+                tvWateringAlarm.localTimeToText(plant.wateringAlarm.time)
+                switchWateringAlarm.visibility = View.VISIBLE
             }
 
-            binding.wateringAlarmSwitch.isChecked = plant.wateringAlarm.onOff
-            memo.text = plant.memo
-            binding.emptyDiaryText.text =
+            binding.switchWateringAlarm.isChecked = plant.wateringAlarm.onOff
+            tvMemo.text = plant.memo
+            binding.tvEmptyDiary.text =
                 getString(R.string.diary_list_empty_with_plantName, plant.name)
         }
     }
@@ -176,14 +183,14 @@ class PlantDetailDialog : BaseFullScreenDialog<DialogPlantDetailBinding>() {
     fun onMenuClick() {
         PopupMenu(
             requireContext(),
-            binding.menuButton,
+            binding.ivMenu,
             Gravity.END,
             0,
             R.style.popupMenuStyle
         ).run {
             menuInflater.inflate(R.menu.modify_menu, menu)
             setOnMenuItemClickListener {
-                when (it.itemId) {
+                when(it.itemId) {
                     R.id.menu_edit -> {
                         openEditPlant()
                     }

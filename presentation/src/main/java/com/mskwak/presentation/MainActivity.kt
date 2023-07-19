@@ -24,11 +24,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun initNavigation() {
         val navHost =
-            supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
+            supportFragmentManager.findFragmentById(binding.layoutFragmentContainer.id) as NavHostFragment
         val navController = navHost.navController
         binding.bottomNav.setupWithNavController(navController)
         binding.bottomNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
+            when(item.itemId) {
                 R.id.homeFragment -> {
                     navController.navigate(R.id.actionGlobalHomeFragment)
                     true
