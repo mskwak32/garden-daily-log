@@ -19,6 +19,8 @@ dependencies {
     implementation(Libraries.APP_COMPAT)
     implementation(Ui.MATERIAL)
     implementation(Ui.CONSTRAINT_LAYOUT)
+    implementation(Ui.ACTIVITY)
+    implementation(Ui.FRAGMENT)
 
     implementation(Libraries.LIFECYCLE_VIEWMODEL)
     implementation(Libraries.LIFECYCLE_LIVEDATA)

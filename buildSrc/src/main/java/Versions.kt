@@ -6,6 +6,8 @@ object Versions {
     const val MATERIAL = "1.8.0"
     const val CONSTRAINT_LAYOUT = "2.1.4"
     const val COROUTINES = "1.6.4"
+    const val ACTIVITY_KTX = "1.7.2"
+    const val FRAGMENT_KTX = "1.6.0"
 
     const val JUNIT = "4.13.2"
     const val ANDROIDX_TEST = "1.5.0"
@@ -26,8 +28,5 @@ object Versions {
     const val OKHTTP = "4.11.0"
     const val TIMBER = "5.0.1"
 
-    const val GOOGLE_SERVICE = "4.3.15"
-    const val FIREBASE_BOM = "31.5.0"
-    const val FIREBASE_CRASHLYTICS_PLUGIN = "2.8.1"
-    const val KOTLIN = "1.8.0"
+    const val FIREBASE_BOM = "32.2.0"
 }
