@@ -9,11 +9,11 @@
 
         <variable
             name="fragment"
-            type="com.mskwak.presentation.ui.fragment_plant.HomeFragment" />
+            type="com.mskwak.presentation.ui.fragment_plant.PlantFragment" />
 
         <variable
             name="viewModel"
-            type="com.mskwak.presentation.ui.fragment_plant.HomeViewModel" />
+            type="com.mskwak.presentation.ui.fragment_plant.PlantViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

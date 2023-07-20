@@ -14,11 +14,12 @@ import com.mskwak.domain.usecase.WateringUseCase
 import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class PlantViewModel @Inject constructor(
     private val plantUseCase: PlantUseCase,
     private val wateringUseCase: WateringUseCase
 ) : ViewModel() {
@@ -31,9 +32,10 @@ class HomeViewModel @Inject constructor(
     val onWateringEvent: LiveData<Unit> = _onWateringEvent
 
     var plants: LiveData<List<Plant>> = _sortOrder.switchMap { sortOrder ->
-        plantUseCase.getPlantsWithSortOrder(sortOrder).asLiveData().also {
-            _isEmptyList.value = it.value?.isEmpty() ?: true
-        }
+        plantUseCase.getPlantsWithSortOrder(sortOrder).map {
+            _isEmptyList.value = it.isEmpty()
+            it
+        }.asLiveData()
     }
 
     fun setSortOrder(sortOrder: PlantListSortOrder) {

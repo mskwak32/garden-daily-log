@@ -18,6 +18,7 @@ import com.mskwak.presentation.ui.custom_component.ListItemDecoVertical
 import com.mskwak.presentation.ui.custom_component.SortAdapter
 import com.mskwak.presentation.ui.dialog.SelectMonthDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 @AndroidEntryPoint
@@ -98,7 +99,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>() {
         }
 
         viewModel.diaries.observe(viewLifecycleOwner) {
-            lifecycle.coroutineScope.launchWhenStarted {
+            lifecycle.coroutineScope.launch {
                 diaryListAdapter.submitList(it)
             }
         }
@@ -121,7 +122,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>() {
     }
 
     private fun openDiaryDetail(diary: Diary) {
-        val action = DiaryFragmentDirections.diaryFragmentToDiaryDetail(diary.id)
+        val action = DiaryFragmentDirections.toDiaryDetail(diary.id)
         findNavController().navigate(action)
     }
 }

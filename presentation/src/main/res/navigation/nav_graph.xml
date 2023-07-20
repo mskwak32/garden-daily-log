@@ -3,19 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/plantFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.mskwak.presentation.ui.fragment_plant.HomeFragment"
-        tools:layout="@layout/fragment_home">
+        android:id="@+id/plantFragment"
+        android:name="com.mskwak.presentation.ui.fragment_plant.PlantFragment"
+        tools:layout="@layout/fragment_plant">
 
         <action
-            android:id="@+id/home_to_plant_detail"
+            android:id="@+id/to_plant_detail"
             app:destination="@id/plantDetailDialog" />
 
         <action
-            android:id="@+id/home_to_plant_edit"
+            android:id="@+id/to_plant_edit"
             app:destination="@id/plantEditDialog" />
 
     </fragment>
@@ -32,7 +32,7 @@
             app:nullable="true" />
 
         <action
-            android:id="@+id/diary_fragment_to_diary_detail"
+            android:id="@+id/to_diary_detail"
             app:destination="@id/diaryDetailDialog" />
 
     </fragment>
@@ -52,19 +52,19 @@
             app:argType="integer" />
 
         <action
-            android:id="@+id/plant_detail_to_diary_fragment"
+            android:id="@+id/to_diary_fragment"
             app:destination="@id/diaryFragment" />
 
         <action
-            android:id="@+id/plant_detail_to_plant_edit"
+            android:id="@+id/to_plant_edit"
             app:destination="@id/plantEditDialog" />
 
         <action
-            android:id="@+id/plant_detail_to_diary_edit"
+            android:id="@+id/to_diary_edit"
             app:destination="@id/diaryEditDialog" />
 
         <action
-            android:id="@+id/plant_detail_to_diary_detail"
+            android:id="@+id/to_diary_detail"
             app:destination="@id/diaryDetailDialog" />
 
     </dialog>
@@ -92,7 +92,7 @@
             app:argType="integer" />
 
         <action
-            android:id="@+id/diary_detail_to_diary_edit"
+            android:id="@+id/to_diary_edit"
             app:destination="@id/diaryEditDialog" />
 
     </dialog>
@@ -121,7 +121,7 @@
 
     <action
         android:id="@+id/actionGlobalHomeFragment"
-        app:destination="@id/homeFragment"
+        app:destination="@id/plantFragment"
         app:popUpTo="@id/nav_graph" />
 
     <action

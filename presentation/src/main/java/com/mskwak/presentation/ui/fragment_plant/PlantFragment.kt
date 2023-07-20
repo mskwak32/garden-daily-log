@@ -9,16 +9,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.mskwak.domain.type.PlantListSortOrder
 import com.mskwak.presentation.R
-import com.mskwak.presentation.databinding.FragmentHomeBinding
+import com.mskwak.presentation.databinding.FragmentPlantBinding
 import com.mskwak.presentation.ui.base.BaseFragment
 import com.mskwak.presentation.ui.custom_component.ListItemDecoVertical
 import com.mskwak.presentation.ui.custom_component.SortAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding>() {
-    override val layoutRes: Int = R.layout.fragment_home
-    private val viewModel by viewModels<HomeViewModel>()
+class PlantFragment : BaseFragment<FragmentPlantBinding>() {
+    override val layoutRes: Int = R.layout.fragment_plant
+    private val viewModel by viewModels<PlantViewModel>()
     private val adapter: PlantListAdapter by lazy {
         PlantListAdapter(
             onWateringClick = {
@@ -87,12 +87,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun openPlantDetail(plantId: Int) {
-        val action = HomeFragmentDirections.homeToPlantDetail(plantId)
+        val action = PlantFragmentDirections.toPlantDetail(plantId)
         findNavController().navigate(action)
     }
 
     fun onAddPlantClick() {
-        val action = HomeFragmentDirections.homeToPlantEdit(null)
+        val action = PlantFragmentDirections.toPlantEdit(null)
         findNavController().navigate(action)
     }
 }

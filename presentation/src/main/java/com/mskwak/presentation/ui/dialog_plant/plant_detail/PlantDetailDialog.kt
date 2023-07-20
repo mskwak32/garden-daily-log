@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.PopupMenu
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.appbar.AppBarLayout
@@ -19,6 +20,7 @@ import com.mskwak.presentation.ui.binding.setImageUri
 import com.mskwak.presentation.ui.custom_component.ListItemDecoVertical
 import com.mskwak.presentation.ui.dialog.DeleteConfirmDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -167,12 +169,12 @@ class PlantDetailDialog : BaseFullScreenDialog<DialogPlantDetailBinding>() {
     }
 
     fun newDiaryClick() {
-        val action = PlantDetailDialogDirections.plantDetailToDiaryEdit(plantId, null)
+        val action = PlantDetailDialogDirections.toDiaryEdit(plantId, null)
         findNavController().navigate(action)
     }
 
     fun moreDiaryClick() {
-        val action = PlantDetailDialogDirections.plantDetailToDiaryFragment(plantId.toString())
+        val action = PlantDetailDialogDirections.toDiaryFragment(plantId.toString())
         findNavController().navigate(action)
     }
 
@@ -211,22 +213,24 @@ class PlantDetailDialog : BaseFullScreenDialog<DialogPlantDetailBinding>() {
     }
 
     private fun openDiaryDetail(diaryId: Int) {
-        val action = PlantDetailDialogDirections.plantDetailToDiaryDetail(diaryId)
+        val action = PlantDetailDialogDirections.toDiaryDetail(diaryId)
         findNavController().navigate(action)
     }
 
     private fun showDeleteConfirm() {
         DeleteConfirmDialog().apply {
             deleteClickListener = {
-                viewModel.deletePlant()
-                this@PlantDetailDialog.dismiss()
+                lifecycleScope.launch {
+                    viewModel.deletePlant()
+                    this@PlantDetailDialog.dismiss()
+                }
             }
         }.show(childFragmentManager, null)
     }
 
     private fun openEditPlant() {
         val plantId = viewModel.plant.value?.id
-        val action = PlantDetailDialogDirections.plantDetailToPlantEdit(plantId.toString())
+        val action = PlantDetailDialogDirections.toPlantEdit(plantId.toString())
         findNavController().navigate(action)
     }
 }

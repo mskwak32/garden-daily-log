@@ -13,9 +13,11 @@ import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.domain.usecase.WateringUseCase
 import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -80,9 +82,7 @@ class PlantDetailViewModel @Inject constructor(
         return plant.value?.let { wateringUseCase.getWateringDays(it) }
     }
 
-    fun deletePlant() {
-        viewModelScope.launch {
-            plant.value?.let { plantUseCase.deletePlant(it) }
-        }
+    suspend fun deletePlant() = withContext(Dispatchers.IO) {
+        plant.value?.let { plantUseCase.deletePlant(it) }
     }
 }

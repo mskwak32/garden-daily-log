@@ -104,7 +104,7 @@ class DiaryDetailDialog : BottomSheetDialogFragment() {
     private fun showEditDiary() {
         val plantId = viewModel.diary.value!!.plantId
         val diaryId = viewModel.diary.value!!.id.toString()
-        val action = DiaryDetailDialogDirections.diaryDetailToDiaryEdit(plantId, diaryId)
+        val action = DiaryDetailDialogDirections.toDiaryEdit(plantId, diaryId)
         findNavController().navigate(action)
     }
 }
