@@ -1,4 +1,4 @@
-package com.mskwak.presentation.ui.diary_dialog.diary_detail
+package com.mskwak.presentation.ui.dialog_diary.diary_detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

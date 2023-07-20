@@ -1,4 +1,4 @@
-package com.mskwak.presentation.ui.home
+package com.mskwak.presentation.ui.fragment_plant
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

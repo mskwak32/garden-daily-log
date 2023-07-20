@@ -1,4 +1,4 @@
-package com.mskwak.presentation.ui.home
+package com.mskwak.presentation.ui.fragment_plant
 
 import android.animation.ObjectAnimator
 import android.graphics.Canvas

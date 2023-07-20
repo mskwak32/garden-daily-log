@@ -1,4 +1,4 @@
-package com.mskwak.presentation.ui.diary_dialog.edit_diary
+package com.mskwak.presentation.ui.dialog_diary.edit_diary
 
 import android.graphics.Bitmap
 import android.net.Uri

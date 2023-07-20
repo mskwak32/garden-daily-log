@@ -1,4 +1,4 @@
-package com.mskwak.presentation.ui.setting
+package com.mskwak.presentation.ui.fragment_setting
 
 import android.content.Intent
 import android.net.Uri

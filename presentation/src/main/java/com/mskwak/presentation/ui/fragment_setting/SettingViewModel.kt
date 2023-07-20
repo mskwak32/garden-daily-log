@@ -1,4 +1,4 @@
-package com.mskwak.presentation.ui.setting
+package com.mskwak.presentation.ui.fragment_setting
 
 import android.content.Context
 import androidx.core.content.pm.PackageInfoCompat
@@ -7,10 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mskwak.domain.usecase.AppConfigUseCase
-import com.mskwak.presentation.BuildConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReentrantLock
 import javax.inject.Inject
 
@@ -26,12 +24,12 @@ class SettingViewModel @Inject constructor(
     val hasAppUpdate: LiveData<Boolean> = _hasAppUpdate
 
     var updateContent: String? = null
-    private set
+        private set
 
     private val lock = ReentrantLock()
 
     fun getAppVersionName(context: Context): String {
-        return if(versionName != null) {
+        return if (versionName != null) {
             return versionName!!
         } else {
             val info = context.packageManager.getPackageInfo(context.packageName, 0)
@@ -61,7 +59,7 @@ class SettingViewModel @Inject constructor(
 
     private fun getVersionCode(context: Context): Int {
         lock.lock()
-        val code = if(versionCode != null) {
+        val code = if (versionCode != null) {
             versionCode!!
         } else {
             val info = context.packageManager.getPackageInfo(context.packageName, 0)

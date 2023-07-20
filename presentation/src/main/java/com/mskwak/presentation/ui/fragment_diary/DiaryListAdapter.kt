@@ -1,5 +1,4 @@
-package com.mskwak.presentation.ui.plant_dialog.plant_detail
-
+package com.mskwak.presentation.ui.fragment_diary
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,24 +6,28 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mskwak.domain.model.Diary
-import com.mskwak.presentation.databinding.LayoutItemDiaryInPlantDetailBinding
+import com.mskwak.presentation.databinding.LayoutItemDiaryBinding
 import com.mskwak.presentation.ui.binding.setThumbnail
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
-class DiarySummaryAdapter(private val onItemClick: (diary: Diary) -> Unit) :
-    ListAdapter<Diary, DiarySummaryAdapter.ItemViewHolder>(ItemDiffCallback()) {
+class DiaryListAdapter(
+    private val onItemClick: (diary: Diary) -> Unit,
+    private val getPlantName: (plantId: Int) -> String?
+) : ListAdapter<Diary, DiaryListAdapter.ItemViewHolder>(ItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = LayoutItemDiaryInPlantDetailBinding.inflate(inflater, parent, false)
+        val binding =
+            LayoutItemDiaryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ItemViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.bind(item)
+        holder.bind(getItem(position))
     }
 
-    inner class ItemViewHolder(private val binding: LayoutItemDiaryInPlantDetailBinding) :
+    inner class ItemViewHolder(private val binding: LayoutItemDiaryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
@@ -34,13 +37,16 @@ class DiarySummaryAdapter(private val onItemClick: (diary: Diary) -> Unit) :
         }
 
         fun bind(diary: Diary) {
-            binding.diary = diary
-            setPicture(diary)
-        }
-
-        private fun setPicture(diary: Diary) {
+            binding.tvMemo.text = diary.memo
             val pictureUri = diary.pictureList?.takeIf { it.isNotEmpty() }?.first()
             binding.ivPicture.setThumbnail(pictureUri)
+            binding.tvPlantName.text = getPlantName(diary.plantId) ?: ""
+            binding.tvDate.text = getDateText(diary.createdDate)
+        }
+
+        private fun getDateText(date: LocalDate): String {
+            val formatter = DateTimeFormatter.ofPattern("MM.dd\nE", Locale.getDefault())
+            return date.format(formatter)
         }
     }
 

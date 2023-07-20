@@ -1,4 +1,4 @@
-package com.mskwak.presentation.ui.diary_page
+package com.mskwak.presentation.ui.fragment_diary
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
