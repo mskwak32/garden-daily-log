@@ -5,17 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
+import com.mskwak.domain.model.Diary
 import com.mskwak.domain.model.Plant
 import com.mskwak.domain.model.WateringDays
 import com.mskwak.domain.usecase.DiaryUseCase
 import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.domain.usecase.WateringUseCase
-import com.mskwak.presentation.model.DiaryUiData
 import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,11 +26,11 @@ class PlantDetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _plant = MutableLiveData<Plant>()
-    private val _diaries = MutableLiveData<List<DiaryUiData>>()
+    private val _diaries = MutableLiveData<List<Diary>>()
     private val _wateringCompleted = SingleLiveEvent<Unit>()
 
     var plant: LiveData<Plant> = _plant
-    var diaries: LiveData<List<DiaryUiData>> = _diaries
+    var diaries: LiveData<List<Diary>> = _diaries
     val isEmptyList: LiveData<Boolean> = _diaries.map { diaries ->
         diaries.isEmpty()
     }
@@ -48,9 +47,7 @@ class PlantDetailViewModel @Inject constructor(
                 }
             }
             launch {
-                diaryUseCase.getDiariesByPlantId(plantId).map { list ->
-                    list.map { DiaryUiData(it) }
-                }.collectLatest {
+                diaryUseCase.getDiariesByPlantId(plantId).collectLatest {
                     _diaries.value = it
                 }
             }

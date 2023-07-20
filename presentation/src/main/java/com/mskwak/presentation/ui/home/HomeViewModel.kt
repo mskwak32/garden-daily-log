@@ -6,15 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
+import com.mskwak.domain.model.Plant
 import com.mskwak.domain.model.WateringDays
 import com.mskwak.domain.type.PlantListSortOrder
 import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.domain.usecase.WateringUseCase
-import com.mskwak.presentation.model.PlantUiData
 import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,18 +30,17 @@ class HomeViewModel @Inject constructor(
     val isEmptyList: LiveData<Boolean> = _isEmptyList
     val onWateringEvent: LiveData<Unit> = _onWateringEvent
 
-    var plants: LiveData<List<PlantUiData>> = _sortOrder.switchMap { sortOrder ->
-        plantUseCase.getPlantsWithSortOrder(sortOrder).map {
-            _isEmptyList.value = it.isEmpty()
-            it.map { plant -> PlantUiData(plant) }
-        }.asLiveData()
+    var plants: LiveData<List<Plant>> = _sortOrder.switchMap { sortOrder ->
+        plantUseCase.getPlantsWithSortOrder(sortOrder).asLiveData().also {
+            _isEmptyList.value = it.value?.isEmpty() ?: true
+        }
     }
 
     fun setSortOrder(sortOrder: PlantListSortOrder) {
         _sortOrder.takeIf { it.value != sortOrder }?.value = sortOrder
     }
 
-    fun onWateringClick(plant: PlantUiData) {
+    fun onWateringClick(plant: Plant) {
         viewModelScope.launch {
             _onWateringEvent.call()
             delay(250)
@@ -50,7 +48,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getWateringDays(plant: PlantUiData): WateringDays {
+    fun getWateringDays(plant: Plant): WateringDays {
         return wateringUseCase.getWateringDays(plant)
     }
 }

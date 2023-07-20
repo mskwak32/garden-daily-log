@@ -6,11 +6,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mskwak.domain.model.Alarm
+import com.mskwak.domain.model.Plant
 import com.mskwak.domain.usecase.PictureUseCase
 import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.presentation.R
-import com.mskwak.presentation.model.AlarmUiData
-import com.mskwak.presentation.model.PlantUiData
 import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -27,7 +27,7 @@ class PlantEditViewModel @Inject constructor(
     val plantName = MutableLiveData<String>()
     val memo = MutableLiveData<String>()
 
-    private val _pictureUri = MutableLiveData<Uri>()
+    private val _pictureUri = MutableLiveData<Uri?>()
     private val _plantNameEmpty = MutableLiveData(false)
     private val _plantDate = MutableLiveData(LocalDate.now())
     private val _lastWateringDate = MutableLiveData(LocalDate.now())
@@ -38,7 +38,7 @@ class PlantEditViewModel @Inject constructor(
     private val _onSavedEvent = SingleLiveEvent<Unit>()
     private val _snackbarMessage = SingleLiveEvent<Int>()
 
-    val pictureUri: LiveData<Uri> = _pictureUri
+    val pictureUri: LiveData<Uri?> = _pictureUri
     val plantNameEmpty: LiveData<Boolean> = _plantNameEmpty
     val plantDate: LiveData<LocalDate> = _plantDate
     val lastWateringDate: LiveData<LocalDate> = _lastWateringDate
@@ -74,16 +74,16 @@ class PlantEditViewModel @Inject constructor(
                 _wateringAlarmOnOff.value = false
             }
 
-            val alarm = AlarmUiData(_wateringAlarmTime.value!!, wateringAlarmOnOff.value!!)
-            val plant = PlantUiData(
-                plantName.value!!,
-                _plantDate.value!!,
-                _wateringPeriod.value!!,
-                _lastWateringDate.value!!,
-                alarm,
-                pictureUri,
-                memo.value,
-                plantId
+            val alarm = Alarm(_wateringAlarmTime.value!!, wateringAlarmOnOff.value!!)
+            val plant = Plant(
+                name = plantName.value!!,
+                createdDate = _plantDate.value!!,
+                waterPeriod = _wateringPeriod.value!!,
+                lastWateringDate = _lastWateringDate.value!!,
+                wateringAlarm = alarm,
+                pictureUri = pictureUri,
+                memo = memo.value,
+                id = plantId
             )
             if (isUpdatePlant) {
                 //delete old picture
@@ -105,7 +105,7 @@ class PlantEditViewModel @Inject constructor(
                 _pictureUri.value = plant.pictureUri
                 plantName.value = plant.name
                 _plantDate.value = plant.createdDate
-                memo.value = plant.memo
+                memo.value = plant.memo ?: ""
                 _lastWateringDate.value = plant.lastWateringDate
                 _wateringPeriod.value = plant.waterPeriod
                 _wateringAlarmOnOff.value = plant.wateringAlarm.onOff

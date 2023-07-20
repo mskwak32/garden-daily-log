@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.mskwak.domain.model.Diary
 import com.mskwak.presentation.databinding.LayoutItemDiaryInPlantDetailBinding
-import com.mskwak.presentation.model.DiaryUiData
 import com.mskwak.presentation.ui.binding.setThumbnail
 
-class DiarySummaryAdapter(private val onItemClick: (diary: DiaryUiData) -> Unit) :
-    ListAdapter<DiaryUiData, DiarySummaryAdapter.ItemViewHolder>(ItemDiffCallback()) {
+class DiarySummaryAdapter(private val onItemClick: (diary: Diary) -> Unit) :
+    ListAdapter<Diary, DiarySummaryAdapter.ItemViewHolder>(ItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -33,24 +33,23 @@ class DiarySummaryAdapter(private val onItemClick: (diary: DiaryUiData) -> Unit)
             }
         }
 
-        fun bind(diary: DiaryUiData) {
+        fun bind(diary: Diary) {
             binding.diary = diary
             setPicture(diary)
         }
 
-        private fun setPicture(diary: DiaryUiData) {
-            val pictureUri =
-                if (diary.pictureList?.isNotEmpty() == true) diary.pictureList.first() else null
+        private fun setPicture(diary: Diary) {
+            val pictureUri = diary.pictureList?.takeIf { it.isNotEmpty() }?.first()
             binding.ivPicture.setThumbnail(pictureUri)
         }
     }
 
-    class ItemDiffCallback : DiffUtil.ItemCallback<DiaryUiData>() {
-        override fun areItemsTheSame(oldItem: DiaryUiData, newItem: DiaryUiData): Boolean {
+    class ItemDiffCallback : DiffUtil.ItemCallback<Diary>() {
+        override fun areItemsTheSame(oldItem: Diary, newItem: Diary): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: DiaryUiData, newItem: DiaryUiData): Boolean {
+        override fun areContentsTheSame(oldItem: Diary, newItem: Diary): Boolean {
             return oldItem == newItem
         }
     }

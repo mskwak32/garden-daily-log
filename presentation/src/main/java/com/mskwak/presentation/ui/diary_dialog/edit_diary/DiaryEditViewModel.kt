@@ -8,11 +8,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.mskwak.domain.AppConstValue
+import com.mskwak.domain.model.Diary
 import com.mskwak.domain.usecase.DiaryUseCase
 import com.mskwak.domain.usecase.PictureUseCase
 import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.presentation.R
-import com.mskwak.presentation.model.DiaryUiData
 import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -57,12 +57,12 @@ class DiaryEditViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            val diary = DiaryUiData(
-                plantId!!,
-                contentText.value ?: "",
-                _pictureList.value?.toList() ?: emptyList(),
-                diaryDate.value!!,
-                diaryId
+            val diary = Diary(
+                plantId = plantId!!,
+                memo = contentText.value ?: "",
+                pictureList = _pictureList.value?.toList() ?: emptyList(),
+                createdDate = diaryDate.value!!,
+                id = diaryId
             )
 
             if (isUpdate) {

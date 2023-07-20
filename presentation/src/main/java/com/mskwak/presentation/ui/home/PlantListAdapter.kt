@@ -5,18 +5,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.mskwak.domain.model.Plant
 import com.mskwak.domain.model.WateringDays
 import com.mskwak.presentation.R
 import com.mskwak.presentation.databinding.LayoutItemPlantBinding
-import com.mskwak.presentation.model.PlantUiData
 import java.time.LocalDate
 
 class PlantListAdapter(
-    private val onWateringClick: (plant: PlantUiData) -> Unit,
-    private val onItemClick: (plant: PlantUiData) -> Unit,
-    private val getWateringDays: (plant: PlantUiData) -> WateringDays
-) :
-    ListAdapter<PlantUiData, PlantListAdapter.ItemViewHolder>(ItemDiffCallback()) {
+    private val onWateringClick: (plant: Plant) -> Unit,
+    private val onItemClick: (plant: Plant) -> Unit,
+    private val getWateringDays: (plant: Plant) -> WateringDays
+) : ListAdapter<Plant, PlantListAdapter.ItemViewHolder>(ItemDiffCallback()) {
 
     private val currentDate = LocalDate.now()
 
@@ -43,12 +42,12 @@ class PlantListAdapter(
             }
         }
 
-        fun bind(plant: PlantUiData) {
+        fun bind(plant: Plant) {
             binding.plant = plant
             setWateringDays(plant)
         }
 
-        private fun setWateringDays(plant: PlantUiData) {
+        private fun setWateringDays(plant: Plant) {
             val wateringDays = getWateringDays(plant)
             val days = wateringDays.days
             val isDateOver = wateringDays.isDateOver
@@ -76,12 +75,12 @@ class PlantListAdapter(
         }
     }
 
-    class ItemDiffCallback : DiffUtil.ItemCallback<PlantUiData>() {
-        override fun areItemsTheSame(oldItem: PlantUiData, newItem: PlantUiData): Boolean {
+    class ItemDiffCallback : DiffUtil.ItemCallback<Plant>() {
+        override fun areItemsTheSame(oldItem: Plant, newItem: Plant): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: PlantUiData, newItem: PlantUiData): Boolean {
+        override fun areContentsTheSame(oldItem: Plant, newItem: Plant): Boolean {
             return oldItem == newItem
 
         }

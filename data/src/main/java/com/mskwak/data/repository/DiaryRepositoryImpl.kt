@@ -1,7 +1,8 @@
 package com.mskwak.data.repository
 
-import com.mskwak.data.model.DiaryData
 import com.mskwak.data.source.local.DiaryDao
+import com.mskwak.data.toDiary
+import com.mskwak.data.toDiaryData
 import com.mskwak.domain.model.Diary
 import com.mskwak.domain.repository.DiaryRepository
 import kotlinx.coroutines.Dispatchers
@@ -17,45 +18,51 @@ class DiaryRepositoryImpl @Inject constructor(
 ) : DiaryRepository {
 
     override suspend fun addDiary(diary: Diary) = withContext(Dispatchers.IO) {
-        diaryDao.insertDiary(DiaryData(diary))
+        diaryDao.insertDiary(diary.toDiaryData())
         Timber.d("add new diary")
     }
 
     override suspend fun updateDiary(diary: Diary) = withContext(Dispatchers.IO) {
-        diaryDao.updateDiary(DiaryData(diary))
+        diaryDao.updateDiary(diary.toDiaryData())
         Timber.d("update diary id= ${diary.id}")
     }
 
     override suspend fun deleteDiary(diary: Diary) = withContext(Dispatchers.IO) {
-        diaryDao.deleteDiary(DiaryData(diary))
+        diaryDao.deleteDiary(diary.toDiaryData())
         Timber.d("delete diary id= ${diary.id}")
     }
 
     override suspend fun deleteDiariesByPlantId(plantId: Int) = withContext(Dispatchers.IO) {
         diaryDao.getDiariesByPlantId(plantId).forEach { diary ->
-            deleteDiary(diary)
+            diaryDao.deleteDiary(diary)
         }
     }
 
     override fun getDiariesByPlantId(plantId: Int, limit: Int): Flow<List<Diary>> {
-        return diaryDao.getDiariesByPlantId(plantId, limit).map { it }
+        return diaryDao.getDiariesByPlantId(plantId, limit).map { list ->
+            list.map { it.toDiary() }
+        }
     }
 
     override suspend fun getDiary(id: Int): Diary = withContext(Dispatchers.IO) {
-        diaryDao.getDiary(id)
+        diaryDao.getDiary(id).toDiary()
     }
 
     override fun getDiaryFlow(id: Int): Flow<Diary> {
-        return diaryDao.getDiaryFlow(id).map { it }
+        return diaryDao.getDiaryFlow(id).map { it.toDiary() }
     }
 
     override fun getDiaries(year: Int, month: Int, plantId: Int?): Flow<List<Diary>> {
         val startDate = LocalDate.of(year, month, 1)
         val endDate = LocalDate.of(year, month, startDate.lengthOfMonth())
         return if (plantId == null) {
-            diaryDao.getDiaries(startDate, endDate).map { it }
+            diaryDao.getDiaries(startDate, endDate).map { list ->
+                list.map { it.toDiary() }
+            }
         } else {
-            diaryDao.getDiariesByPlantId(plantId, startDate, endDate).map { it }
+            diaryDao.getDiariesByPlantId(plantId, startDate, endDate).map { list ->
+                list.map { it.toDiary() }
+            }
         }
     }
 }

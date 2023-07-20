@@ -1,7 +1,8 @@
 package com.mskwak.data.repository
 
-import com.mskwak.data.model.PlantData
 import com.mskwak.data.source.local.PlantDao
+import com.mskwak.data.toPlant
+import com.mskwak.data.toPlantData
 import com.mskwak.domain.model.Plant
 import com.mskwak.domain.repository.PlantRepository
 import kotlinx.coroutines.Dispatchers
@@ -16,31 +17,33 @@ class PlantRepositoryImpl @Inject constructor(
 ) : PlantRepository {
 
     override suspend fun addPlant(plant: Plant): Int = withContext(Dispatchers.IO) {
-        val id = plantDao.insertPlant(PlantData(plant)).toInt()
+        val id = plantDao.insertPlant(plant.toPlantData()).toInt()
         Timber.d("add new plant id= $id")
         id
     }
 
     override suspend fun updatePlant(plant: Plant) = withContext(Dispatchers.IO) {
-        plantDao.updatePlant(PlantData(plant))
+        plantDao.updatePlant(plant.toPlantData())
         Timber.d("update plant id= ${plant.id}")
     }
 
     override suspend fun deletePlant(plant: Plant) = withContext(Dispatchers.IO) {
-        plantDao.deletePlant(PlantData(plant))
+        plantDao.deletePlant(plant.toPlantData())
         Timber.d("delete plant id= ${plant.id}")
     }
 
     override suspend fun getPlant(plantId: Int): Plant = withContext(Dispatchers.IO) {
-        plantDao.getPlant(plantId)
+        plantDao.getPlant(plantId).toPlant()
     }
 
     override fun getPlants(): Flow<List<Plant>> {
-        return plantDao.getPlants().map { it }
+        return plantDao.getPlants().map { list ->
+            list.map { it.toPlant() }
+        }
     }
 
     override fun getPlantFlow(plantId: Int): Flow<Plant> {
-        return plantDao.getPlantFlow(plantId).map { it }
+        return plantDao.getPlantFlow(plantId).map { it.toPlant() }
     }
 
     override suspend fun getPlantName(plantId: Int): String = withContext(Dispatchers.IO) {

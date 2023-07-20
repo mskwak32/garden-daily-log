@@ -4,30 +4,24 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import com.mskwak.presentation.R
+import com.mskwak.presentation.databinding.LayoutTextviewWithIconBinding
 
 class TextViewWithIcon @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
-    private var iconView: ImageView
-    private var textView: TextView
-    private var requiredView: TextView
+    private lateinit var binding: LayoutTextviewWithIconBinding
     private var isRequired: Boolean = false
     private val defaultTextColor: Int
 
     init {
-        val view =
-            LayoutInflater.from(context).inflate(R.layout.layout_textview_with_icon, this, false)
-        addView(view)
+        val binding =
+            LayoutTextviewWithIconBinding.inflate(LayoutInflater.from(context), this, false)
+        addView(binding.root)
 
-        iconView = view.findViewById(R.id.tv_icon)
-        textView = view.findViewById(R.id.tv_text)
-        requiredView = view.findViewById(R.id.tv_requiredIcon)
-        defaultTextColor = textView.currentTextColor
+        defaultTextColor = binding.tvText.currentTextColor
         initAttrs(attrs)
     }
 
@@ -40,15 +34,15 @@ class TextViewWithIcon @JvmOverloads constructor(
         isRequired = typedArray.getBoolean(R.styleable.TextViewWithIcon_required, false)
 
         if (iconRes != -1) {
-            iconView.setImageResource(iconRes)
+            binding.tvIcon.setImageResource(iconRes)
         }
 
-        with(textView) {
+        with(binding.tvText) {
             setText(text)
             if (textColor != -1) setTextColor(textColor)
         }
 
-        requiredView.visibility = if (isRequired) VISIBLE else GONE
+        binding.tvRequiredIcon.visibility = if (isRequired) VISIBLE else GONE
     }
 
     fun setFieldEmpty(isEmpty: Boolean) {
@@ -56,6 +50,6 @@ class TextViewWithIcon @JvmOverloads constructor(
             return
         }
         val textColor = if (isEmpty) resources.getColor(R.color.red_300, null) else defaultTextColor
-        textView.setTextColor(textColor)
+        binding.tvText.setTextColor(textColor)
     }
 }

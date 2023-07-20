@@ -5,17 +5,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.mskwak.domain.model.Diary
 import com.mskwak.presentation.databinding.LayoutItemDiaryBinding
-import com.mskwak.presentation.model.DiaryUiData
 import com.mskwak.presentation.ui.binding.setThumbnail
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 class DiaryListAdapter(
-    private val onItemClick: (diary: DiaryUiData) -> Unit,
+    private val onItemClick: (diary: Diary) -> Unit,
     private val getPlantName: (plantId: Int) -> String?
-) : ListAdapter<DiaryUiData, DiaryListAdapter.ItemViewHolder>(ItemDiffCallback()) {
+) : ListAdapter<Diary, DiaryListAdapter.ItemViewHolder>(ItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val binding =
@@ -36,10 +36,9 @@ class DiaryListAdapter(
             }
         }
 
-        fun bind(diary: DiaryUiData) {
+        fun bind(diary: Diary) {
             binding.tvMemo.text = diary.memo
-            val pictureUri =
-                if (diary.pictureList?.isNotEmpty() == true) diary.pictureList.first() else null
+            val pictureUri = diary.pictureList?.takeIf { it.isNotEmpty() }?.first()
             binding.ivPicture.setThumbnail(pictureUri)
             binding.tvPlantName.text = getPlantName(diary.plantId) ?: ""
             binding.tvDate.text = getDateText(diary.createdDate)
@@ -51,12 +50,12 @@ class DiaryListAdapter(
         }
     }
 
-    class ItemDiffCallback : DiffUtil.ItemCallback<DiaryUiData>() {
-        override fun areItemsTheSame(oldItem: DiaryUiData, newItem: DiaryUiData): Boolean {
+    class ItemDiffCallback : DiffUtil.ItemCallback<Diary>() {
+        override fun areItemsTheSame(oldItem: Diary, newItem: Diary): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: DiaryUiData, newItem: DiaryUiData): Boolean {
+        override fun areContentsTheSame(oldItem: Diary, newItem: Diary): Boolean {
             return oldItem == newItem
         }
     }
