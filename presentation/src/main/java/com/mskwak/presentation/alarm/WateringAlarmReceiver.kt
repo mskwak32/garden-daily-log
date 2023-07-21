@@ -1,11 +1,14 @@
 package com.mskwak.presentation.alarm
 
+import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.mskwak.domain.usecase.PlantUseCase
@@ -57,23 +60,35 @@ class WateringAlarmReceiver : BroadcastReceiver() {
 
     private fun deliverNotification(context: Context, plantName: String?, plantId: Int) {
 
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_leaf)
-            .setContentTitle(context.getString(R.string.noti_watering_title))
-            .setContentText(plantName?.let { context.getString(R.string.noti_watering_message, it) }
-                ?: "")
-            .setContentIntent(getPendingIntent(context))
-            .setAutoCancel(true)
-            .setOnlyAlertOnce(true)
-            .setGroup(WATERING_GROUP_KEY)
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_leaf)
+                .setContentTitle(context.getString(R.string.noti_watering_title))
+                .setContentText(
+                    plantName?.let {
+                        context.getString(
+                            R.string.noti_watering_message,
+                            it
+                        )
+                    } ?: ""
+                )
+                .setContentIntent(getPendingIntent(context))
+                .setAutoCancel(true)
+                .setOnlyAlertOnce(true)
+                .setGroup(WATERING_GROUP_KEY)
 
-        with(NotificationManagerCompat.from(context)) {
-            notify(plantId, builder.build())
-            notify(SUMMARY_NOTI_CODE, getSummaryNoti(context).build())
+            with(NotificationManagerCompat.from(context)) {
+                notify(plantId, builder.build())
+                notify(SUMMARY_NOTIFICATION_CODE, getSummaryNotification(context).build())
+            }
         }
     }
 
-    private fun getSummaryNoti(context: Context): NotificationCompat.Builder {
+    private fun getSummaryNotification(context: Context): NotificationCompat.Builder {
         return NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_leaf)
             .setAutoCancel(true)
@@ -99,7 +114,7 @@ class WateringAlarmReceiver : BroadcastReceiver() {
         private const val CHANNEL_ID = "wateringNotification"
         const val PLANT_ID_KEY = "plantId"
         private const val DEFAULT_PLANT_ID = 100000
-        private const val SUMMARY_NOTI_CODE = 1000
+        private const val SUMMARY_NOTIFICATION_CODE = 1000
         private const val WATERING_GROUP_KEY = "wateringNotificationGroup"
     }
 }
