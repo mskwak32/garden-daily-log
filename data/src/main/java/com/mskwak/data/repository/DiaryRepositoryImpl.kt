@@ -44,12 +44,8 @@ class DiaryRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getDiary(id: Int): Diary = withContext(Dispatchers.IO) {
-        diaryDao.getDiary(id).toDiary()
-    }
-
-    override fun getDiaryFlow(id: Int): Flow<Diary> {
-        return diaryDao.getDiaryFlow(id).map { it.toDiary() }
+    override fun getDiary(id: Int): Flow<Diary> {
+        return diaryDao.getDiary(id).map { it.toDiary() }
     }
 
     override fun getDiaries(year: Int, month: Int, plantId: Int?): Flow<List<Diary>> {

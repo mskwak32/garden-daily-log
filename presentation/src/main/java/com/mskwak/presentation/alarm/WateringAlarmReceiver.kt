@@ -13,9 +13,9 @@ import com.mskwak.domain.usecase.WateringUseCase
 import com.mskwak.presentation.MainActivity
 import com.mskwak.presentation.R
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,21 +28,18 @@ class WateringAlarmReceiver : BroadcastReceiver() {
     @Inject
     lateinit var wateringUseCase: WateringUseCase
 
-    private val dispatcher: CoroutineDispatcher = Dispatchers.Default
-
     override fun onReceive(context: Context, intent: Intent) {
         createNotificationChannel(context)
 
         val plantId = intent.getIntExtra(PLANT_ID_KEY, DEFAULT_PLANT_ID)
 
-        CoroutineScope(dispatcher).launch {
-            val plant = plantUseCase.takeIf { plantId != DEFAULT_PLANT_ID }?.getPlant(plantId)
-            deliverNotification(context, plant?.name, plantId)
-
-            //다음번 알람 등록
-            if (plant != null) {
-                wateringUseCase.setWateringAlarm(plant.id, true)
-            }
+        CoroutineScope(Dispatchers.Default).launch {
+            plantUseCase.takeIf { plantId != DEFAULT_PLANT_ID }?.getPlant(plantId)?.first()
+                ?.let { plant ->
+                    deliverNotification(context, plant.name, plantId)
+                    //다음번 알람 등록
+                    wateringUseCase.setWateringAlarm(plant.id, true)
+                }
         }
     }
 

@@ -5,6 +5,7 @@ import com.mskwak.domain.model.Plant
 import com.mskwak.domain.model.WateringDays
 import com.mskwak.domain.repository.PlantRepository
 import com.mskwak.domain.repository.WateringRepository
+import kotlinx.coroutines.flow.first
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
@@ -44,7 +45,7 @@ class WateringUseCase @Inject constructor(
     }
 
     private suspend fun getNextAlarmDateTime(plantId: Int): LocalDateTime? {
-        val plant = plantRepository.getPlant(plantId)
+        val plant = plantRepository.getPlant(plantId).first()
         if (plant.waterPeriod == 0) return null
 
         val nextDate = plant.lastWateringDate.plusDays(plant.waterPeriod.toLong())

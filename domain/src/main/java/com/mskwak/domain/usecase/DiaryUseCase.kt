@@ -40,12 +40,8 @@ class DiaryUseCase @Inject constructor(
         diaryRepository.deleteDiary(diary)
     }
 
-    suspend fun getDiary(diaryId: Int): Diary {
+    fun getDiary(diaryId: Int): Flow<Diary> {
         return diaryRepository.getDiary(diaryId)
-    }
-
-    fun getDiaryFlow(diaryId: Int): Flow<Diary> {
-        return diaryRepository.getDiaryFlow(diaryId)
     }
 
     fun getDiaries(

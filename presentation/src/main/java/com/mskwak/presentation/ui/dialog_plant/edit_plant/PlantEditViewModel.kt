@@ -13,6 +13,7 @@ import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.presentation.R
 import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
@@ -100,7 +101,7 @@ class PlantEditViewModel @Inject constructor(
 
     fun loadPlant(plantId: Int) {
         viewModelScope.launch {
-            plantUseCase.getPlant(plantId).let { plant ->
+            plantUseCase.getPlant(plantId).first().let { plant ->
                 this@PlantEditViewModel.plantId = plant.id
                 _pictureUri.value = plant.pictureUri
                 plantName.value = plant.name

@@ -16,14 +16,11 @@ interface PlantDao {
     @Delete
     suspend fun deletePlant(plant: PlantData)
 
-    @Query("SELECT * FROM plant WHERE id = :plantId")
-    suspend fun getPlant(plantId: Int): PlantData
-
     @Query("SELECT * FROM plant")
     fun getPlants(): Flow<List<PlantData>>
 
     @Query("SELECT * FROM plant WHERE id = :plantId")
-    fun getPlantFlow(plantId: Int): Flow<PlantData>
+    fun getPlant(plantId: Int): Flow<PlantData>
 
     @Query("UPDATE plant SET lastWateringDate = :date WHERE id = :plantId")
     suspend fun updateLastWatering(date: LocalDate, plantId: Int)

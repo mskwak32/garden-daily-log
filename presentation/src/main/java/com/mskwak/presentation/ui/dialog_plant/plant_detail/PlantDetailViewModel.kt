@@ -44,7 +44,7 @@ class PlantDetailViewModel @Inject constructor(
         this.plantId = plantId
         with(viewModelScope) {
             launch {
-                plantUseCase.getPlantFlow(plantId).collectLatest {
+                plantUseCase.getPlant(plantId).collectLatest {
                     _plant.value = it
                 }
             }

@@ -15,6 +15,7 @@ import com.mskwak.domain.usecase.PlantUseCase
 import com.mskwak.presentation.R
 import com.mskwak.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.LocalDate
@@ -120,7 +121,7 @@ class DiaryEditViewModel @Inject constructor(
 
     fun loadDiary(id: Int) {
         viewModelScope.launch {
-            diaryUseCase.getDiary(id).let {
+            diaryUseCase.getDiary(id).first().let {
                 diaryId = it.id
                 plantId = it.plantId
                 diaryDate.value = it.createdDate

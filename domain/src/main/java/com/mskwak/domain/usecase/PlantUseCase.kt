@@ -42,11 +42,7 @@ class PlantUseCase @Inject constructor(
         }
     }
 
-    fun getPlantFlow(plantId: Int): Flow<Plant> {
-        return plantRepository.getPlantFlow(plantId)
-    }
-
-    suspend fun getPlant(plantId: Int): Plant {
+    fun getPlant(plantId: Int): Flow<Plant> {
         return plantRepository.getPlant(plantId)
     }
 

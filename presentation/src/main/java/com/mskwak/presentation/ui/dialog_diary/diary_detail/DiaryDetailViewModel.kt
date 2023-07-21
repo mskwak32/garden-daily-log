@@ -38,7 +38,7 @@ class DiaryDetailViewModel @Inject constructor(
     fun loadDiary(diaryId: Int) {
         this.diaryId = diaryId
         viewModelScope.launch {
-            diaryUseCase.getDiaryFlow(diaryId).collectLatest {
+            diaryUseCase.getDiary(diaryId).collectLatest {
                 _diary.value = it
             }
         }
