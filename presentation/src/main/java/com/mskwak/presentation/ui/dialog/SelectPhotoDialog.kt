@@ -15,19 +15,17 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
-import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
-import com.google.android.material.snackbar.Snackbar
 import com.mskwak.presentation.R
 import com.mskwak.presentation.databinding.DialogSelectPhotoBinding
+import com.mskwak.presentation.util.showPermissionDeniedSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -65,7 +63,10 @@ class SelectPhotoDialog : DialogFragment() {
             if (isGranted) {
                 openImageSelector()
             } else {
-                showDeniedSnackbar(R.string.message_photo_image_permission)
+                requireContext().showPermissionDeniedSnackbar(
+                    requireView(),
+                    R.string.message_photo_image_permission
+                )
             }
         }
     private val cameraPermissionLauncher =
@@ -73,7 +74,10 @@ class SelectPhotoDialog : DialogFragment() {
             if (isGranted) {
                 openCamera()
             } else {
-                showDeniedSnackbar(R.string.message_photo_camera_permission)
+                requireContext().showPermissionDeniedSnackbar(
+                    requireView(),
+                    R.string.message_photo_camera_permission
+                )
             }
         }
 
@@ -107,8 +111,10 @@ class SelectPhotoDialog : DialogFragment() {
                 openCamera()
             }
             shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
-                //이전에 권한 거부했음
-                showDeniedSnackbar(R.string.message_photo_camera_permission)
+                requireContext().showPermissionDeniedSnackbar(
+                    requireView(),
+                    R.string.message_photo_camera_permission
+                )
             }
             else -> {
                 cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
@@ -117,18 +123,25 @@ class SelectPhotoDialog : DialogFragment() {
     }
 
     fun onImageClick() {
-        when {
-            ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                openImageSelector()
-            }
-            shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) -> {
-                showDeniedSnackbar(R.string.message_photo_image_permission)
-            }
-            else -> {
-                imagePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            openImageSelector()
+        } else {
+            when {
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED -> {
+                    openImageSelector()
+                }
+                shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) -> {
+                    requireContext().showPermissionDeniedSnackbar(
+                        requireView(),
+                        R.string.message_photo_image_permission
+                    )
+                }
+                else -> {
+                    imagePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                }
             }
         }
     }
@@ -146,19 +159,6 @@ class SelectPhotoDialog : DialogFragment() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (intent.resolveActivity(requireContext().packageManager) != null) {
             cameraResultLauncher.launch(intent)
-        }
-    }
-
-    private fun showDeniedSnackbar(@StringRes messageId: Int) {
-        view?.let {
-            Snackbar.make(it, getString(messageId), Snackbar.LENGTH_LONG)
-                .setAction(getString(R.string.permission_setting_action)) {
-                    //앱 상세화면으로 이동
-                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    intent.data = Uri.parse("package:${requireContext().packageName}")
-                    startActivity(intent)
-                }.setActionTextColor(resources.getColor(R.color.green_600, null))
-                .show()
         }
     }
 

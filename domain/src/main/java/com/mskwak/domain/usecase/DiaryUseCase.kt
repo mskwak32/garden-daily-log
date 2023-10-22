@@ -1,11 +1,11 @@
 package com.mskwak.domain.usecase
 
 import com.mskwak.domain.AppConstValue
-import com.mskwak.domain.di.IoDispatcher
 import com.mskwak.domain.model.Diary
 import com.mskwak.domain.repository.DiaryRepository
+import com.mskwak.domain.repository.PictureRepository
 import com.mskwak.domain.type.DiaryListSortOrder
-import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -15,8 +15,9 @@ import javax.inject.Singleton
 @Singleton
 class DiaryUseCase @Inject constructor(
     private val diaryRepository: DiaryRepository,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    private val pictureRepository: PictureRepository
 ) {
+
     fun getDiariesByPlantId(plantId: Int): Flow<List<Diary>> {
         return diaryRepository.getDiariesByPlantId(
             plantId,
@@ -33,15 +34,14 @@ class DiaryUseCase @Inject constructor(
     }
 
     suspend fun deleteDiary(diary: Diary) {
+        diary.pictureList?.forEach {
+            pictureRepository.deletePlantPicture(it)
+        }
         diaryRepository.deleteDiary(diary)
     }
 
-    suspend fun getDiary(diaryId: Int): Diary {
+    fun getDiary(diaryId: Int): Flow<Diary> {
         return diaryRepository.getDiary(diaryId)
-    }
-
-    fun getDiaryFlow(diaryId: Int): Flow<Diary> {
-        return diaryRepository.getDiaryFlow(diaryId)
     }
 
     fun getDiaries(
@@ -52,11 +52,11 @@ class DiaryUseCase @Inject constructor(
     ): Flow<List<Diary>> {
         return diaryRepository.getDiaries(year, month, plantId).map { list ->
             list.applySort(sortOrder)
-        }.flowOn(ioDispatcher)
+        }.flowOn(Dispatchers.IO)
     }
 
     private fun List<Diary>.applySort(sortOrder: DiaryListSortOrder): List<Diary> {
-        return when (sortOrder) {
+        return when(sortOrder) {
             DiaryListSortOrder.CREATED_LATEST -> {
                 sortedByDescending { diary -> diary.createdDate }
             }

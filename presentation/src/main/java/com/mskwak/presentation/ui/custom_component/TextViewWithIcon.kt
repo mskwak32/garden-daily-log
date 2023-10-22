@@ -10,7 +10,8 @@ import android.widget.TextView
 import com.mskwak.presentation.R
 
 class TextViewWithIcon @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null,
+    context: Context,
+    attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
     private var iconView: ImageView
@@ -24,9 +25,9 @@ class TextViewWithIcon @JvmOverloads constructor(
             LayoutInflater.from(context).inflate(R.layout.layout_textview_with_icon, this, false)
         addView(view)
 
-        iconView = view.findViewById(R.id.icon)
-        textView = view.findViewById(R.id.text)
-        requiredView = view.findViewById(R.id.requiredIcon)
+        iconView = view.findViewById(R.id.tv_icon)
+        textView = view.findViewById(R.id.tv_text)
+        requiredView = view.findViewById(R.id.tv_requiredIcon)
         defaultTextColor = textView.currentTextColor
         initAttrs(attrs)
     }

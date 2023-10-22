@@ -3,18 +3,16 @@ package com.mskwak.presentation.alarm
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.mskwak.domain.di.IoDispatcher
-import com.mskwak.domain.usecase.PlantUseCase
+import com.mskwak.domain.usecase.WateringUseCase
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class BootReceiver @Inject constructor(
-    private val useCase: PlantUseCase,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    private val useCase: WateringUseCase
 ) : BroadcastReceiver() {
 
     /**
@@ -24,7 +22,7 @@ class BootReceiver @Inject constructor(
         if (intent.action.equals(Intent.ACTION_BOOT_COMPLETED) ||
             intent.action.equals(Intent.ACTION_MY_PACKAGE_REPLACED)
         ) {
-            CoroutineScope(ioDispatcher).launch {
+            CoroutineScope(Dispatchers.IO).launch {
                 useCase.resetWateringAlarm()
             }
         }

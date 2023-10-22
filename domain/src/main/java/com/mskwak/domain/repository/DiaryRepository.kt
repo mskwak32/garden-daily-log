@@ -9,8 +9,7 @@ interface DiaryRepository {
     suspend fun updateDiary(diary: Diary)
     suspend fun deleteDiary(diary: Diary)
     fun getDiariesByPlantId(plantId: Int, limit: Int): Flow<List<Diary>>
-    suspend fun getDiary(id: Int): Diary
-    fun getDiaryFlow(id: Int): Flow<Diary>
+    fun getDiary(id: Int): Flow<Diary>
     suspend fun deleteDiariesByPlantId(plantId: Int)
     fun getDiaries(year: Int, month: Int, plantId: Int?): Flow<List<Diary>>
 }

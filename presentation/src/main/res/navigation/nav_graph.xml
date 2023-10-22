@@ -3,26 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/plantFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.mskwak.presentation.ui.home.HomeFragment"
-        tools:layout="@layout/fragment_home">
+        android:id="@+id/plantFragment"
+        android:name="com.mskwak.presentation.ui.fragment_plant.PlantFragment"
+        tools:layout="@layout/fragment_plant">
 
         <action
-            android:id="@+id/home_to_plant_detail"
+            android:id="@+id/to_plant_detail"
             app:destination="@id/plantDetailDialog" />
 
         <action
-            android:id="@+id/home_to_plant_edit"
+            android:id="@+id/to_plant_edit"
             app:destination="@id/plantEditDialog" />
 
     </fragment>
 
     <fragment
         android:id="@+id/diaryFragment"
-        android:name="com.mskwak.presentation.ui.diary_page.DiaryFragment"
+        android:name="com.mskwak.presentation.ui.fragment_diary.DiaryFragment"
         tools:layout="@layout/fragment_diary">
 
         <argument
@@ -32,19 +32,19 @@
             app:nullable="true" />
 
         <action
-            android:id="@+id/diary_fragment_to_diary_detail"
+            android:id="@+id/to_diary_detail"
             app:destination="@id/diaryDetailDialog" />
 
     </fragment>
 
     <fragment
         android:id="@+id/settingFragment"
-        android:name="com.mskwak.presentation.ui.setting.SettingFragment"
+        android:name="com.mskwak.presentation.ui.fragment_setting.SettingFragment"
         tools:layout="@layout/fragment_setting" />
 
     <dialog
         android:id="@+id/plantDetailDialog"
-        android:name="com.mskwak.presentation.ui.plant_dialog.plant_detail.PlantDetailDialog"
+        android:name="com.mskwak.presentation.ui.dialog_plant.plant_detail.PlantDetailDialog"
         tools:layout="@layout/dialog_plant_detail">
 
         <argument
@@ -52,26 +52,26 @@
             app:argType="integer" />
 
         <action
-            android:id="@+id/plant_detail_to_diary_fragment"
+            android:id="@+id/to_diary_fragment"
             app:destination="@id/diaryFragment" />
 
         <action
-            android:id="@+id/plant_detail_to_plant_edit"
+            android:id="@+id/to_plant_edit"
             app:destination="@id/plantEditDialog" />
 
         <action
-            android:id="@+id/plant_detail_to_diary_edit"
+            android:id="@+id/to_diary_edit"
             app:destination="@id/diaryEditDialog" />
 
         <action
-            android:id="@+id/plant_detail_to_diary_detail"
+            android:id="@+id/to_diary_detail"
             app:destination="@id/diaryDetailDialog" />
 
     </dialog>
 
     <dialog
         android:id="@+id/plantEditDialog"
-        android:name="com.mskwak.presentation.ui.plant_dialog.edit_plant.PlantEditDialog"
+        android:name="com.mskwak.presentation.ui.dialog_plant.edit_plant.PlantEditDialog"
         tools:layout="@layout/dialog_plant_edit">
 
         <argument
@@ -84,7 +84,7 @@
 
     <dialog
         android:id="@+id/diaryDetailDialog"
-        android:name="com.mskwak.presentation.ui.diary_dialog.diary_detail.DiaryDetailDialog"
+        android:name="com.mskwak.presentation.ui.dialog_diary.diary_detail.DiaryDetailDialog"
         tools:layout="@layout/dialog_diary_detail">
 
         <argument
@@ -92,14 +92,14 @@
             app:argType="integer" />
 
         <action
-            android:id="@+id/diary_detail_to_diary_edit"
+            android:id="@+id/to_diary_edit"
             app:destination="@id/diaryEditDialog" />
 
     </dialog>
 
     <dialog
         android:id="@+id/diaryEditDialog"
-        android:name="com.mskwak.presentation.ui.diary_dialog.edit_diary.DiaryEditDialog"
+        android:name="com.mskwak.presentation.ui.dialog_diary.edit_diary.DiaryEditDialog"
         tools:layout="@layout/dialog_diary_edit">
 
         <argument
@@ -121,7 +121,7 @@
 
     <action
         android:id="@+id/actionGlobalHomeFragment"
-        app:destination="@id/homeFragment"
+        app:destination="@id/plantFragment"
         app:popUpTo="@id/nav_graph" />
 
     <action

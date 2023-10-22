@@ -2,13 +2,13 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:drawable="@color/bgray_25"
         android:width="200dp"
-        android:height="200dp" />
+        android:height="200dp"
+        android:drawable="@color/gray_25" />
     <item
-        android:drawable="@drawable/ic_add_photo_black"
         android:width="50dp"
         android:height="50dp"
+        android:drawable="@drawable/ic_add_photo_black"
         android:gravity="center" />
 
 </layer-list>

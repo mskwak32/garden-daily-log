@@ -9,11 +9,11 @@
 
         <variable
             name="fragment"
-            type="com.mskwak.presentation.ui.diary_page.DiaryFragment" />
+            type="com.mskwak.presentation.ui.fragment_diary.DiaryFragment" />
 
         <variable
             name="viewModel"
-            type="com.mskwak.presentation.ui.diary_page.DiaryViewModel" />
+            type="com.mskwak.presentation.ui.fragment_diary.DiaryViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +22,7 @@
         android:clipChildren="false">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbarLayout"
+            android:id="@+id/layout_appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
@@ -41,19 +41,19 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <ImageButton
-                        android:id="@+id/monthBackButton"
+                    <ImageView
+                        android:id="@+id/iv_monthBack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/ic_arrow_back_ios_black"
+                        android:contentDescription="@null"
                         android:onClick="@{() -> viewModel.previousMonth()}" />
 
                     <TextView
-                        android:id="@+id/monthText"
+                        android:id="@+id/tv_month"
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
+                        android:layout_marginHorizontal="16dp"
                         android:gravity="center"
                         android:onClick="@{() -> fragment.onMonthClick()}"
                         android:textColor="@color/black"
@@ -62,11 +62,12 @@
                         app:localMonth="@{viewModel.month}"
                         tools:text="2022. 03" />
 
-                    <ImageButton
-                        android:id="@+id/monthForwardButton"
+                    <ImageView
+                        android:id="@+id/iv_monthForward"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/ic_arrow_forward_ios_black"
+                        android:contentDescription="@null"
                         android:onClick="@{() -> viewModel.nextMonth()}" />
 
                 </LinearLayout>
@@ -74,60 +75,59 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="16dp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="16dp"
                     android:onClick="@{() -> fragment.onThisMonthClick()}"
                     android:text="@string/this_month"
                     android:textColor="@color/teal_700"
                     android:textSize="@dimen/text_body" />
 
-
             </com.google.android.material.appbar.MaterialToolbar>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/plantFilter"
+                android:id="@+id/rv_plantFilter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
+                android:paddingHorizontal="16dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/layout_chip" />
 
             <Spinner
-                android:id="@+id/sortSpinner"
+                android:id="@+id/spinner_sort"
                 style="@style/spinnerDropdown"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:minWidth="100dp"
-                android:paddingRight="20dp" />
+                android:paddingStart="2dp"
+                android:paddingEnd="20dp" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/diaryList"
+            android:id="@+id/rv_diaryList"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:clipToPadding="false"
             android:padding="16dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appbarLayout"
+            app:layout_constraintTop_toBottomOf="@id/layout_appbar"
             tools:listitem="@layout/layout_item_diary" />
 
         <LinearLayout
-            android:id="@+id/emptyDiaryLayout"
+            android:id="@+id/layout_emptyDiary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="@{viewModel.isEmptyList()? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appbarLayout">
+            app:layout_constraintTop_toBottomOf="@id/layout_appbar">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="100dp"

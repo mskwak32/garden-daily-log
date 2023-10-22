@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:maxLines="1"
     android:padding="4dp"
-    android:textColor="@color/bgray_1000"
+    android:textColor="@color/gray_1000"
     android:textSize="@dimen/text_body"
     tools:text="심은날짜 최근순">
 

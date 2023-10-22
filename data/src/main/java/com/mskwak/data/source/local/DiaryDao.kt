@@ -31,10 +31,7 @@ interface DiaryDao {
     ): Flow<List<DiaryData>>
 
     @Query("SELECT * FROM diary WHERE id = :id")
-    suspend fun getDiary(id: Int): DiaryData
-
-    @Query("SELECT * FROM diary WHERE id = :id")
-    fun getDiaryFlow(id: Int): Flow<DiaryData>
+    fun getDiary(id: Int): Flow<DiaryData>
 
     @Query("SELECT * FROM diary WHERE createdDate BETWEEN :startDate AND :endDate")
     fun getDiaries(startDate: LocalDate, endDate: LocalDate): Flow<List<DiaryData>>

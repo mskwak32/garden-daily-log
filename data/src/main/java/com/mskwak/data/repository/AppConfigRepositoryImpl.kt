@@ -2,20 +2,18 @@ package com.mskwak.data.repository
 
 import com.mskwak.data.BuildConfig
 import com.mskwak.data.source.remote.AppConfigService
-import com.mskwak.domain.di.IoDispatcher
 import com.mskwak.domain.repository.AppConfigRepository
-import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
 class AppConfigRepositoryImpl @Inject constructor(
-    private val appConfigService: AppConfigService,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    private val appConfigService: AppConfigService
 ) : AppConfigRepository {
 
-    override suspend fun getLatestAppVersion(): Result<Int> = withContext(ioDispatcher) {
+    override suspend fun getLatestAppVersion(): Result<Int> = withContext(Dispatchers.IO) {
         try {
             val response = if (BuildConfig.DEBUG) {
                 appConfigService.getDebugLatestAppVersion()
@@ -36,7 +34,7 @@ class AppConfigRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getUpdateContent(versionCode: Int): Result<String> =
-        withContext(ioDispatcher) {
+        withContext(Dispatchers.IO) {
             try {
                 val response = appConfigService.getUpdateContent(versionCode)
                 val result = if (response.isSuccessful && response.body() != null) {

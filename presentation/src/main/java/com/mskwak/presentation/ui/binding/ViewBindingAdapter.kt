@@ -14,6 +14,7 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
 @BindingAdapter("fieldEmpty")
 fun TextViewWithIcon.setFieldEmpty(isFieldEmpty: Boolean) {
     this.setFieldEmpty(isFieldEmpty)

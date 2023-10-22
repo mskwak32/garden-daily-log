@@ -9,11 +9,11 @@
 
         <variable
             name="viewModel"
-            type="com.mskwak.presentation.ui.plant_dialog.plant_detail.PlantDetailViewModel" />
+            type="com.mskwak.presentation.ui.dialog_plant.plant_detail.PlantDetailViewModel" />
 
         <variable
             name="dialog"
-            type="com.mskwak.presentation.ui.plant_dialog.plant_detail.PlantDetailDialog" />
+            type="com.mskwak.presentation.ui.dialog_plant.plant_detail.PlantDetailDialog" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -21,7 +21,7 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbarLayout"
+            android:id="@+id/layout_appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/transparent"
@@ -41,10 +41,11 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/picture"
+                        android:id="@+id/iv_picture"
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
                         android:background="@color/green_300"
+                        android:contentDescription="@null"
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_flower_pot"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -57,18 +58,18 @@
                         app:shapeAppearanceOverlay="@style/plantDetailAppbarBottomDeco" />
 
                     <LinearLayout
-                        android:id="@+id/plantBasicLayout"
+                        android:id="@+id/layout_plantInfo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="30dp"
                         android:background="@drawable/rectangle_stroke_box_bg"
                         android:orientation="vertical"
                         android:padding="16dp"
                         app:layout_constraintBottom_toBottomOf="parent">
 
                         <TextView
-                            android:id="@+id/plantName"
+                            android:id="@+id/tv_plantName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_xlarge"
@@ -76,7 +77,7 @@
                             tools:text="식물이름" />
 
                         <TextView
-                            android:id="@+id/plantDate"
+                            android:id="@+id/tv_plantDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -94,20 +95,20 @@
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/popupMenuStyle">
 
-                    <ImageButton
-                        android:id="@+id/backButton"
+                    <ImageView
+                        android:id="@+id/iv_back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/ic_arrow_back_white"
                         android:contentDescription="@string/cancel"
                         android:onClick="@{() -> dialog.onBackClick()}" />
 
-                    <ImageButton
-                        android:id="@+id/menuButton"
+                    <ImageView
+                        android:id="@+id/iv_menu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:layout_marginRight="16dp"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="16dp"
                         android:background="@drawable/ic_more_horiz_white"
                         android:contentDescription="@string/menu"
                         android:onClick="@{() -> dialog.onMenuClick()}" />
@@ -119,7 +120,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
-            android:id="@+id/nestedScrollView"
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
@@ -131,185 +132,188 @@
                 android:padding="30dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/wateringLayout"
+                    android:id="@+id/layout_watering"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle_stroke_box_bg"
                     android:clipToPadding="false"
                     android:orientation="vertical"
-                    android:paddingLeft="16dp"
+                    android:paddingHorizontal="16dp"
                     android:paddingTop="16dp"
-                    android:paddingRight="16dp"
                     android:paddingBottom="8dp"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.airbnb.lottie.LottieAnimationView
-                        android:id="@+id/waterAnimation"
+                        android:id="@+id/anim_water"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:scaleType="centerCrop"
                         android:scaleX="1.8"
                         android:scaleY="1.8"
                         android:visibility="invisible"
-                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:lottie_rawRes="@raw/lottie_water_loader" />
 
                     <ImageView
-                        android:id="@+id/waterIcon"
+                        android:id="@+id/iv_waterIcon"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:background="@drawable/ic_water_drop_blue"
-                        app:layout_constraintBottom_toBottomOf="@id/waterAnimation"
-                        app:layout_constraintLeft_toLeftOf="@id/waterAnimation"
-                        app:layout_constraintRight_toRightOf="@id/waterAnimation"
-                        app:layout_constraintTop_toTopOf="@id/waterAnimation" />
+                        android:contentDescription="@null"
+                        app:layout_constraintBottom_toBottomOf="@id/anim_water"
+                        app:layout_constraintEnd_toEndOf="@id/anim_water"
+                        app:layout_constraintStart_toStartOf="@id/anim_water"
+                        app:layout_constraintTop_toTopOf="@id/anim_water" />
 
                     <TextView
-                        android:id="@+id/wateringDdays"
+                        android:id="@+id/tv_wateringDays"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
+                        android:layout_marginStart="12dp"
                         android:textSize="@dimen/text_medium"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@id/waterAnimation"
-                        app:layout_constraintLeft_toRightOf="@id/waterIcon"
-                        app:layout_constraintTop_toTopOf="@id/waterAnimation"
+                        app:layout_constraintBottom_toBottomOf="@id/anim_water"
+                        app:layout_constraintStart_toEndOf="@id/iv_waterIcon"
+                        app:layout_constraintTop_toTopOf="@id/anim_water"
                         tools:text="D-00" />
 
                     <TextView
-                        android:id="@+id/lastWateringTitle"
+                        android:id="@+id/tv_lastWateringLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/watering_last_date"
                         android:textSize="@dimen/text_body"
+                        app:layout_constraintEnd_toStartOf="@id/tv_lastWateringDate"
                         app:layout_constraintHorizontal_chainStyle="spread_inside"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/lastWateringDate"
-                        app:layout_constraintTop_toBottomOf="@id/waterAnimation" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/anim_water" />
 
                     <TextView
-                        android:id="@+id/lastWateringDate"
+                        android:id="@+id/tv_lastWateringDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_body"
-                        app:layout_constraintBaseline_toBaselineOf="@id/lastWateringTitle"
-                        app:layout_constraintLeft_toRightOf="@id/lastWateringTitle"
-                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBaseline_toBaselineOf="@id/tv_lastWateringLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_lastWateringLabel"
                         tools:text="2022.02.02" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/wateringAlarmLayout"
+                        android:id="@+id/layout_wateringAlarm"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_marginTop="8dp"
-                        app:layout_constraintTop_toBottomOf="@id/lastWateringTitle">
+                        app:layout_constraintTop_toBottomOf="@id/tv_lastWateringLabel">
 
                         <TextView
-                            android:id="@+id/wateringAlarmTitle"
+                            android:id="@+id/tv_wateringAlarmLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:text="@string/watering_alarm"
                             android:textSize="@dimen/text_body"
-                            app:layout_constraintLeft_toLeftOf="parent" />
+                            app:layout_constraintStart_toStartOf="parent" />
 
                         <TextView
-                            android:id="@+id/wateringAlarm"
+                            android:id="@+id/tv_wateringAlarm"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="end|center_vertical"
                             android:gravity="center_vertical"
                             android:textSize="@dimen/text_body"
-                            app:layout_constraintRight_toLeftOf="@id/wateringAlarmSwitch"
+                            app:layout_constraintEnd_toStartOf="@id/switch_wateringAlarm"
                             tools:text="오전 09:00" />
 
 
                         <com.google.android.material.switchmaterial.SwitchMaterial
-                            android:id="@+id/wateringAlarmSwitch"
+                            android:id="@+id/switch_wateringAlarm"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_gravity="end|center_vertical"
                             android:onClick="@{() -> viewModel.wateringAlarmToggle()}"
-                            android:paddingLeft="16dp"
-                            app:layout_constraintRight_toRightOf="parent"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="0dp"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <Button
-                        android:id="@+id/wateringButton"
+                        android:id="@+id/btn_watering"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:backgroundTint="@color/blue_500"
                         android:onClick="@{() -> dialog.onWateringClick()}"
                         android:text="@string/watering"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/wateringAlarmLayout" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/layout_wateringAlarm" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
-                    android:id="@+id/memoTitle"
+                    android:id="@+id/tv_memoLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:text="@string/memo"
                     android:textSize="@dimen/text_large"
                     android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@id/wateringLayout" />
+                    app:layout_constraintTop_toBottomOf="@id/layout_watering" />
 
                 <TextView
-                    android:id="@+id/memo"
+                    android:id="@+id/tv_memo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/rectangle_stroke_box_bg"
                     android:padding="10dp"
                     android:textSize="@dimen/text_body"
-                    app:layout_constraintTop_toBottomOf="@id/memoTitle"
+                    app:layout_constraintTop_toBottomOf="@id/tv_memoLabel"
                     tools:text="memo\nmemo" />
 
                 <TextView
-                    android:id="@+id/diaryTitle"
+                    android:id="@+id/tv_diaryLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
                     android:text="@string/plant_diary"
                     android:textSize="@dimen/text_large"
                     android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@id/memo" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_memo" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/newDiaryButton"
+                    android:id="@+id/btn_newDiary"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:background="@drawable/rounded_stroke_box_bg"
+                    android:gravity="center"
                     android:onClick="@{() -> dialog.newDiaryClick()}"
+                    android:paddingHorizontal="8dp"
                     android:stateListAnimator="@null"
                     android:text="@string/new_diary"
-                    app:layout_constraintBottom_toBottomOf="@id/diaryTitle"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/diaryTitle" />
+                    app:layout_constraintBottom_toBottomOf="@id/tv_diaryLabel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_diaryLabel" />
 
                 <FrameLayout
-                    android:id="@+id/diaryLayout"
+                    android:id="@+id/layout_diary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    app:layout_constraintTop_toBottomOf="@id/diaryTitle">
+                    app:layout_constraintTop_toBottomOf="@id/tv_diaryLabel">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/diaryList"
+                        android:id="@+id/rv_diaryList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                     <LinearLayout
-                        android:id="@+id/emptyDiaryView"
+                        android:id="@+id/layout_emptyDiary"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:background="@color/white"
@@ -320,13 +324,13 @@
                         <com.airbnb.lottie.LottieAnimationView
                             android:layout_width="90dp"
                             android:layout_height="90dp"
-                            app:lottie_rawRes="@raw/lottie_notebook"
+                            android:progress="100"
                             android:scaleX="1.4"
                             android:scaleY="1.4"
-                            android:progress="100" />
+                            app:lottie_rawRes="@raw/lottie_notebook" />
 
                         <TextView
-                            android:id="@+id/emptyDiaryText"
+                            android:id="@+id/tv_emptyDiary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -337,9 +341,8 @@
 
                 </FrameLayout>
 
-
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/moreDiaryButton"
+                    android:id="@+id/btn_moreDiary"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
@@ -348,10 +351,9 @@
                     android:stateListAnimator="@null"
                     android:text="@string/view_more"
                     android:visibility="@{viewModel.isEmptyList()? View.GONE : View.VISIBLE}"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/diaryLayout" />
-
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_diary" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

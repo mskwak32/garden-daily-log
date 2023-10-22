@@ -5,7 +5,6 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.mskwak.domain.model.Plant
 import java.time.LocalDate
 
 @Entity(
@@ -13,24 +12,12 @@ import java.time.LocalDate
     indices = [Index(value = ["id", "name"])]
 )
 data class PlantData(
-    @PrimaryKey(autoGenerate = true) override val id: Int = 0,
-    override val name: String,
-    override val createdDate: LocalDate,
-    override val waterPeriod: Int,
-    override val lastWateringDate: LocalDate,
-    @Embedded override val wateringAlarm: AlarmData,
-    override val pictureUri: Uri?,
-    override val memo: String?
-) : Plant {
-
-    constructor(plant: Plant) : this(
-        id = plant.id,
-        name = plant.name,
-        createdDate = plant.createdDate,
-        waterPeriod = plant.waterPeriod,
-        lastWateringDate = plant.lastWateringDate,
-        wateringAlarm = AlarmData(plant.wateringAlarm),
-        pictureUri = plant.pictureUri,
-        memo = plant.memo
-    )
-}
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val name: String,
+    val createdDate: LocalDate,
+    val waterPeriod: Int,
+    val lastWateringDate: LocalDate,
+    @Embedded val wateringAlarm: AlarmData,
+    val pictureUri: Uri?,
+    val memo: String?
+)
