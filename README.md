@@ -1,7 +1,7 @@
 # 텃밭일기
 개인 프로젝트
 
-* compose branch에서 조금씩 compose로 이전 작업 진행 중입니다.
+* 이 프로젝트는 garden-log 프로젝트로 이전되었습니다.
 
 ## Introduction
 텃밭에 심은 식물 물주기 관리 및 일기 관리 앱입니다.
